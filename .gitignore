@@ -193,3 +193,4 @@ typings/
 .yarn-integrity
 /build
 
+package-lock.json
