@@ -1,40 +1,26 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import "./Colors.css";
-import { ThemeProvider, Button } from "@material-ui/core";
-import theme from "./theme";
+import Nav from "./common/nav/Nav";
+import { LoginPage } from "./components/login/LoginPage";
+import { Route, Switch } from "react-router-dom";
 
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
+interface State {}
+interface Props {}
+
+export class App extends React.Component<Props, State> {
+  render() {
+    return (
       <div className="App">
-        <header className="App-header">
-          <img
-            src={logo}
-            className="App-logo"
-            alt="logo"
-            style={{ backgroundColor: "var(--white)" }}
-          />
-          <Button color="primary">Primary</Button>
-          <Button color="secondary">Secondary</Button>
-          <p>
-            Edit{" "}
-            <code style={{ color: "var(--secondary_d)" }}>src/App.tsx</code> and
-            save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Nav />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/login" exact component={LoginPage} />
+        </Switch>
       </div>
-    </ThemeProvider>
-  );
+    );
+  }
 }
 
-export default App;
+const Home = () => {
+  return <div className="App">Home</div>;
+};
