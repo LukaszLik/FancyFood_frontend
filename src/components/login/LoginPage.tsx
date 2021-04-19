@@ -6,7 +6,7 @@ interface State {}
 interface Props {}
 
 export class LoginPage extends React.Component<Props, State> {
-  constructor(props: Props){
+  constructor(props: Props) {
     super(props);
   }
 

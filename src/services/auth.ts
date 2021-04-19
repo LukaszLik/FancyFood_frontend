@@ -12,7 +12,6 @@ class AuthService {
       .then((response) => {
         if (response.headers.authorization) {
           localStorage.setItem("user", JSON.stringify(response.headers));
-          console.log("set local storage")
         }
         return response.data;
       });

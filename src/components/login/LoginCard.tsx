@@ -7,20 +7,23 @@ import {
   FilledInput,
   FormControl,
   InputLabel,
+  Grid,
+  Box,
+  Typography,
+  Card,
+  CardContent,
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Link } from "react-router-dom";
 import AuthService from "../../services/auth";
-import authHeader from "../../services/header";
 import "./Login.css";
 
-//https://material-ui.com/es/components/text-fields/
 interface State {
   password: string;
   showPassword: boolean;
   email: string;
-  message: string
+  message: string;
 }
 
 const LoginCard = () => {
@@ -28,7 +31,7 @@ const LoginCard = () => {
     password: "",
     showPassword: false,
     email: "",
-    message: ""
+    message: "",
   });
 
   const handleChange = (prop: keyof State) => (
@@ -51,92 +54,129 @@ const LoginCard = () => {
     e.preventDefault();
     setValues({
       ...values,
-      message: ""
-    })
+      message: "",
+    });
 
     AuthService.login(values.email, values.password).then(
-        () => {
-          window.location.reload();
-          console.log("log in")
-          console.log(authHeader())
-        },
-        error => {
-          const resMessage =
-              (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-              error.message ||
-              error.toString();
+      () => {
+        window.location.reload();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-          setValues({
-            ...values,
-            message: resMessage
-          })
-        }
+        setValues({
+          ...values,
+          message: resMessage,
+        });
+      }
     );
+  };
 
-  }
-
+  const paperStyle = {
+    height: "35vh",
+    width: "55vh",
+    outlineColor: "blue",
+    border: "#c79100 4px solid",
+    paddingTop: "0.5%",
+  };
   return (
-    <div className="login-card">
-      <form className="login-card-form"  method="POST" onSubmit={handleLogin}>
-        <h2>Zaloguj się</h2>
-        <div className="login-card-form-container">
-        <TextField
-          className="login-input"
-          id="email"
-          type="text"
-          label="Email"
-          placeholder="Email"
-          margin="normal"
-          variant="filled"
-          name="email"
-          onChange={handleChange("email")}
-          value={values.email}
-        />
-        <FormControl variant="filled" className="password-input">
-          <InputLabel htmlFor="standard-adornment-password">
-            Password
-          </InputLabel>
-          <FilledInput
-            id="password"
-            type={values.showPassword ? "text" : "password"}
-            placeholder="Password"
-            value={values.password}
-            name="email"
-            onChange={handleChange("password")}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-        {values.message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {values.message}
-              </div>
-            </div>
-        )}
-        <Button variant="contained" type="submit" color="secondary" className="btn-login" size="large">
-          <span className="btn-login-txt">Zaloguj się</span>
-        </Button>
-        </div>
-      </form>
-      <p className="login-link-des">
-        Zapomniałeś hasła? <Link to="#" className="login-link">PRZYPOMNIJ HASLO</Link>
-      </p>
-      <p className="login-link-des">
-        Nie masz jeszcze konta? <Link to="#" className="login-link">ZAREJESTRUJ SIE</Link>
-      </p>
-    </div>
+    <Grid
+      container
+      alignItems="center"
+      direction="column"
+      justify="center"
+      style={{ minHeight: "90vh" }}
+    >
+      <Card style={paperStyle} variant="outlined">
+        <CardContent>
+          <Typography variant="h5">Zaloguj się</Typography>
+        </CardContent>
+        <CardContent>
+          <form method="POST" onSubmit={handleLogin}>
+            <Grid container direction="column" alignItems="center">
+              <TextField
+                className="login-input"
+                id="email"
+                type="text"
+                label="Email"
+                placeholder="Email"
+                margin="normal"
+                variant="filled"
+                name="email"
+                onChange={handleChange("email")}
+                value={values.email}
+              />
+              <FormControl
+                variant="filled"
+                margin="normal"
+                size="medium"
+                className="password-input"
+              >
+                <InputLabel htmlFor="standard-adornment-password">
+                  Password
+                </InputLabel>
+                <FilledInput
+                  id="password"
+                  type={values.showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={values.password}
+                  name="password"
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {values.showPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+              <Box style={{ minHeight: "4vh" }} margin="normal">
+                {values.message && (
+                  <div className="form-group">{values.message}</div>
+                )}
+              </Box>
+              <Button
+                variant="contained"
+                type="submit"
+                color="secondary"
+                className="btn-login"
+                size="large"
+              >
+                <span className="btn-login-txt">Zaloguj się</span>
+              </Button>
+            </Grid>
+          </form>
+        </CardContent>
+      </Card>
+      <Box>
+        <p className="login-link-des">
+          Zapomniałeś hasła?{" "}
+          <Link to="#" className="login-link">
+            PRZYPOMNIJ HASLO
+          </Link>
+        </p>
+        <p className="login-link-des">
+          Nie masz jeszcze konta?{" "}
+          <Link to="#" className="login-link">
+            ZAREJESTRUJ SIE
+          </Link>
+        </p>
+      </Box>
+    </Grid>
   );
 };
 
