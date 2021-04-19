@@ -78,7 +78,7 @@ const LoginCard = () => {
   };
 
   const paperStyle = {
-    height: "35vh",
+    minHeight: "35vh",
     width: "55vh",
     outlineColor: "blue",
     border: "#c79100 4px solid",
