@@ -17,20 +17,22 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Link } from "react-router-dom";
 import AuthService from "../../services/auth";
-import "./Login.css";
+import "./Register.css";
 
 interface State {
+  email: string;
+  username: string;
   password: string;
   showPassword: boolean;
-  email: string;
   message: string;
 }
 
-const LoginCard = () => {
+const RegisterCard = () => {
   const [values, setValues] = React.useState<State>({
+    email: "",
+    username: "",
     password: "",
     showPassword: false,
-    email: "",
     message: "",
   });
 
@@ -50,14 +52,14 @@ const LoginCard = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setValues({
       ...values,
       message: "",
     });
 
-    AuthService.login(values.email, values.password).then(
+    AuthService.register(values.email, values.username, values.password).then(
       () => {
         window.location.reload();
       },
@@ -68,7 +70,6 @@ const LoginCard = () => {
             error.response.data.message) ||
           error.message ||
           error.toString();
-
         setValues({
           ...values,
           message: resMessage,
@@ -79,11 +80,13 @@ const LoginCard = () => {
 
   const paperStyle = {
     minHeight: "35vh",
+    minWidth: "30vh",
     width: "55vh",
     outlineColor: "blue",
     border: "#c79100 4px solid",
     paddingTop: "0.5%",
   };
+
   return (
     <Grid
       container
@@ -94,11 +97,23 @@ const LoginCard = () => {
     >
       <Card style={paperStyle} variant="outlined">
         <CardContent style={{ paddingBottom: "0px" }}>
-          <Typography variant="h5">Zaloguj się</Typography>
+          <Typography variant="h5">Utwórz konto</Typography>
         </CardContent>
         <CardContent>
-          <form method="POST" onSubmit={handleLogin}>
+          <form method="POST" onSubmit={handleRegister}>
             <Grid container direction="column" alignItems="center">
+              <TextField
+                className="login-input"
+                id="username"
+                type="text"
+                label="Imię i nazwisko"
+                placeholder="Imię i nazwisko"
+                margin="normal"
+                variant="filled"
+                name="username"
+                onChange={handleChange("username")}
+                value={values.username}
+              />
               <TextField
                 className="login-input"
                 id="email"
@@ -156,7 +171,7 @@ const LoginCard = () => {
                 className="btn-login"
                 size="large"
               >
-                <span className="btn-login-txt">Zaloguj się</span>
+                <span className="btn-login-txt">Zarejestruj się</span>
               </Button>
             </Grid>
           </form>
@@ -164,15 +179,9 @@ const LoginCard = () => {
       </Card>
       <Box>
         <p className="login-link-des">
-          Zapomniałeś hasła?{" "}
-          <Link to="#" className="login-link">
-            PRZYPOMNIJ HASLO
-          </Link>
-        </p>
-        <p className="login-link-des">
-          Nie masz jeszcze konta?{" "}
-          <Link to="/signup" className="login-link">
-            ZAREJESTRUJ SIE
+          Masz już konto?{" "}
+          <Link to="/login" className="login-link">
+            ZALOGUJ SIĘ
           </Link>
         </p>
       </Box>
@@ -180,4 +189,4 @@ const LoginCard = () => {
   );
 };
 
-export default LoginCard;
+export default RegisterCard;

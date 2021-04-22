@@ -1,26 +1,29 @@
-.login-link{
+.login-link {
     color: #26c6da;
     font-weight: 600;
     text-decoration: none;
 }
-.login-link-des{
+
+.login-link-des {
     font-weight: 700;
 }
 
-.login-link:hover{
+.login-link:hover {
     color: #6ef9ff;
 }
 
-.btn-login-txt{
+.btn-login-txt {
     letter-spacing: 1px;
     text-transform: uppercase;
     color: white;
 }
 
-.password-input, .login-input{
+.password-input,
+.login-input {
     width: 75%;
 }
-.btn-login-txt{
+
+.btn-login-txt {
     letter-spacing: .5px;
     text-transform: uppercase;
     color: white;

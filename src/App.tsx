@@ -3,6 +3,7 @@ import "./App.css";
 import Nav from "./common/nav/Nav";
 import { LoginPage } from "./components/login/LoginPage";
 import { Route, Switch } from "react-router-dom";
+import { RegisterPage } from "./components/register/RegisterPage";
 
 interface State {}
 interface Props {}
@@ -15,6 +16,7 @@ export class App extends React.Component<Props, State> {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/login" exact component={LoginPage} />
+          <Route path="/signup" exact component={RegisterPage} />
         </Switch>
       </div>
     );

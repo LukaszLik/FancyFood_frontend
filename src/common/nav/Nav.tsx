@@ -38,7 +38,7 @@ const Nav = () => {
         >
           <Button
             variant="outlined"
-            color="primary"
+            color="secondary"
             component={Link}
             to="/login"
             style={{ marginRight: "20px" }}
