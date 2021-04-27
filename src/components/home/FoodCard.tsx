@@ -192,6 +192,7 @@ export default function RecipeReviewCard() {
                 />
 
             <div className={classes.stars} id='stars'>
+                {/*jakis container na duzo gwiazdkow?*/}
                 <StarBorderSharpIcon />
             </div>
 
