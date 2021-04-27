@@ -16,6 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 //thicc sizes
 // h: 260
@@ -34,8 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "10px",
         },
         media: {
-            maxHeight: 125,
             maxWidth: 250,
+            maxHeight: 125,
             paddingTop: '56.25%', // 16:9
         },
         expand: {
@@ -48,9 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
         expandOpen: {
 
             transform: 'rotate(180deg)',
-        },
-        avatar: {
-            backgroundColor: red[500],
         },
 
         chipRow: {
@@ -79,6 +77,23 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: 20,
             fontWeight: 'bold',
             fontFamily: 'Times New Roman',
+            margin: '-5px -20px 0px -6px',
+            maxWidth: '200px',
+        },
+
+        titleFavSpan: {
+            display: 'flex',
+            // flexFlow: 'row wrap',
+            align: 'left',
+            justifyContent: 'left',
+            alignItems: 'left',
+            gap: '8px',
+            padding: '0px 0px 0px 0px',
+        },
+
+        favIcon: {
+            color: "#c79100",
+            // maxWidth: '20px',
         },
 
     }),
@@ -93,7 +108,7 @@ export default function RecipeReviewCard() {
     };
 
     return (
-        <Card className={classes.root} variant="outlined">
+        <Card className={classes.root}>
             <CardMedia
                 className={classes.media}
                 image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
@@ -105,6 +120,8 @@ export default function RecipeReviewCard() {
                 <Chip className={classes.chip} label="Basic" />
                 <Chip className={classes.chip} label="Placeholder" />
             </span>
+
+            <span className={classes.titleFavSpan}>
             <CardHeader
                 classes={{
                     title: classes.title,
@@ -113,6 +130,10 @@ export default function RecipeReviewCard() {
                 title="Penne z bakłażanem"
             />
 
+            <IconButton aria-label="add to favorites">
+                    <FavoriteBorderIcon className={classes.favIcon}/>
+            </IconButton>
+            </span>
 
             {/*<CardContent>*/}
             {/*    <Typography variant="body2" color="textSecondary" component="p">*/}
@@ -121,22 +142,13 @@ export default function RecipeReviewCard() {
             {/*    </Typography>*/}
             {/*</CardContent>*/}
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
-                <IconButton
-                    className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </IconButton>
+
+
+
+                {/*<IconButton aria-label="add to favorites">*/}
+                {/*    <FavoriteIcon />*/}
+                {/*</IconButton>*/}
+
             </CardActions>
             {/*<Collapse in={expanded} timeout="auto" unmountOnExit>*/}
             {/*    <CardContent>*/}
