@@ -17,6 +17,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import StarBorderSharpIcon from '@material-ui/icons/StarBorderSharp';
 
 //thicc sizes
 // h: 260
@@ -29,8 +30,9 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            maxWidth: 250,
-            maxHeight: 260,
+            position: 'absolute',
+            width: 250,
+            height: 260,
             border: "3px solid #c79100",
             borderRadius: "10px",
         },
@@ -66,35 +68,89 @@ const useStyles = makeStyles((theme: Theme) =>
 
         chip: {
             maxHeight: '20px',
-            fontFamily: 'Times New Roman',
+            fontFamily: 'Roboto Slab',
             // fontWeight: 'bold',
             // marginLeft: '5px',
         },
 
         title: {
+            // maxHeight: 260,
             textAlign: 'left',
             color: '#002226',
-            fontSize: 20,
-            fontWeight: 'bold',
-            fontFamily: 'Times New Roman',
-            margin: '-5px -20px 0px -6px',
-            maxWidth: '200px',
+            fontSize: '20px',
+            fontFamily: 'Roboto Slab',
+            margin: '-5px 0px 0px -6px',
+            // maxWidth: 180,
+            width: 229,
+            maxHeight: 64,
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: '24px',
         },
 
         titleFavSpan: {
-            display: 'flex',
-            // flexFlow: 'row wrap',
-            align: 'left',
-            justifyContent: 'left',
-            alignItems: 'left',
-            gap: '8px',
-            padding: '0px 0px 0px 0px',
+            // // textOverflow: 'ellipsis',
+            // overflow: 'hidden',
+            // // width: 250,
+            // // height: '100%',
+            // display: 'flex',
+            // // flexFlow: 'row wrap',
+            // align: 'left',
+            // justifyContent: 'left',
+            // alignItems: 'left',
+            // // gap: '8px',
+            // // padding: '0px 0px 0px 0px',
+            // // position: 'absolute',
+            // wordWrap: 'break-word',
+            width: 229,
+            height: 64,
         },
 
         favIcon: {
+            // position: 'relative',
             color: "#c79100",
-            // maxWidth: '20px',
+            width: '20px',
+            height: '18.35px',
+            // left: '40%',
+            // right: '0%',
+            // top: '69.5%',
+            // bottom: '0%',
+            position: 'absolute',
+            left: '87%',
+            right: '0%',
+            top: '71.4%',
+            bottom: '0',
         },
+
+        author: {
+            position: 'absolute',
+            width: '102px',
+            height: '33px',
+            textAlign: 'left',
+            margin: '0px 0px 0px 10px',
+            fontFamily: 'Roboto Slab',
+            fontStyle: 'normal',
+            fontWeight: 'normal',
+            fontSize: '12px',
+            lineHeight: '24px',
+            /* or 200% */
+            color: '#002226',
+            top: '87%',
+        },
+
+        stars: {
+            height: '20px',
+            width: '20px',
+            borderRadius: '0px',
+
+            position: 'absolute',
+            // left: '8.33%,',
+            right: '89.4%',
+            top: '81%',
+            // bottom: '8.33%',
+
+            color: '#002226',
+        }
 
     }),
 );
@@ -103,16 +159,16 @@ export default function RecipeReviewCard() {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
+    // const handleExpandClick = () => {
+    //     setExpanded(!expanded);
+    // };
 
     return (
         <Card className={classes.root}>
             <CardMedia
                 className={classes.media}
                 image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
-                title="Paella dish"
+                // title="Paella dish"
             />
 
             {/*.MuiChip-label ???*/}
@@ -121,19 +177,32 @@ export default function RecipeReviewCard() {
                 <Chip className={classes.chip} label="Placeholder" />
             </span>
 
-            <span className={classes.titleFavSpan}>
-            <CardHeader
-                classes={{
-                    title: classes.title,
-                }}
+            {/*<span className={classes.titleFavSpan}>*/}
 
-                title="Penne z bakłażanem"
-            />
+            {/*<div className={classes.titleFavSpan} id='text-likes-favourites'>*/}
+                <CardHeader
+                    classes={{
+                        title: classes.title,
+                    }}
 
-            <IconButton aria-label="add to favorites">
-                    <FavoriteBorderIcon className={classes.favIcon}/>
-            </IconButton>
-            </span>
+                    title="Penne z bakłażanem"
+                    // title="Pomidorowa z kalafiorowym ryżem"
+                    // title="PSADGsdKJASHIBA ASASFS ASFASFASFASFDSA"
+
+                />
+
+            <div className={classes.stars} id='stars'>
+                <StarBorderSharpIcon />
+            </div>
+
+            <div className={classes.author} id='author'>
+                <p>Autor:</p>
+            </div>
+
+            {/*</div>*/}
+
+
+            {/*</span>*/}
 
             {/*<CardContent>*/}
             {/*    <Typography variant="body2" color="textSecondary" component="p">*/}
@@ -142,7 +211,9 @@ export default function RecipeReviewCard() {
             {/*    </Typography>*/}
             {/*</CardContent>*/}
             <CardActions disableSpacing>
-
+                <IconButton className={classes.favIcon} aria-label="add to favorites">
+                    <FavoriteBorderIcon />
+                </IconButton>
 
 
                 {/*<IconButton aria-label="add to favorites">*/}
