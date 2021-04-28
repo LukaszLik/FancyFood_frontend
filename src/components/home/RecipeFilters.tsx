@@ -61,7 +61,7 @@ export default function RecipeFilters() {
       >
         <Grid item>
           <div className={classes.searchElement}>
-            <h3>Szukaj</h3>
+            <h3>Szukaj przepisu</h3>
             <TextField
               id="input-search-by-name"
               type="text"
@@ -81,7 +81,7 @@ export default function RecipeFilters() {
         </Grid>
         <Grid item>
           <div className={classes.searchElement}>
-            <h3>Filtruj po Tagach</h3>
+            <h3>Filtruj po tagach</h3>
             <TextField
               id="recipe-tag-search"
               label="Tagi"

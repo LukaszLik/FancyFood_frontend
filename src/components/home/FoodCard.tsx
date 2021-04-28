@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme: Theme) =>
     expandOpen: {
       transform: "rotate(180deg)",
     },
-
     chipRow: {
       display: "flex",
       width: 250,
@@ -48,14 +47,10 @@ const useStyles = makeStyles((theme: Theme) =>
       gap: "8px",
       padding: "0px 0px 0px 0px",
     },
-
     chip: {
       maxHeight: "20px",
       fontFamily: "Times New Roman",
-      // fontWeight: 'bold',
-      // marginLeft: '5px',
     },
-
     title: {
       textAlign: "left",
       color: "#002226",
@@ -65,20 +60,16 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "-5px -20px 0px -6px",
       maxWidth: "200px",
     },
-
     titleFavSpan: {
       display: "flex",
-      // flexFlow: 'row wrap',
       align: "left",
       justifyContent: "left",
       alignItems: "left",
       gap: "8px",
       padding: "0px 0px 0px 0px",
     },
-
     favIcon: {
       color: "#c79100",
-      // maxWidth: '20px',
     },
   })
 );
