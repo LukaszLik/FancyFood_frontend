@@ -194,3 +194,4 @@ typings/
 /build
 
 package-lock.json
+package-json

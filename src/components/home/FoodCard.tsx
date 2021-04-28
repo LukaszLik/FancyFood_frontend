@@ -1,16 +1,16 @@
 import React from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import Chip from "@material-ui/core/Chip";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
+import {
+  Card,
+  Chip,
+  CardHeader,
+  CardMedia,
+  CardActions,
+  IconButton,
+  makeStyles,
+  Theme,
+  createStyles,
+} from "@material-ui/core";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import StarBorderSharpIcon from "@material-ui/icons/StarBorderSharp";
-import StarSharpIcon from "@material-ui/icons/StarSharp";
-import StarHalfSharpIcon from "@material-ui/icons/StarHalfSharp";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
