@@ -93,9 +93,9 @@ export default function RecipeFilters() {
         </Grid>
         <Grid item>
           <div className={classes.searchElement}>
-            <h3>Sortuj</h3>
+            <h3>Sortuj po</h3>
             <FormControl variant="filled" className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Sortuj po</InputLabel>
+              <InputLabel id="demo-simple-select-label">Sortuj</InputLabel>
               <Select value={state.sort} onChange={handleChangeSelect}>
                 <MenuItem value={""} />
                 <MenuItem value={"Popularność"}>Popularność</MenuItem>

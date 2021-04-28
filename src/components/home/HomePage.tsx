@@ -2,6 +2,7 @@ import React from "react";
 import FoodCard from "./FoodCard";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import RecipeFilters from "./RecipeFilters";
 
 interface State {}
 interface Props {}
@@ -10,7 +11,8 @@ export class HomePage extends React.Component<Props, State> {
   render() {
     return (
       <div className="home-page">
-        <h1>Hello</h1>
+
+        <RecipeFilters />
 
         <Grid
           container

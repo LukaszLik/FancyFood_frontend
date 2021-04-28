@@ -10,7 +10,12 @@ import {
   Theme,
   createStyles,
 } from "@material-ui/core";
+
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import StarBorderSharpIcon from "@material-ui/icons/StarBorderSharp";
+import StarSharpIcon from "@material-ui/icons/StarSharp";
+import StarHalfSharpIcon from "@material-ui/icons/StarHalfSharp";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
