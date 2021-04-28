@@ -18,6 +18,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import StarBorderSharpIcon from '@material-ui/icons/StarBorderSharp';
+import StarSharpIcon from '@material-ui/icons/StarSharp';
+import StarHalfSharpIcon from '@material-ui/icons/StarHalfSharp';
 
 //thicc sizes
 // h: 260
@@ -69,6 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
         chip: {
             maxHeight: '20px',
             fontFamily: 'Roboto Slab',
+            marginTop: '-6px',
             // fontWeight: 'bold',
             // marginLeft: '5px',
         },
@@ -79,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: '#002226',
             fontSize: '20px',
             fontFamily: 'Roboto Slab',
-            margin: '-5px 0px 0px -6px',
+            margin: '-10px 0px 0px -6px',
             // maxWidth: 180,
             width: 229,
             maxHeight: 64,
@@ -93,7 +96,7 @@ const useStyles = makeStyles((theme: Theme) =>
             // overflow: 'hidden',
             // // width: 250,
             // // height: '100%',
-            // display: 'flex',
+            display: 'block',
             // // flexFlow: 'row wrap',
             // align: 'left',
             // justifyContent: 'left',
@@ -102,6 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
             // // padding: '0px 0px 0px 0px',
             // // position: 'absolute',
             // wordWrap: 'break-word',
+            verticalAlign: 'top',
             width: 229,
             height: 64,
         },
@@ -118,13 +122,13 @@ const useStyles = makeStyles((theme: Theme) =>
             position: 'absolute',
             left: '87%',
             right: '0%',
-            top: '71.4%',
+            top: '67%',
             bottom: '0',
         },
 
         author: {
             position: 'absolute',
-            width: '102px',
+            width: '200px',
             height: '33px',
             textAlign: 'left',
             margin: '0px 0px 0px 10px',
@@ -139,14 +143,15 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         stars: {
+            position: 'absolute',
             height: '20px',
             width: '20px',
             borderRadius: '0px',
+            display: 'flex',
 
-            position: 'absolute',
             // left: '8.33%,',
             right: '89.4%',
-            top: '81%',
+            top: '84.6%',
             // bottom: '8.33%',
 
             color: '#002226',
@@ -179,7 +184,7 @@ export default function RecipeReviewCard() {
 
             {/*<span className={classes.titleFavSpan}>*/}
 
-            {/*<div className={classes.titleFavSpan} id='text-likes-favourites'>*/}
+            <div className={classes.titleFavSpan} id='text-likes-favourites'>
                 <CardHeader
                     classes={{
                         title: classes.title,
@@ -191,13 +196,18 @@ export default function RecipeReviewCard() {
 
                 />
 
-            <div className={classes.stars} id='stars'>
-                {/*jakis container na duzo gwiazdkow?*/}
-                <StarBorderSharpIcon />
+                <span className={classes.stars} id='stars'>
+                    {/*jakis container na duzo gwiazdkow?*/}
+                    <StarSharpIcon />
+                    <StarHalfSharpIcon />
+                    <StarBorderSharpIcon />
+                    <StarBorderSharpIcon />
+                    <StarBorderSharpIcon />
+                </span>
             </div>
 
             <div className={classes.author} id='author'>
-                <p>Autor:</p>
+                <p>Autor: JAN PAPIEŻ II</p>
             </div>
 
             {/*</div>*/}
