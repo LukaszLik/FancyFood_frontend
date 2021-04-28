@@ -1,4 +1,3 @@
-/*Todo Background image. No backgroud for home page!*/
 html {
   background: url(images/BackgroundLogowanie.png) no-repeat center center fixed;
   -webkit-background-size: cover;
