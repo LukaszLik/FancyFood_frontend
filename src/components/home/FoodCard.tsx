@@ -149,6 +149,7 @@ export default function RecipeReviewCard() {
       <span className={classes.chipRow}>
         <Chip className={classes.chip} label="Basic" />
         <Chip className={classes.chip} label="Placeholder" />
+          {/*<Chip className={classes.chip} label="Placeholder21214124r1" />*/}
       </span>
 
       <div className={classes.titleFavSpan} id="text-likes-favourites">
