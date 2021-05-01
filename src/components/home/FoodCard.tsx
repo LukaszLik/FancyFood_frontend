@@ -5,10 +5,6 @@ import {
   CardHeader,
   CardMedia,
   CardActions,
-  IconButton,
-  makeStyles,
-  Theme,
-  createStyles,
 } from "@material-ui/core";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -17,124 +13,28 @@ import StarBorderSharpIcon from "@material-ui/icons/StarBorderSharp";
 import StarSharpIcon from "@material-ui/icons/StarSharp";
 import StarHalfSharpIcon from "@material-ui/icons/StarHalfSharp";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      position: "relative",
-      width: "250px",
-      height: "260px",
-      border: "4px solid #c79100",
-      borderRadius: "10px",
-    },
-    media: {
-      maxWidth: 250,
-      maxHeight: 125,
-      paddingTop: "56.25%", // 16:9
-    },
-    expand: {
-      transform: "rotate(0deg)",
-      marginLeft: "auto",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: "rotate(180deg)",
-    },
-    chipRow: {
-      display: "flex",
-      width: 250,
-      maxHeight: "20px",
-      flexFlow: "row wrap",
-      align: "left",
-      justifyContent: "left",
-      margin: "11px 0px 0px 8px",
-      alignItems: "left",
-      gap: "8px",
-      padding: "0px 0px 0px 0px",
-    },
-    chip: {
-      maxHeight: "20px",
-      fontFamily: "Roboto Slab",
-      marginTop: "-6px",
-    },
-    title: {
-      textAlign: "left",
-      color: "#002226",
-      fontSize: "20px",
-      fontFamily: "Roboto Slab",
-      margin: "-10px 0px 0px -6px",
-      width: 229,
-      maxHeight: 64,
-      fontStyle: "normal",
-      fontWeight: 500,
-      lineHeight: "24px",
-    },
+import { CardData } from "./HomePage";
+import { styles } from "./FoodCardStyles";
 
-    titleFavSpan: {
-      display: "block",
-      verticalAlign: "top",
-      width: 229,
-      height: 64,
-    },
-
-    favIcon: {
-      color: "#c79100",
-      width: "20px",
-      height: "18.35px",
-      position: "absolute",
-      left: "87%",
-      right: "0%",
-      top: "67%",
-      bottom: "0",
-    },
-
-    author: {
-      position: "absolute",
-      width: "200px",
-      height: "33px",
-      textAlign: "left",
-      margin: "0px 0px 0px 10px",
-      fontFamily: "Roboto Slab",
-      fontStyle: "normal",
-      fontWeight: 400,
-      fontSize: "12px",
-      lineHeight: "24px",
-      /* or 200% */
-      color: "#002226",
-      top: "87%",
-    },
-
-    authorName: {
-      fontWeight: 700,
-    },
-
-    stars: {
-      position: "absolute",
-      height: "20px",
-      width: "20px",
-      borderRadius: "0px",
-      display: "flex",
-      right: "89.4%",
-      top: "84.6%",
-      color: "#002226",
-    },
-  })
-);
+import "./HomePage.css";
 
 interface State {
   addedToFavourites: boolean;
+  recipe: CardData;
 }
 
-export default function RecipeReviewCard() {
-  const classes = useStyles();
+export default function RecipeReviewCard(props) {
+  // let props = CardData();
+  const classes = styles();
   const [state, setState] = React.useState<State>({
     addedToFavourites: false,
+    recipe: new CardData(),
   });
 
   const handleFavourites = (e) => {
     setState({
       addedToFavourites: !state.addedToFavourites,
+      recipe: new CardData(),
     });
     console.log("added to favourites");
   };
@@ -147,19 +47,28 @@ export default function RecipeReviewCard() {
       />
 
       <span className={classes.chipRow}>
-        <Chip className={classes.chip} label="Basic" />
+        <Chip className={classes.chip} label={props.category} />
         <Chip className={classes.chip} label="Placeholder" />
-          {/*<Chip className={classes.chip} label="Placeholder21214124r1" />*/}
       </span>
 
-      <div className={classes.titleFavSpan} id="text-likes-favourites">
-        <CardHeader
-          classes={{
-            title: classes.title,
-          }}
-          title="Penne z bakłażanem"
-          // title="Pomidorowa z kalafiorowym ryżem"
-        />
+      <span className={classes.titleFavSpan} id="text-likes-favourites">
+        <span className={classes.titleFav}>
+          <p className={classes.title}>{props.recipeName}</p>
+          <span className={classes.buttonDiv}>
+            <button
+              type="button"
+              onClick={handleFavourites}
+              className={classes.favIcon}
+              aria-label="add to favorites"
+            >
+              {state.addedToFavourites ? (
+                <FavoriteIcon />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
+            </button>
+          </span>
+        </span>
 
         <span className={classes.stars} id="stars">
           <StarSharpIcon />
@@ -167,24 +76,18 @@ export default function RecipeReviewCard() {
           <StarBorderSharpIcon />
           <StarBorderSharpIcon />
           <StarBorderSharpIcon />
+          <p className={classes.reviewNumberText}>{props.recipeId}</p>
         </span>
-      </div>
+      </span>
 
       <div className={classes.author} id="author">
         <p>
-          Autor: <span className={classes.authorName}>M.Dymek</span>
+          Autor:{" "}
+          <span className={classes.authorName}>{props.creatorUsername}</span>
         </p>
       </div>
 
-      <CardActions disableSpacing>
-        <IconButton
-          onClick={handleFavourites}
-          className={classes.favIcon}
-          aria-label="add to favorites"
-        >
-          {state.addedToFavourites ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-        </IconButton>
-      </CardActions>
+      <CardActions disableSpacing></CardActions>
     </Card>
   );
 }
