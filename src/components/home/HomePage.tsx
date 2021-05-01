@@ -48,21 +48,20 @@ export class HomePage extends React.Component<Props, State> {
     const response = axios
       .get(`http://localhost:8081/api/v1/recipe/${this.state.pageNumber}`)
       .then((response) => {
-        this.setState(
-          (state) => {
-            return { isLoading: false, recipes: response.data.content };
-          },
-          () => {
-            console.log(this.state.recipes[0].recipeId);
-          }
-        );
+        this.setState((state) => {
+          return { isLoading: false, recipes: response.data.content };
+        });
       });
   }
   render() {
     const recipes: CardData[] = [];
 
     if (this.state.isLoading) {
-      return <div></div>;
+      return (
+        <div>
+          <p>Ładowanie strony, proszę czekać</p>.
+        </div>
+      );
     }
 
     for (let recipe of this.state.recipes) {
@@ -76,9 +75,7 @@ export class HomePage extends React.Component<Props, State> {
         <div className="card-area">
           <div className="card-container">
             {recipes.map((recipe, recipeIdx) => {
-              {
-                return <FoodCard {...recipe} />;
-              }
+              return <FoodCard {...recipe} />;
             })}
           </div>
         </div>

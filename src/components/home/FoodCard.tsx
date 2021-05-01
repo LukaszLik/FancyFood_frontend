@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Card,
-  Chip,
-  CardHeader,
-  CardMedia,
-  CardActions,
-} from "@material-ui/core";
+import { Card, Chip, CardMedia } from "@material-ui/core";
 
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -24,14 +18,13 @@ interface State {
 }
 
 export default function RecipeReviewCard(props) {
-  // let props = CardData();
   const classes = styles();
   const [state, setState] = React.useState<State>({
     addedToFavourites: false,
     recipe: new CardData(),
   });
 
-  const handleFavourites = (e) => {
+  const handleFavourites = () => {
     setState({
       addedToFavourites: !state.addedToFavourites,
       recipe: new CardData(),
@@ -86,8 +79,6 @@ export default function RecipeReviewCard(props) {
           <span className={classes.authorName}>{props.creatorUsername}</span>
         </p>
       </div>
-
-      <CardActions disableSpacing></CardActions>
     </Card>
   );
 }
