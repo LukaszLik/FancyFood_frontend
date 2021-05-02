@@ -25,7 +25,9 @@ export class App extends React.Component<Props, State> {
 }
 
 const Home = () => {
-  return <div className="App">
-      <AddProducts/>
-  </div>;
+  return (
+    <div className="App">
+      <AddProducts />
+    </div>
+  );
 };
