@@ -12,6 +12,7 @@ import {
   Typography,
   Card,
   CardContent,
+  FormHelperText,
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -36,10 +37,55 @@ const RegisterCard = () => {
     message: "",
   });
 
+  const [errors, setErrors] = React.useState<any>();
+
   const handleChange = (prop: keyof State) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setValues({ ...values, [prop]: event.target.value });
+
+    if (prop === "username") {
+      validateUsername(event.target.value);
+    } else if (prop === "email") {
+      validateEmail(event.target.value);
+    } else if (prop === "password") {
+      validatePassword(event.target.value);
+    }
+  };
+
+  const validateEmail = (value: any) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    setErrors({ ...errors, email: "" });
+    if (value.length === 0) {
+      setErrors({ ...errors, email: "Email jest wymagany." });
+    } else if (!re.test(String(value).toLowerCase())) {
+      setErrors({ ...errors, email: "Niepoprawny adres email." });
+    }
+  };
+
+  const validateUsername = (value: any) => {
+    setErrors({ ...errors, username: "" });
+    if (value.length === 0) {
+      setErrors({ ...errors, username: "Imię i nazwisko jest wymagane." });
+    } else if (value.length > 255) {
+      setErrors({
+        ...errors,
+        username: "Imię i nazwisko nie powinno mieć więcej niż 255 znaków.",
+      });
+    }
+  };
+
+  const validatePassword = (value: any) => {
+    setErrors({ ...errors, password: "" });
+    if (value.length === 0) {
+      setErrors({ ...errors, password: "Hasło jest wymagane." });
+    } else if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(value)) {
+      setErrors({
+        ...errors,
+        password:
+          "Hasło powinnno zawierać przynajmniej 8 znaków, 1 dużą, 1 małą literę i 1 cyfrę.",
+      });
+    }
   };
 
   const handleMouseDownPassword = (
@@ -103,7 +149,10 @@ const RegisterCard = () => {
           <form method="POST" onSubmit={handleRegister}>
             <Grid container direction="column" alignItems="center">
               <TextField
+                required
                 className="login-input"
+                error={Boolean(errors?.username)}
+                helperText={errors?.username}
                 id="username"
                 type="text"
                 label="Imię i nazwisko"
@@ -115,7 +164,10 @@ const RegisterCard = () => {
                 value={values.username}
               />
               <TextField
+                required
                 className="login-input"
+                error={Boolean(errors?.email)}
+                helperText={errors?.email}
                 id="email"
                 type="text"
                 label="Email"
@@ -132,11 +184,16 @@ const RegisterCard = () => {
                 size="medium"
                 className="password-input"
               >
-                <InputLabel htmlFor="standard-adornment-password">
-                  Password
+                <InputLabel
+                  style={{ color: errors?.password ? "red" : "gray" }}
+                  htmlFor="standard-adornment-password"
+                >
+                  Password *
                 </InputLabel>
                 <FilledInput
+                  required
                   id="password"
+                  error={Boolean(errors?.password)}
                   type={values.showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={values.password}
@@ -158,6 +215,12 @@ const RegisterCard = () => {
                     </InputAdornment>
                   }
                 />
+                <FormHelperText
+                  style={{ color: errors?.password !== "" ? "red" : "gray" }}
+                  id="component-error-text"
+                >
+                  {errors?.password}
+                </FormHelperText>
               </FormControl>
               <Box style={{ minHeight: "4vh" }} margin="normal">
                 {values.message && (
@@ -170,6 +233,9 @@ const RegisterCard = () => {
                 color="secondary"
                 className="btn-login"
                 size="large"
+                disabled={Boolean(
+                  errors?.password || errors?.username || errors?.email
+                )}
               >
                 <span className="btn-login-txt">Zarejestruj się</span>
               </Button>
