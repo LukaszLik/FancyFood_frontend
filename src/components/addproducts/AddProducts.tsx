@@ -13,6 +13,7 @@ import {
 import "./AddProduct.css";
 import ChipInput from "material-ui-chip-input";
 import { grey } from "@material-ui/core/colors";
+import { Link } from "react-router-dom";
 
 const AddProducts = (props) => {
   const [ingredients, setIngredients] = useState([{ data: "", id: 0 }]);
@@ -191,28 +192,41 @@ const AddProducts = (props) => {
           )}
         </CardContent>
         <CardContent>
-          <InputList
-            name="Składniki"
-            el={ingredients}
-            setEl={setIngredients}
-            change={handleInputChange}
-            add={handleAdd}
-            remove={handleRemove}
-            label="Składnik"
-            placeholder="Składnik"
-          />
+          <div className={"div-margin"}>
+            <InputList
+              name="Składniki"
+              el={ingredients}
+              setEl={setIngredients}
+              change={handleInputChange}
+              add={handleAdd}
+              remove={handleRemove}
+              label="Składnik"
+              placeholder="Składnik"
+            />
+          </div>
 
-          <InputList
-            name="Przygotowanie"
-            el={steps}
-            setEl={setSteps}
-            change={handleInputChange}
-            add={handleAdd}
-            remove={handleRemove}
-            label="Krok"
-            placeholder="Krok"
-          />
+          <div className={"div-margin"}>
+            <InputList
+              name="Przygotowanie"
+              el={steps}
+              setEl={setSteps}
+              change={handleInputChange}
+              add={handleAdd}
+              remove={handleRemove}
+              label="Krok"
+              placeholder="Krok"
+            />
+          </div>
 
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{ marginRight: "5%" }}
+            component={Link}
+            to="/"
+          >
+            Anuluj
+          </Button>
           <Button
             variant="contained"
             type="submit"
