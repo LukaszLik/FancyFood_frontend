@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import InputList from "./../../common/litInputs/InputList";
 import {
+  withStyles,
+  Theme,
   Button,
   Card,
   CardContent,
@@ -10,8 +12,9 @@ import {
 } from "@material-ui/core";
 import "./AddProduct.css";
 import ChipInput from "material-ui-chip-input";
+import { grey } from "@material-ui/core/colors";
 
-const AddProducts = () => {
+const AddProducts = (props) => {
   const [ingredients, setIngredients] = useState([{ data: "", id: 0 }]);
   const [steps, setSteps] = useState([{ data: "", id: 0 }]);
   const [values, setValues] = useState({
@@ -19,7 +22,7 @@ const AddProducts = () => {
     chips: new Array(),
     quantity: 0,
     time: "",
-    image: "",
+    image: null,
   });
 
   const handleAddChip = (chip: any) => {
@@ -74,11 +77,37 @@ const AddProducts = () => {
   };
 
   const paperStyle = {
-    minHeight: "35vh",
-    width: "55vh",
+    minHeight: "70vh",
+    width: "50vw",
     outlineColor: "blue",
     border: "#c79100 4px solid",
     paddingTop: "0.5%",
+    margin: "5vh 0vh 5vh 0vh",
+  };
+
+  const UploadCustomButton = withStyles((theme: Theme) => ({
+    root: {
+      fontWeight: 500,
+      color: grey[50],
+      backgroundColor: grey[500],
+      "&:hover": {
+        backgroundColor: grey[800],
+      },
+    },
+  }))(Button);
+
+  const hiddenFileInput = React.useRef(null);
+
+  const handleClick = (event) => {
+    // @ts-ignore
+    hiddenFileInput.current.click();
+  };
+
+  const handleImage = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // @ts-ignore
+    setValues({ ...values, [prop]: event.target.files[0] });
   };
 
   return (
@@ -92,13 +121,15 @@ const AddProducts = () => {
       <Card style={paperStyle} variant="outlined">
         <CardContent>
           <CardContent style={{ paddingBottom: "0px" }}>
-            <Typography variant="h5">Dodaj przepis</Typography>
+            <Typography className="titleStyle" variant="h5">
+              Dodaj przepis
+            </Typography>
           </CardContent>
 
           <TextField
-            className="login-input"
+            className="single-input"
             type="text"
-            label="Title"
+            label="Tytuł"
             placeholder="Tytuł"
             margin="normal"
             variant="filled"
@@ -108,7 +139,7 @@ const AddProducts = () => {
           />
 
           <ChipInput
-            className="login-input"
+            className="single-input"
             label="Tags"
             margin="normal"
             variant="filled"
@@ -140,7 +171,24 @@ const AddProducts = () => {
               value={values.time}
             />
           </div>
-          {/*  upload file nput */}
+
+          <input
+            type="file"
+            accept="image/*"
+            ref={hiddenFileInput}
+            onChange={handleImage("image")}
+            style={{ display: "none" }}
+          />
+
+          <UploadCustomButton variant="contained" onClick={handleClick}>
+            Wybierz Zdjęcie
+          </UploadCustomButton>
+          {values.image ? (
+            // @ts-ignore
+            <p>{values.image.name}</p>
+          ) : (
+            <br />
+          )}
         </CardContent>
         <CardContent>
           <InputList

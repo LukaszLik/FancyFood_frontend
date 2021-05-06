@@ -12,7 +12,18 @@
 
 .in-row{
     display: grid;
-    gap: 20px;
+    gap: 3%;
     justify-content: center;
-    grid-template-columns: 20% 50%;
+    grid-template-columns: 20% 52%;
+    margin-bottom: 5%;
 }
+
+.titleStyle{
+    font-weight: 500;
+}
+
+.single-input {
+    width: 75%;
+}
+
+
