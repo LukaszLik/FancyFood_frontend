@@ -79,7 +79,7 @@ const RegisterCard = () => {
     setErrors({ ...errors, password: "" });
     if (value.length === 0) {
       setErrors({ ...errors, password: "Hasło jest wymagane." });
-    } else if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(value)) {
+    } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+,.\\\/;':"-]).{8,}$/.test(value)) {
       setErrors({
         ...errors,
         password:
