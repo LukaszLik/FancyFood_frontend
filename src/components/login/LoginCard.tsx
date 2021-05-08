@@ -59,7 +59,7 @@ const LoginCard = () => {
 
     AuthService.login(values.email, values.password).then(
       () => {
-        window.location.reload();
+        window.location.href = "http://localhost:3000/";
       },
       (error) => {
         const resMessage =

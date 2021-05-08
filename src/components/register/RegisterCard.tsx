@@ -140,6 +140,7 @@ const RegisterCard = () => {
       direction="column"
       justify="center"
       style={{ minHeight: "90vh" }}
+      className="back-image"
     >
       <Card style={paperStyle} variant="outlined">
         <CardContent style={{ paddingBottom: "0px" }}>

@@ -8,7 +8,7 @@ interface Props {}
 export class LoginPage extends React.Component<Props, State> {
   render() {
     return (
-      <div className="login-page">
+      <div className="back-image">
         <LoginCard />
       </div>
     );
