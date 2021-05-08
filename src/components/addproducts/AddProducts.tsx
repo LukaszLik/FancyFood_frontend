@@ -14,10 +14,13 @@ import "./AddProduct.css";
 import ChipInput from "material-ui-chip-input";
 import { grey } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
+import ConnectionService from "../../services/connection";
 
 const AddProducts = (props) => {
-  const [ingredients, setIngredients] = useState([{ data: "", id: 0 }]);
-  const [steps, setSteps] = useState([{ data: "", id: 0 }]);
+  const [ingredients, setIngredients] = useState([
+    { data: "", orderNumber: 0 },
+  ]);
+  const [steps, setSteps] = useState([{ data: "", orderNumber: 0 }]);
   const [values, setValues] = useState({
     title: "",
     chips: new Array(),
@@ -60,21 +63,28 @@ const AddProducts = (props) => {
   };
 
   const handleAdd = (index, componentList, componentEl) => {
-    componentList([...componentEl, { data: "", id: index + 1 }]);
+    componentList([...componentEl, { data: "", orderNumber: index + 1 }]);
   };
 
   const createHandler = (e) => {
     const data = {
-      title: values.title,
-      quantity: values.quantity,
-      time: values.time,
-      image: values.image,
-      ingredients: ingredients,
+      recipeName: values.title,
+      tags: values.chips,
+      servingQuantity: values.quantity,
+      timeDescription: values.time,
       steps: steps,
-      chips: values.chips,
+      ingredients: ingredients,
+      image: values.image,
     };
 
-    console.log(data);
+    ConnectionService.saveRecipe(data).then(
+      () => {
+        window.location.reload();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   const paperStyle = {
