@@ -13,7 +13,7 @@ class ConnectionService {
           recipeName: dataToSave.recipeName,
           createdOn: new Date(),
           creatorUsername: auth.getUser()["username"],
-          creatorEmail: auth.getUser()["userInfo"],
+          creatorEmail: auth.getUser()["userinfo"],
           tags: dataToSave.tags,
           servingQuantity: dataToSave.servingQuantity,
           timeDescription: dataToSave.timeDescription,
