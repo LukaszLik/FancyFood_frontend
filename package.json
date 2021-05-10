@@ -31,6 +31,7 @@
         "format": "prettier --write src/**/*.ts{,x}",
         "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
     },
+    "proxy": "http://localhost:8081/api/v1",
     "eslintConfig": {
         "extends": [
             "react-app",

@@ -16,3 +16,11 @@ Use `npm run lint` to lint all files in the src folder using eslint extension
 Dla każdego taska tworzymy nowy branch według wzoru: __feature/task_jira_code__ lub __feature/task_jira_code-short_description__  
 Gdy zadanie zostanie skończone robimy __merge request__ i przesuwamy w jira status na verification i szukamy osoby chętnej do zrobienia weryfikacji/code review  
 Kod po akceptacji wrzucamy na mastera (Należy pamiętać aby przed tą operacją podbić wersję projektu)
+
+## Proxy
+
+W pliku package.json dodane jest ustawienie "proxy". Definiuje ono gdzie będą trafiały requesty z Axiosa. 
+Obecnie URL dla metod HTTP nie muszą zawierać części hosta. Np:
+<p style="text-align: center;font-style: italic"> axios.post( "registration") </p>
+jest równoważne:
+<p style="text-align: center; font-style: italic" >axios.post("http://localhost:8081/api/v1/registration")</p>
