@@ -8,8 +8,12 @@ class AuthService {
         password,
       })
       .then((response) => {
-        if (response.headers.authorization) {
+        if (response.headers.authorization && response.headers.userinfo) {
           localStorage.setItem("user", JSON.stringify(response.headers));
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify(response.headers.userinfo)
+          );
         }
         return response.data;
       });
@@ -17,10 +21,10 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("userInfo");
   }
 
   register(email: string, username: string, password: string) {
-    console.log(email, username, password);
     return axios.post( "registration", {
       email,
       username,
@@ -29,7 +33,7 @@ class AuthService {
   }
 
   getUser() {
-    return JSON.parse(localStorage.getItem("user") as string);
+    return JSON.parse(localStorage.getItem("userInfo") as string);
   }
 }
 
