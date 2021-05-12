@@ -1,6 +1,10 @@
+.home{
+    height: 100%;
+    width: 100%;
+}
 .card-container {
-    margin-top: 30px;
     width: 70%;
+    height: 90%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-auto-flow: row;
@@ -9,6 +13,37 @@
 }
 .card-area{
     width: 100%;
+    min-height: 620px;
     display: grid;
     justify-items: center;
 }
+.footer{
+    position: absolute;
+    width: 100%;
+    display: flex;
+}
+
+.pagination{
+    left: 73vw;
+    top: 2vh;
+    position: absolute;
+}
+
+.titleText{
+    display: -webkit-box;
+    font-family: "Roboto Slab";
+    max-height: 50px;
+    min-width: 210px;
+    max-width: 210px;
+    font-size: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 24px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-align: left;
+    font-style: normal;
+    font-weight: 600;
+    margin: 1.5vh 0vw 0vh 0.6vw;
+}
+

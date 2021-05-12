@@ -3,22 +3,34 @@ import FoodCard from "./FoodCard";
 import RecipeFilters from "./RecipeFilters";
 import axios from "axios";
 import "./HomePage.css";
+import Pagination from "@material-ui/lab/Pagination";
 
 interface State {
   isLoading: boolean;
   recipes: CardData[];
   pageNumber: number;
+  pages;
 }
 
 interface Props {}
 
+export class Tag {
+  id: number;
+  tagName: string;
+
+  constructor(id= 0, tagName = "placeholder") {
+    this.id = id;
+    this.tagName = tagName;
+  }
+}
+
 export class CardData {
-  recipeId: Number;
-  recipeName: String;
+  recipeId: number;
+  recipeName: string;
   creatorId: number;
   createdOn: string;
   creatorUsername: string;
-  category: string;
+  tags: Tag[];
 
   constructor(
     recipeId = 1,
@@ -26,14 +38,14 @@ export class CardData {
     creatorId = 1,
     createdOn = Date(),
     creatorUsername = "test",
-    category = "test"
+    tags = [new Tag(0, "test")],
   ) {
     this.recipeId = recipeId;
     this.recipeName = recipeName;
     this.creatorId = creatorId;
     this.createdOn = createdOn;
     this.creatorUsername = creatorUsername;
-    this.category = category;
+    this.tags = tags;
   }
 }
 
@@ -42,17 +54,28 @@ export class HomePage extends React.Component<Props, State> {
     isLoading: true,
     recipes: [] as CardData[],
     pageNumber: 0,
+    pages: 0,
   };
 
   async componentDidMount() {
-    const response = axios
-      .get(`http://localhost:8081/api/v1/recipe/${this.state.pageNumber}`)
+    axios.get(`http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`)
       .then((response) => {
         this.setState((state) => {
-          return { isLoading: false, recipes: response.data.content };
+          return { isLoading: false, recipes: response.data.content, pages: response.data.totalPages };
         });
       });
   }
+
+  componentDidUpdate(){
+    axios.get(`http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`)
+        .then((response) => {
+          this.setState((state) => {
+            return { isLoading: false, recipes: response.data.content, pages: response.data.totalPages };
+          });
+        });
+
+  }
+
   render() {
     const recipes: CardData[] = [];
 
@@ -66,20 +89,26 @@ export class HomePage extends React.Component<Props, State> {
 
     for (let recipe of this.state.recipes) {
       recipes.push(recipe);
-      console.log(recipes);
     }
-
     return (
-      <div>
+      <div className="home">
         <RecipeFilters />
         <div className="card-area">
           <div className="card-container">
             {recipes.map((recipe, recipeIdx) => {
-              return <FoodCard {...recipe} />;
+              return <FoodCard key={recipeIdx + this.state.pageNumber} {...recipe} />;
             })}
           </div>
         </div>
+        <div className="footer">
+          <Pagination count={this.state.pages} color="secondary"
+                      className="pagination"
+                    onChange={(event, page) => {
+                      this.setState({pageNumber: page - 1})
+                    }}/>
+        </div>
       </div>
+
     );
   }
 }

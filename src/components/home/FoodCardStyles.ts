@@ -34,20 +34,25 @@ export const styles = makeStyles((theme: Theme) =>
     chip: {
       height: "2.2vh",
       fontFamily: "Roboto Slab",
+        fontWeight: 500,
     },
     title: {
+      display: 'block',
       textAlign: "left",
       color: "#002226",
       fontSize: "20px",
       fontFamily: "Roboto Slab",
       margin: "1.5vh 0vw 0vh 0.6vw",
-      width: "250px",
-      height: "20px",
       minWidth: "210px",
-      minHeight: "10px",
+      height: "50px",
       fontStyle: "normal",
-      fontWeight: 700,
+      fontWeight: 600,
       lineHeight: "24px",
+
+      webkitLineClamp: 2,
+      webkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
     titleFavSpan: {
       position: "relative",
@@ -77,7 +82,6 @@ export const styles = makeStyles((theme: Theme) =>
       color: "#c79100",
       width: "24px",
       height: "24px",
-      // right: "6px",
       top: "13px",
     },
     author: {
@@ -92,7 +96,6 @@ export const styles = makeStyles((theme: Theme) =>
       fontWeight: 400,
       fontSize: "12px",
       lineHeight: "24px",
-      /* or 200% */
       color: "#002226",
       top: "87%",
     },

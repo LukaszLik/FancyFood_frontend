@@ -1,14 +1,11 @@
 import React from "react";
 import { Card, Chip, CardMedia } from "@material-ui/core";
-
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import StarBorderSharpIcon from "@material-ui/icons/StarBorderSharp";
-import StarSharpIcon from "@material-ui/icons/StarSharp";
-import StarHalfSharpIcon from "@material-ui/icons/StarHalfSharp";
+import { Favorite as FavoriteIcon, FavoriteBorder as FavoriteBorderIcon, StarBorderSharp as StarBorderSharpIcon,
+  StarSharp as StarSharpIcon, StarHalfSharp as StarHalfSharpIcon} from "@material-ui/icons";
 
 import { CardData } from "./HomePage";
 import { styles } from "./FoodCardStyles";
+import "./HomePage.css";
 
 import "./HomePage.css";
 
@@ -29,7 +26,6 @@ export default function RecipeReviewCard(props) {
       addedToFavourites: !state.addedToFavourites,
       recipe: new CardData(),
     });
-    console.log("added to favourites");
   };
 
   return (
@@ -40,13 +36,15 @@ export default function RecipeReviewCard(props) {
       />
 
       <span className={classes.chipRow}>
-        <Chip className={classes.chip} label={props.category} />
-        <Chip className={classes.chip} label="Placeholder" />
+            {
+              props.tags.map((tag, id) => {
+                return id < 3 ? <Chip key={id} className={classes.chip} label={tag.tagName} /> : <div></div>;
+            })}
       </span>
 
       <span className={classes.titleFavSpan} id="text-likes-favourites">
         <span className={classes.titleFav}>
-          <p className={classes.title}>{props.recipeName}</p>
+          <div className="titleText">{props.recipeName}</div>
           <span className={classes.buttonDiv}>
             <button
               type="button"
