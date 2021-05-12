@@ -9,9 +9,14 @@ import {
   Grid,
   TextField,
   Typography,
+  FormControl,
+  Select,
+  MenuItem,
+  Chip,
+  InputLabel,
+  Input,
 } from "@material-ui/core";
 import "./AddProduct.css";
-import ChipInput from "material-ui-chip-input";
 import { grey } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
@@ -21,32 +26,21 @@ const AddProducts = (props) => {
     { data: "", orderNumber: 0 },
   ]);
   const [steps, setSteps] = useState([{ data: "", orderNumber: 0 }]);
+  const [tags, setTags] = useState<string[]>([]);
   const [values, setValues] = useState({
     title: "",
-    chips: new Array(),
     quantity: 0,
     time: "",
     image: null,
   });
 
-  const handleAddChip = (chip: any) => {
-    setValues({
-      ...values,
-      chips: [...values.chips, chip],
-    });
-  };
+  const handleChange =
+    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
-  const handleDeleteChip = (chip: any, index: any) => {
-    setValues({
-      ...values,
-      chips: values.chips.filter((c) => c !== chip),
-    });
-  };
-
-  const handleChange = (prop) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleTags = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setTags(event.target.value as string[]);
   };
 
   const handleInputChange = (e, index, componentList, componentEl) => {
@@ -69,7 +63,7 @@ const AddProducts = (props) => {
   const createHandler = (e) => {
     const data = {
       recipeName: values.title,
-      tags: values.chips,
+      tags: tags,
       servingQuantity: values.quantity,
       timeDescription: values.time,
       steps: steps,
@@ -85,6 +79,13 @@ const AddProducts = (props) => {
         console.log(error);
       }
     );
+  };
+
+  const hiddenFileInput = React.useRef(null);
+
+  const handleClick = (event) => {
+    // @ts-ignore
+    hiddenFileInput.current.click();
   };
 
   const paperStyle = {
@@ -107,19 +108,22 @@ const AddProducts = (props) => {
     },
   }))(Button);
 
-  const hiddenFileInput = React.useRef(null);
-
-  const handleClick = (event) => {
-    // @ts-ignore
-    hiddenFileInput.current.click();
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: 48 * 4.5 + 8,
+        width: 250,
+      },
+    },
   };
 
-  const handleImage = (prop) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    // @ts-ignore
-    setValues({ ...values, [prop]: event.target.files[0] });
-  };
+  const tagsNames = ["Śniadanie", "Obiad", "Kolacja", "Lunch", "Deser"];
+
+  const handleImage =
+    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      // @ts-ignore
+      setValues({ ...values, [prop]: event.target.files[0] });
+    };
 
   return (
     <Grid
@@ -149,15 +153,31 @@ const AddProducts = (props) => {
             value={values.title}
           />
 
-          <ChipInput
-            className="single-input"
-            label="Tags"
-            margin="normal"
-            variant="filled"
-            onAdd={(chip) => handleAddChip(chip)}
-            onDelete={(chip, index) => handleDeleteChip(chip, index)}
-            value={values.chips}
-          />
+          <FormControl variant="filled" className="single-input">
+            <InputLabel id="demo-mutiple-chip-label">Tagi</InputLabel>
+            <Select
+              labelId="demo-mutiple-chip-label"
+              id="demo-mutiple-chip"
+              multiple
+              value={tags}
+              onChange={handleTags}
+              input={<Input id="select-multiple-chip" />}
+              renderValue={(selected) => (
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {(selected as string[]).map((value) => (
+                    <Chip key={value} label={value} style={{ margin: "2px" }} />
+                  ))}
+                </div>
+              )}
+              MenuProps={MenuProps}
+            >
+              {tagsNames.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
           <div className="in-row">
             <TextField
