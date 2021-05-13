@@ -20,6 +20,7 @@ import "./AddProduct.css";
 import { grey } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
+import Tags from "../../common/Tags";
 
 const AddProducts = (props) => {
   const [ingredients, setIngredients] = useState([
@@ -117,13 +118,13 @@ const AddProducts = (props) => {
     },
   };
 
-  const tagsNames = ["Śniadanie", "Obiad", "Kolacja", "Lunch", "Deser"];
-
   const handleImage =
     (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
       // @ts-ignore
       setValues({ ...values, [prop]: event.target.files[0] });
     };
+
+  const tagsArray = Object.values(Tags);
 
   return (
     <Grid
@@ -171,7 +172,7 @@ const AddProducts = (props) => {
               )}
               MenuProps={MenuProps}
             >
-              {tagsNames.map((name) => (
+              {tagsArray.map((name) => (
                 <MenuItem key={name} value={name}>
                   {name}
                 </MenuItem>
