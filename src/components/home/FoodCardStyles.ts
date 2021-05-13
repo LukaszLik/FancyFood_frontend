@@ -34,25 +34,7 @@ export const styles = makeStyles((theme: Theme) =>
     chip: {
       height: "2.2vh",
       fontFamily: "Roboto Slab",
-        fontWeight: 500,
-    },
-    title: {
-      display: 'block',
-      textAlign: "left",
-      color: "#002226",
-      fontSize: "20px",
-      fontFamily: "Roboto Slab",
-      margin: "1.5vh 0vw 0vh 0.6vw",
-      minWidth: "210px",
-      height: "50px",
-      fontStyle: "normal",
-      fontWeight: 600,
-      lineHeight: "24px",
-
-      webkitLineClamp: 2,
-      webkitBoxOrient: 'vertical',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
+      fontWeight: 500,
     },
     titleFavSpan: {
       position: "relative",

@@ -1,7 +1,12 @@
 import React from "react";
 import { Card, Chip, CardMedia } from "@material-ui/core";
-import { Favorite as FavoriteIcon, FavoriteBorder as FavoriteBorderIcon, StarBorderSharp as StarBorderSharpIcon,
-  StarSharp as StarSharpIcon, StarHalfSharp as StarHalfSharpIcon} from "@material-ui/icons";
+import {
+  Favorite as FavoriteIcon,
+  FavoriteBorder as FavoriteBorderIcon,
+  StarBorderSharp as StarBorderSharpIcon,
+  StarSharp as StarSharpIcon,
+  StarHalfSharp as StarHalfSharpIcon,
+} from "@material-ui/icons";
 
 import { CardData } from "./HomePage";
 import { styles } from "./FoodCardStyles";
@@ -28,6 +33,7 @@ export default function RecipeReviewCard(props) {
     });
   };
 
+  let maxChips = 3;
   return (
     <Card className={classes.root}>
       <CardMedia
@@ -36,10 +42,13 @@ export default function RecipeReviewCard(props) {
       />
 
       <span className={classes.chipRow}>
-            {
-              props.tags.map((tag, id) => {
-                return id < 3 ? <Chip key={id} className={classes.chip} label={tag.tagName} /> : <div></div>;
-            })}
+        {props.tags.map((tag, id) => {
+          return id < maxChips ? (
+            <Chip key={tag.id} className={classes.chip} label={tag.tagName} />
+          ) : (
+            <div key={tag.id}></div>
+          );
+        })}
       </span>
 
       <span className={classes.titleFavSpan} id="text-likes-favourites">

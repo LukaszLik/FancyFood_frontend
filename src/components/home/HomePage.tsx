@@ -18,9 +18,13 @@ export class Tag {
   id: number;
   tagName: string;
 
-  constructor(id= 0, tagName = "placeholder") {
+  constructor(id = 0, tagName = "placeholder") {
     this.id = id;
     this.tagName = tagName;
+  }
+
+  set setId(value) {
+    this.id = value;
   }
 }
 
@@ -38,7 +42,7 @@ export class CardData {
     creatorId = 1,
     createdOn = Date(),
     creatorUsername = "test",
-    tags = [new Tag(0, "test")],
+    tags = [new Tag(0, "test")]
   ) {
     this.recipeId = recipeId;
     this.recipeName = recipeName;
@@ -56,24 +60,40 @@ export class HomePage extends React.Component<Props, State> {
     pageNumber: 0,
     pages: 0,
   };
+  prevPageNumber = -1;
 
   async componentDidMount() {
-    axios.get(`http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`)
+    axios
+      .get(`http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`)
       .then((response) => {
         this.setState((state) => {
-          return { isLoading: false, recipes: response.data.content, pages: response.data.totalPages };
+          return {
+            isLoading: false,
+            recipes: response.data.content,
+            pages: response.data.totalPages,
+          };
         });
       });
   }
 
-  componentDidUpdate(){
-    axios.get(`http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`)
+  componentDidUpdate() {
+    if (this.state.pageNumber !== this.prevPageNumber) {
+      axios
+        .get(
+          `http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`
+        )
         .then((response) => {
           this.setState((state) => {
-            return { isLoading: false, recipes: response.data.content, pages: response.data.totalPages };
+            return {
+              isLoading: false,
+              recipes: response.data.content,
+              pages: response.data.totalPages,
+            };
           });
         });
 
+      this.state.pageNumber = this.prevPageNumber;
+    }
   }
 
   render() {
@@ -87,6 +107,7 @@ export class HomePage extends React.Component<Props, State> {
       );
     }
 
+    let uniqueId = 0;
     for (let recipe of this.state.recipes) {
       recipes.push(recipe);
     }
@@ -96,19 +117,21 @@ export class HomePage extends React.Component<Props, State> {
         <div className="card-area">
           <div className="card-container">
             {recipes.map((recipe, recipeIdx) => {
-              return <FoodCard key={recipeIdx + this.state.pageNumber} {...recipe} />;
+              return <FoodCard key={recipeIdx} {...recipe} />;
             })}
           </div>
         </div>
         <div className="footer">
-          <Pagination count={this.state.pages} color="secondary"
-                      className="pagination"
-                    onChange={(event, page) => {
-                      this.setState({pageNumber: page - 1})
-                    }}/>
+          <Pagination
+            count={this.state.pages}
+            color="secondary"
+            className="pagination"
+            onChange={(event, page) => {
+              this.setState({ pageNumber: page - 1 });
+            }}
+          />
         </div>
       </div>
-
     );
   }
 }
