@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   Typography,
-  Grid,
   CardMedia,
   Chip,
   Box,
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     outlineColor: "blue",
     border: "#c79100 4px solid",
     paddingTop: "0.5%",
+    paddingBottom: "5vh",
     margin: "5vh 0vh 5vh 0vh",
   },
   tagsContainer: {
@@ -45,6 +45,7 @@ function getPortionString(portionCount) {
 
 const RecipeInfo = () => {
   const classes = useStyles();
+  const textTable = ["SSSSSSSSSSSS1", "222 2222 222", "33 333 EEE EEE", "Test długi test test test teshjqhgkja jhsgksjrlleg ibak jbrkjbg q bkrqgbiurt khbgqkrhbq lhkwbglwhkrbglwhk qkrhgberwhgb  khbhrgwhjrgv jwhrgvwr whrjgb werhgbwe jh ehegb wjhrvgwjh"];
 
   return (
     <Box
@@ -82,12 +83,12 @@ const RecipeInfo = () => {
 
         <RecipeElement
           title={"Składniki na 8 " + getPortionString(8)}
-          text={"test test test"}
+          textTable={textTable}
         />
 
         <Divider variant="middle" />
 
-        <RecipeElement title={"Przygotowanie"} text={"test test test"} />
+        <RecipeElement title={"Przygotowanie"} textTable={textTable} />
       </Card>
     </Box>
   );

@@ -1,13 +1,19 @@
 import React from "react";
+import "./Recipe.css";
+
+function createText(textTable) {
+  return textTable.map((text) =><li className="listEl">{text}</li>);
+}
 
 const RecipeElement = (props) => {
   return (
-    <div>
+    <div className="recipeEl">
       <h3>{props.title}</h3>
 
-      <div>
-        <p>{props.text}</p>
-      </div>
+     <ul className="cont">
+      {createText(props.textTable)}
+     </ul>
+
     </div>
   );
 };
