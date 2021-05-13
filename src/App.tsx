@@ -4,6 +4,7 @@ import Nav from "./common/nav/Nav";
 import { LoginPage } from "./components/login/LoginPage";
 import { Route, Switch } from "react-router-dom";
 import { RegisterPage } from "./components/register/RegisterPage";
+import { RecipePage } from "./components/recipePage/RecipePage";
 
 interface State {}
 interface Props {}
@@ -24,5 +25,9 @@ export class App extends React.Component<Props, State> {
 }
 
 const Home = () => {
-  return <div className="App">Home</div>;
+  return (
+    <div className="App">
+      <RecipePage />
+    </div>
+  );
 };
