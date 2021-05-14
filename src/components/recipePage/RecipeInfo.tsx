@@ -120,13 +120,11 @@ const RecipeInfo: React.FC<Props> = props => {
         </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">
-          {//TODO  EDIT DATA TIME TO DATA
-             }
-          <h5>Dodano: {state.createdOn}</h5>
+          <h4>Dodano: {state.createdOn.substring(0,10)}</h4>
           <Divider orientation="vertical" flexItem />
-          <h5>Czas: {state.recipeBody.timeDescription} </h5>
+          <h4>Czas: {state.recipeBody.timeDescription} </h4>
           <Divider orientation="vertical" flexItem />
-          <h5>Autor: {state.creatorUsername}</h5>
+          <h4>Autor: {state.creatorUsername}</h4>
         </Box>
         <Divider variant="middle" />
 
@@ -137,9 +135,6 @@ const RecipeInfo: React.FC<Props> = props => {
         />
         <Divider variant="middle" />
 
-        {
-          //TODO EDIT STEPS LOOK
-        }
         <RecipeElement title={"Przygotowanie"} textTable={state.recipeBody.steps} variant={false}/>
 
 

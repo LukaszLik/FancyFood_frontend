@@ -6,7 +6,7 @@ const RecipeElement = (props) => {
 
   return (
     <div className="recipeEl">
-      <h3>{props.title}</h3>
+      <h2>{props.title}</h2>
 
         {props.variant ? (
             <ul className="cont">
