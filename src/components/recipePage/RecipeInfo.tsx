@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Recipe.css";
 import RecipeElement from "./RecipeElement";
 import {
@@ -11,6 +11,9 @@ import {
   Box,
   Divider,
 } from "@material-ui/core";
+import axios from "axios";
+
+
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -43,10 +46,53 @@ function getPortionString(portionCount) {
   }
 }
 
-const RecipeInfo = () => {
-  const classes = useStyles();
-  const textTable = ["SSSSSSSSSSSS1", "222 2222 222", "33 333 EEE EEE", "Test długi test test test teshjqhgkja jhsgksjrlleg ibak jbrkjbg q bkrqgbiurt khbgqkrhbq lhkwbglwhkrbglwhk qkrhgberwhgb  khbhrgwhjrgv jwhrgvwr whrjgb werhgbwe jh ehegb wjhrvgwjh"];
+interface Props{
+  recipeId: number;
+}
+interface State{
+  isLoaded: boolean;
+  recipeName: string;
+  creatorUsername: string;
+  createdOn: string;
+  tags: {id:number;
+    tagName: string;
+  }[];
+  recipeBody: {
+    servingQuantity: number;
+    timeDescription: string;
+    steps: string[];
+    ingredients: string[];
 
+  }
+}
+
+
+
+const RecipeInfo: React.FC<Props> = props => {
+  const classes = useStyles();
+  const [state, setState]=useState<State>({
+    isLoaded: false,
+    recipeName: "",
+    creatorUsername: "",
+    createdOn: "",
+    tags: [],
+    recipeBody: {
+      servingQuantity: 0,
+      timeDescription: "",
+      steps: [],
+      ingredients:[]
+    }
+  });
+
+  function getData(){
+    axios.get(`recipe/${props.recipeId}`).then((response)=>{
+      setState(response.data);
+      console.log(state.tags)
+    })
+  }
+  useEffect(()=>{
+    getData();
+  }, [])
   return (
     <Box
       display="flex"
@@ -57,38 +103,47 @@ const RecipeInfo = () => {
       style={{ minHeight: "90vh" }}
     >
       <Card className={classes.paperStyle} variant="outlined">
+        {
+          //TODO ADD IMAGE!
+        }
         <CardMedia className="image" image="" />
         <CardContent style={{ paddingBottom: "0px" }}>
           <Typography variant="h3" className="titleStyle">
-            TYTUŁ
+            {state.recipeName}
           </Typography>
         </CardContent>
 
         <CardContent className={classes.tagsContainer}>
-          <Chip label="Basic" />
-          <Chip label="Basic" />
-          <Chip label="Basic" />
-          <Chip label="Basic" />
-          <Chip label="Basic" />
+          {state.tags.map((eln, index)=>{
+            return<Chip label={eln.tagName}/>
+          })}
         </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">
-          <h5>Dodano:</h5>
+          {//TODO  EDIT DATA TIME TO DATA
+             }
+          <h5>Dodano: {state.createdOn}</h5>
           <Divider orientation="vertical" flexItem />
-          <h5>Czas:</h5>
+          <h5>Czas: {state.recipeBody.timeDescription} </h5>
           <Divider orientation="vertical" flexItem />
-          <h5>Autor:</h5>
+          <h5>Autor: {state.creatorUsername}</h5>
         </Box>
         <Divider variant="middle" />
 
         <RecipeElement
-          title={"Składniki na 8 " + getPortionString(8)}
-          textTable={textTable}
+          title={`Składniki na ${state.recipeBody.servingQuantity} ${getPortionString(state.recipeBody.servingQuantity)}`}
+            textTable={state.recipeBody.ingredients}
+          variant = {true}
         />
-
         <Divider variant="middle" />
 
-        <RecipeElement title={"Przygotowanie"} textTable={textTable} />
+        {
+          //TODO EDIT STEPS LOOK
+        }
+        <RecipeElement title={"Przygotowanie"} textTable={state.recipeBody.steps} variant={false}/>
+
+
+
       </Card>
     </Box>
   );

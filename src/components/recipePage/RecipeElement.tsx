@@ -1,18 +1,28 @@
 import React from "react";
 import "./Recipe.css";
 
-function createText(textTable) {
-  return textTable.map((text) =><li className="listEl">{text}</li>);
-}
 
 const RecipeElement = (props) => {
+
   return (
     <div className="recipeEl">
       <h3>{props.title}</h3>
 
-     <ul className="cont">
-      {createText(props.textTable)}
-     </ul>
+        {props.variant ? (
+            <ul className="cont">
+                {props.textTable.map((eln, index)=>{
+                    return<li className="listEl">{eln.data}</li>
+                })}
+            </ul>
+        ) : (
+            <ol className="cont">
+                {props.textTable.map((eln, index)=>{
+                    return<li className="listEl">{eln.data}</li>
+                })}
+            </ol>
+        )}
+
+
 
     </div>
   );
