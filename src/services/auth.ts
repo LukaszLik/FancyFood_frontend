@@ -33,6 +33,10 @@ class AuthService {
   getUser() {
     return JSON.parse(localStorage.getItem("user") as string);
   }
+
+  getRecipePages(nr: number) {
+    return axios.get(`http://localhost:8081/api/v1/recipe/page/${nr}`);
+  }
 }
 
 export default new AuthService();

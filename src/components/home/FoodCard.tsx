@@ -12,8 +12,6 @@ import { CardData } from "./HomePage";
 import { styles } from "./FoodCardStyles";
 import "./HomePage.css";
 
-import "./HomePage.css";
-
 interface State {
   addedToFavourites: boolean;
   recipe: CardData;
