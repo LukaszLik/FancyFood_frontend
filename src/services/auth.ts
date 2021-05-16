@@ -35,7 +35,7 @@ class AuthService {
   }
 
   getRecipePages(nr: number) {
-    return axios.get(`http://localhost:8081/api/v1/recipe/page/${nr}`);
+    return axios.get(API_URL + `recipe/page/${nr}`);
   }
 }
 
