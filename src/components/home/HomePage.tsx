@@ -107,17 +107,17 @@ export class HomePage extends React.Component<Props, State> {
       );
     }
 
-    let uniqueId = 0;
     for (let recipe of this.state.recipes) {
       recipes.push(recipe);
     }
+
     return (
       <div className="home">
         <RecipeFilters />
         <div className="card-area">
           <div className="card-container">
-            {recipes.map((recipe, recipeIdx) => {
-              return <FoodCard key={recipeIdx} {...recipe} />;
+            {recipes.map((recipe) => {
+              return <FoodCard key={recipe.recipeId} {...recipe} />;
             })}
           </div>
         </div>

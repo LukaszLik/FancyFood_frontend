@@ -11,6 +11,7 @@ import {
 import { CardData } from "./HomePage";
 import { styles } from "./FoodCardStyles";
 import "./HomePage.css";
+import { useHistory } from "react-router-dom";
 
 import "./HomePage.css";
 
@@ -20,6 +21,7 @@ interface State {
 }
 
 export default function RecipeReviewCard(props) {
+  const history = useHistory();
   const classes = styles();
   const [state, setState] = React.useState<State>({
     addedToFavourites: false,
@@ -33,9 +35,13 @@ export default function RecipeReviewCard(props) {
     });
   };
 
-  let maxChips = 3;
+  const pageHandler = (id: Number) => {
+    history.push(`/recipe/${id}`);
+  };
+
+  const maxChips = 3;
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={() => pageHandler(props.recipeId)}>
       <CardMedia
         className={classes.media}
         image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
