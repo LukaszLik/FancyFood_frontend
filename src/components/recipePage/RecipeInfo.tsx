@@ -44,48 +44,8 @@ function getPortionString(portionCount) {
   }
 }
 
-interface Props {
-  recipeId: number;
-}
-interface State {
-  isLoaded: boolean;
-  recipeName: string;
-  creatorUsername: string;
-  createdOn: string;
-  tags: { id: number; tagName: string }[];
-  recipeBody: {
-    servingQuantity: number;
-    timeDescription: string;
-    steps: string[];
-    ingredients: string[];
-  };
-}
-
-const RecipeInfo: React.FC<Props> = (props) => {
+const RecipeInfo = (props) => {
   const classes = useStyles();
-  const [state, setState] = useState<State>({
-    isLoaded: false,
-    recipeName: "",
-    creatorUsername: "",
-    createdOn: "",
-    tags: [],
-    recipeBody: {
-      servingQuantity: 0,
-      timeDescription: "",
-      steps: [],
-      ingredients: [],
-    },
-  });
-
-  function getData() {
-    axios.get(`${props.recipeId}`).then((response) => {
-      setState(response.data);
-      console.log(state.tags);
-    });
-  }
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <Box
       display="flex"
@@ -102,37 +62,36 @@ const RecipeInfo: React.FC<Props> = (props) => {
         <CardMedia className="image" image="" />
         <CardContent style={{ paddingBottom: "0px" }}>
           <Typography variant="h3" className="titleStyle">
-            {state.recipeName}
+            {props.data.recipeName}
           </Typography>
         </CardContent>
-
         <CardContent className={classes.tagsContainer}>
-          {state.tags.map((eln, index) => {
+          {props.data.tags.map((eln, index) => {
             return <Chip label={eln.tagName} />;
           })}
         </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">
-          <h4>Dodano: {state.createdOn.substring(0, 10)}</h4>
+          <h4>Dodano: {props.data.createdOn.substring(0, 10)}</h4>
           <Divider orientation="vertical" flexItem />
-          <h4>Czas: {state.recipeBody.timeDescription} </h4>
+          <h4>Czas: {props.data.recipeBody.timeDescription} </h4>
           <Divider orientation="vertical" flexItem />
-          <h4>Autor: {state.creatorUsername}</h4>
+          <h4>Autor: {props.data.creatorUsername}</h4>
         </Box>
         <Divider variant="middle" />
 
         <RecipeElement
           title={`Składniki na ${
-            state.recipeBody.servingQuantity
-          } ${getPortionString(state.recipeBody.servingQuantity)}`}
-          textTable={state.recipeBody.ingredients}
+            props.data.recipeBody.servingQuantity
+          } ${getPortionString(props.data.recipeBody.servingQuantity)}`}
+          textTable={props.data.recipeBody.ingredients}
           variant={true}
         />
         <Divider variant="middle" />
 
         <RecipeElement
           title={"Przygotowanie"}
-          textTable={state.recipeBody.steps}
+          textTable={props.data.recipeBody.steps}
           variant={false}
         />
       </Card>

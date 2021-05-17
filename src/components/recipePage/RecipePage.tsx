@@ -1,5 +1,6 @@
 import React from "react";
 import RecipeInfo from "./RecipeInfo";
+import RecipePageLoading from "./RecipePageLoading";
 
 import { RouteComponentProps } from "react-router-dom";
 import AuthService from "../../services/auth";
@@ -33,11 +34,7 @@ const RecipePage: React.FC<RecipePage> = (props) => {
 
   return (
     <div className="back-image">
-      {recipe ? (
-        <RecipeInfo recipeId={recipe.data.recipeId} />
-      ) : (
-        <h1>Loading...</h1>
-      )}
+      {recipe ? <RecipeInfo data={recipe.data} /> : <RecipePageLoading />}
     </div>
   );
 };
