@@ -1,9 +1,9 @@
 import React from "react";
 import FoodCard from "./FoodCard";
 import RecipeFilters from "./RecipeFilters";
-import axios from "axios";
 import "./HomePage.css";
 import Pagination from "@material-ui/lab/Pagination";
+import AuthService from "../../services/auth";
 
 interface State {
   isLoading: boolean;
@@ -63,9 +63,8 @@ export class HomePage extends React.Component<Props, State> {
   prevPageNumber = -1;
 
   async componentDidMount() {
-    axios
-      .get(`http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`)
-      .then((response) => {
+    AuthService.getRecipePages(this.state.pageNumber).then(
+      (response) => {
         this.setState((state) => {
           return {
             isLoading: false,
@@ -73,16 +72,17 @@ export class HomePage extends React.Component<Props, State> {
             pages: response.data.totalPages,
           };
         });
-      });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   componentDidUpdate() {
     if (this.state.pageNumber !== this.prevPageNumber) {
-      axios
-        .get(
-          `http://localhost:8081/api/v1/recipe/page/${this.state.pageNumber}`
-        )
-        .then((response) => {
+      AuthService.getRecipePages(this.state.pageNumber).then(
+        (response) => {
           this.setState((state) => {
             return {
               isLoading: false,
@@ -90,7 +90,11 @@ export class HomePage extends React.Component<Props, State> {
               pages: response.data.totalPages,
             };
           });
-        });
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
 
       this.state.pageNumber = this.prevPageNumber;
     }
@@ -102,7 +106,7 @@ export class HomePage extends React.Component<Props, State> {
     if (this.state.isLoading) {
       return (
         <div>
-          <p>Ładowanie strony, proszę czekać</p>.
+          <p>Ładowanie strony, proszę czekać</p>
         </div>
       );
     }

@@ -13,8 +13,6 @@ import { styles } from "./FoodCardStyles";
 import "./HomePage.css";
 import { useHistory } from "react-router-dom";
 
-import "./HomePage.css";
-
 interface State {
   addedToFavourites: boolean;
   recipe: CardData;
