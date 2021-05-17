@@ -72,21 +72,26 @@ const LoginCard = () => {
       message: "",
     });
 
-    AuthService.login(values.email, values.password).then((error) => {
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+    AuthService.login(values.email, values.password).then(
+      () => {
+        window.location.href = "/";
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-      if (Boolean(resMessage)) {
-        setValues({
-          ...values,
-          message: "Błędne dane",
-        });
+        if (Boolean(resMessage)) {
+          setValues({
+            ...values,
+            message: "Błędne dane",
+          });
+        }
       }
-    });
+    );
   };
 
   const validateEmail = (value: any) => {

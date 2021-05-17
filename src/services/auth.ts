@@ -37,11 +37,11 @@ class AuthService {
   }
 
   getRecipe(id: Number) {
-    return axios.get(API_URL + `recipe/${id}`);
+    return axios.get(`recipe/${id}`);
   }
 
   getRecipePages(nr: number) {
-    return axios.get(API_URL + `recipe/page/${nr}`);
+    return axios.get(`recipe/page/${nr}`);
   }
 }
 
