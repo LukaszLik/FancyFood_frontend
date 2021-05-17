@@ -35,6 +35,14 @@ class AuthService {
   getUser() {
     return JSON.parse(localStorage.getItem("userInfo") as string);
   }
+
+  getRecipe(id: Number) {
+    return axios.get(`recipe/${id}`);
+  }
+
+  getRecipePages(nr: number) {
+    return axios.get(`recipe/page/${nr}`);
+  }
 }
 
 export default new AuthService();

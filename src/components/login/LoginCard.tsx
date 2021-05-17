@@ -37,22 +37,23 @@ const LoginCard = () => {
 
   const [errors, setErrors] = React.useState<any>();
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
+  const handleChange = (prop: keyof State) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({ ...values, [prop]: event.target.value });
 
-      switch (prop) {
-        case "email": {
-          validateEmail(event.target.value);
-          break;
-        }
-
-        case "password": {
-          validatePassword(event.target.value);
-          break;
-        }
+    switch (prop) {
+      case "email": {
+        validateEmail(event.target.value);
+        break;
       }
-    };
+
+      case "password": {
+        validatePassword(event.target.value);
+        break;
+      }
+    }
+  };
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -71,26 +72,30 @@ const LoginCard = () => {
       message: "",
     });
 
-    AuthService.login(values.email, values.password).then((error) => {
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+    AuthService.login(values.email, values.password).then(
+      () => {
+        window.location.href = "/";
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-      if (Boolean(resMessage)) {
-        setValues({
-          ...values,
-          message: "Błędne dane",
-        });
+        if (Boolean(resMessage)) {
+          setValues({
+            ...values,
+            message: "Błędne dane",
+          });
+        }
       }
-    });
+    );
   };
 
   const validateEmail = (value: any) => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     setErrors({ ...errors, email: "" });
     if (value.length === 0) {
       setErrors({ ...errors, email: "Email jest wymagany." });
