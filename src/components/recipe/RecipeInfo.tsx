@@ -1,26 +1,25 @@
 import { RouteComponentProps } from "react-router-dom";
 import AuthService from "../../services/auth";
-import { log } from "util";
 import { useEffect, useState } from "react";
 
 interface RouteParams {
   id: string;
 }
 
-interface RecipeTest extends RouteComponentProps<RouteParams> {}
+interface RecipeInfo extends RouteComponentProps<RouteParams> {}
 
-const RecipeTest: React.FC<RecipeTest> = (props) => {
+const RecipeInfo: React.FC<RecipeInfo> = (props) => {
   const [recipe, setData] = useState<any>();
 
   const readData = () => {
     let id: number = Number(props.match.params.id);
     AuthService.getRecipe(id).then(
       (response) => {
-        console.log(response);
+        console.log(response); // todo dla testów
         setData(response);
       },
       (error) => {
-        console.log(error);
+        console.log(error); // todo zmienić na coś lepszego
       }
     );
   };
@@ -37,4 +36,4 @@ const RecipeTest: React.FC<RecipeTest> = (props) => {
   );
 };
 
-export default RecipeTest;
+export default RecipeInfo;

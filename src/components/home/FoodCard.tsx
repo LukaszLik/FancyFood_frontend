@@ -35,13 +35,16 @@ export default function RecipeReviewCard(props) {
     });
   };
 
-  const pageHandler = (id: Number) => {
+  const recipePageHandler = (id: Number) => {
     history.push(`/recipe/${id}`);
   };
 
   const maxChips = 3;
   return (
-    <Card className={classes.root} onClick={() => pageHandler(props.recipeId)}>
+    <Card
+      className={classes.root}
+      onClick={() => recipePageHandler(props.recipeId)}
+    >
       <CardMedia
         className={classes.media}
         image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
