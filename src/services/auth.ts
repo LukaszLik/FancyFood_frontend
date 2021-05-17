@@ -25,7 +25,7 @@ class AuthService {
   }
 
   register(email: string, username: string, password: string) {
-    return axios.post( "registration", {
+    return axios.post("registration", {
       email,
       username,
       password,
@@ -34,6 +34,14 @@ class AuthService {
 
   getUser() {
     return JSON.parse(localStorage.getItem("userInfo") as string);
+  }
+
+  getRecipe(id: Number) {
+    return axios.get(API_URL + `recipe/${id}`);
+  }
+
+  getRecipePages(nr: number) {
+    return axios.get(API_URL + `recipe/page/${nr}`);
   }
 }
 
