@@ -6,6 +6,7 @@ const API_URL = "http://localhost:8081/api/v1/";
 
 class ConnectionService {
   saveRecipe(dataToSave: any) {
+    console.log(header());
     return axios
       .post(
         API_URL + "recipe/addRecipe",

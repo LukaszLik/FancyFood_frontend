@@ -35,10 +35,11 @@ const AddProducts = (props) => {
     image: null,
   });
 
-  const handleChange =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+  const handleChange = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleTags = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTags(event.target.value as string[]);
@@ -62,6 +63,7 @@ const AddProducts = (props) => {
   };
 
   const createHandler = (e) => {
+    e.preventDefault();
     const data = {
       recipeName: values.title,
       tags: tags,
@@ -69,7 +71,6 @@ const AddProducts = (props) => {
       timeDescription: values.time,
       steps: steps,
       ingredients: ingredients,
-      image: values.image,
     };
 
     ConnectionService.saveRecipe(data).then(
@@ -118,11 +119,12 @@ const AddProducts = (props) => {
     },
   };
 
-  const handleImage =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      // @ts-ignore
-      setValues({ ...values, [prop]: event.target.files[0] });
-    };
+  const handleImage = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // @ts-ignore
+    setValues({ ...values, [prop]: event.target.files[0] });
+  };
 
   const tagsArray = Object.values(Tags);
 
@@ -135,139 +137,149 @@ const AddProducts = (props) => {
       style={{ minHeight: "90vh" }}
     >
       <Card style={paperStyle} variant="outlined">
-        <CardContent>
-          <CardContent style={{ paddingBottom: "0px" }}>
-            <Typography className="titleStyle" variant="h5">
-              Dodaj przepis
-            </Typography>
-          </CardContent>
-
-          <TextField
-            className="single-input"
-            type="text"
-            label="Tytuł"
-            placeholder="Tytuł"
-            margin="normal"
-            variant="filled"
-            name="title"
-            onChange={handleChange("title")}
-            value={values.title}
-          />
-
-          <FormControl variant="filled" className="single-input">
-            <InputLabel id="demo-mutiple-chip-label">Tagi</InputLabel>
-            <Select
-              labelId="demo-mutiple-chip-label"
-              id="demo-mutiple-chip"
-              multiple
-              value={tags}
-              onChange={handleTags}
-              input={<Input id="select-multiple-chip" />}
-              renderValue={(selected) => (
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {(selected as string[]).map((value) => (
-                    <Chip key={value} label={value} style={{ margin: "2px" }} />
-                  ))}
-                </div>
-              )}
-              MenuProps={MenuProps}
-            >
-              {tagsArray.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <div className="in-row">
-            <TextField
-              type="number"
-              label="Ilość porcji"
-              placeholder="Ilość porcji"
-              margin="normal"
-              variant="filled"
-              name="quantity"
-              onChange={handleChange("quantity")}
-              value={values.quantity}
-            />
+        <form method="POST" onSubmit={createHandler}>
+          <CardContent>
+            <CardContent style={{ paddingBottom: "0px" }}>
+              <Typography className="titleStyle" variant="h5">
+                Dodaj przepis
+              </Typography>
+            </CardContent>
 
             <TextField
+              className="single-input"
               type="text"
-              label="Czas"
-              placeholder="Czas"
+              label="Tytuł"
+              placeholder="Tytuł"
               margin="normal"
               variant="filled"
-              name="time"
-              onChange={handleChange("time")}
-              value={values.time}
+              name="title"
+              onChange={handleChange("title")}
+              value={values.title}
+              required
             />
-          </div>
 
-          <input
-            type="file"
-            accept="image/*"
-            ref={hiddenFileInput}
-            onChange={handleImage("image")}
-            style={{ display: "none" }}
-          />
+            <FormControl variant="filled" className="single-input">
+              <InputLabel id="demo-mutiple-chip-label">Tagi</InputLabel>
+              <Select
+                labelId="demo-mutiple-chip-label"
+                id="demo-mutiple-chip"
+                multiple
+                value={tags}
+                onChange={handleTags}
+                input={<Input id="select-multiple-chip" />}
+                required
+                renderValue={(selected) => (
+                  <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {(selected as string[]).map((value) => (
+                      <Chip
+                        key={value}
+                        label={value}
+                        style={{ margin: "2px" }}
+                      />
+                    ))}
+                  </div>
+                )}
+                MenuProps={MenuProps}
+              >
+                {tagsArray.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-          <UploadCustomButton variant="contained" onClick={handleClick}>
-            Wybierz Zdjęcie
-          </UploadCustomButton>
-          {values.image ? (
-            // @ts-ignore
-            <p>{values.image.name}</p>
-          ) : (
-            <br />
-          )}
-        </CardContent>
-        <CardContent>
-          <div className={"div-margin"}>
-            <InputList
-              name="Składniki"
-              el={ingredients}
-              setEl={setIngredients}
-              change={handleInputChange}
-              add={handleAdd}
-              remove={handleRemove}
-              label="Składnik"
-              placeholder="Składnik"
+            <div className="in-row">
+              <TextField
+                type="number"
+                label="Ilość porcji"
+                placeholder="Ilość porcji"
+                margin="normal"
+                variant="filled"
+                name="quantity"
+                onChange={handleChange("quantity")}
+                value={values.quantity}
+                required
+              />
+
+              <TextField
+                type="text"
+                label="Czas"
+                placeholder="Czas"
+                margin="normal"
+                variant="filled"
+                name="time"
+                onChange={handleChange("time")}
+                value={values.time}
+                required
+              />
+            </div>
+
+            <input
+              type="file"
+              accept="image/*"
+              ref={hiddenFileInput}
+              onChange={handleImage("image")}
+              style={{ display: "none" }}
+              required
             />
-          </div>
 
-          <div className={"div-margin"}>
-            <InputList
-              name="Przygotowanie"
-              el={steps}
-              setEl={setSteps}
-              change={handleInputChange}
-              add={handleAdd}
-              remove={handleRemove}
-              label="Krok"
-              placeholder="Krok"
-            />
-          </div>
+            <UploadCustomButton variant="contained" onClick={handleClick}>
+              Wybierz Zdjęcie
+            </UploadCustomButton>
+            {values.image ? (
+              // @ts-ignore
+              <p>{values.image.name}</p>
+            ) : (
+              <br />
+            )}
+          </CardContent>
+          <CardContent>
+            <div className={"div-margin"}>
+              <InputList
+                name="Składniki"
+                el={ingredients}
+                setEl={setIngredients}
+                change={handleInputChange}
+                add={handleAdd}
+                remove={handleRemove}
+                label="Składnik"
+                placeholder="Składnik"
+              />
+            </div>
 
-          <Button
-            variant="outlined"
-            color="secondary"
-            style={{ marginRight: "5%" }}
-            component={Link}
-            to="/"
-          >
-            Anuluj
-          </Button>
-          <Button
-            variant="contained"
-            type="submit"
-            color="secondary"
-            size="large"
-            onClick={createHandler}
-          >
-            <span className="addRecBtn">Dodaj przepis</span>
-          </Button>
-        </CardContent>
+            <div className={"div-margin"}>
+              <InputList
+                name="Przygotowanie"
+                el={steps}
+                setEl={setSteps}
+                change={handleInputChange}
+                add={handleAdd}
+                remove={handleRemove}
+                label="Krok"
+                placeholder="Krok"
+              />
+            </div>
+
+            <Button
+              variant="outlined"
+              color="secondary"
+              style={{ marginRight: "5%" }}
+              component={Link}
+              to="/"
+            >
+              Anuluj
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              color="secondary"
+              size="large"
+            >
+              <span className="addRecBtn">Dodaj przepis</span>
+            </Button>
+          </CardContent>
+        </form>
       </Card>
     </Grid>
   );

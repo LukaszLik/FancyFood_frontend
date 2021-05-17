@@ -25,6 +25,7 @@ const InputList = (props) => {
                 value={field.data}
                 onChange={(e) => props.change(e, idx, props.setEl, props.el)}
                 className="dynamic-fields"
+                required
               />
               {props.el.length !== 1 && (
                 <DeleteIcon
