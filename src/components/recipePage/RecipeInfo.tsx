@@ -78,7 +78,7 @@ const RecipeInfo: React.FC<Props> = (props) => {
   });
 
   function getData() {
-    axios.get(`recipe/${props.recipeId}`).then((response) => {
+    axios.get(`${props.recipeId}`).then((response) => {
       setState(response.data);
       console.log(state.tags);
     });

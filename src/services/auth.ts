@@ -37,7 +37,7 @@ class AuthService {
   }
 
   getRecipe(id: Number) {
-    return axios.get(`recipe/${id}`);
+    return axios.get(`${id}`);
   }
 
   getRecipePages(nr: number) {
