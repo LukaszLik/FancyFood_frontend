@@ -196,3 +196,5 @@ typings/
 package-lock.json
 package-json
 
+Dockerfile
+
