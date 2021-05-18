@@ -2,10 +2,10 @@ import React, {useEffect} from "react";
 import {Box, Grid, Typography} from "@material-ui/core";
 import {CardData} from "../home/HomePage";
 import FoodCard from "../home/FoodCard";
-// import "../home/HomePage.css"
 import {EmptyFoodCard} from "./EmptyFoodCard";
 import {Pagination} from "@material-ui/lab";
 import UserRecipeService from "../../services/userRecipes"
+import "./styles/UserRecipe.css"
 
 interface State {
     isLoading: boolean;
@@ -22,7 +22,6 @@ export const UserRecipe: React.FC = props => {
         pageNumber: 0,
         pages: 0
     })
-
 
     const handlePageChange = (event, value) => {
         setState({...state, pageNumber: value - 1})
@@ -44,19 +43,17 @@ export const UserRecipe: React.FC = props => {
     }, [state.pageNumber])
 
     return (
-        <Grid container direction={"column"} alignItems={"flex-start"}>
-            <Typography variant={"h5"}>Twoje przepisy</Typography>
-            <Box className="card-area">
-                <Box className="card-container">
-                    <EmptyFoodCard/>
-                    {state.recipes.map((recipe, index) => {
-                        return <FoodCard key={index + state.pageNumber} {...recipe} />
-                    })}
-                </Box>
+        <Grid container direction={"column"} alignItems={"flex-start"} className={"main_container"}>
+            <Typography variant={"h5"} className="typography"> Twoje przepisy </Typography>
+            <Box className={"card_container"}>
+                <EmptyFoodCard/>
+                {state.recipes.map((recipe, index) => {
+                    return <FoodCard key={index + state.pageNumber} {...recipe} />
+                })}
             </Box>
-            <Grid container item alignContent={"flex-end"}>
-                <Pagination count={state.pages} onChange={handlePageChange}/>
-            </Grid>
+            <Box className={"pagin"}>
+            <Pagination count={state.pages} onChange={handlePageChange}/>
+            </Box>
         </Grid>
     )
 }

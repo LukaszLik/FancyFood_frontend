@@ -14,11 +14,11 @@ export const UserProfile: React.FC<Props> = props => {
 
     return (<Grid container alignItems={"flex-start"} direction={"column"} spacing={2} className={classes.mainContainer}>
             <Grid item xs={3} >
-                <h2 className={classes.typography_h5}>Wołowina w pieczarkach:</h2>
+                <Typography variant={"h5"} className={classes.typography_h5}>Twój profil</Typography>
             </Grid>
             <Grid container direction={"column"} alignItems={"flex-start"} item>
-                <Typography variant={"subtitle1"}>Email:{props.email} </Typography>
-                <Typography variant={"subtitle1"}>Imię i Nazwisko:{props.username}</Typography>
+                <Typography variant={"subtitle1"} className={classes.typography_subtitle}>Email: {props.email} </Typography>
+                <Typography variant={"subtitle1"} className={classes.typography_subtitle}>Imię i Nazwisko: {props.username}</Typography>
             </Grid>
         </Grid>
     )}

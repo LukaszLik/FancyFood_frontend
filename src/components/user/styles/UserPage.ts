@@ -14,7 +14,7 @@ const useStyles = makeStyles({
         borderWidth:"4px",
         borderRadius:"10px",
         minHeight: "90vh",
-        minWidth: "95vw",
+        minWidth: "90vw",
     },
 
     cardContent: {
