@@ -1,5 +1,7 @@
 import React from "react";
 import {Box, Grid, Typography} from "@material-ui/core";
+import "./styles/UserProfile"
+import useStyles from "./styles/UserProfile";
 
 interface Props  {
     email: string;
@@ -8,15 +10,15 @@ interface Props  {
 
 
 export const UserProfile: React.FC<Props> = props => {
-    return (
-        <Grid container alignItems={"flex-start"} direction={"column"} spacing={2} style={{padding:"0vh 0vw 5vh 0vw"}}>
+    const classes = useStyles()
+
+    return (<Grid container alignItems={"flex-start"} direction={"column"} spacing={2} className={classes.mainContainer}>
             <Grid item xs={3} >
-                <Typography variant={"h5"}>Twój profil:</Typography>
+                <h2 className={classes.typography_h5}>Wołowina w pieczarkach:</h2>
             </Grid>
             <Grid container direction={"column"} alignItems={"flex-start"} item>
                 <Typography variant={"subtitle1"}>Email:{props.email} </Typography>
                 <Typography variant={"subtitle1"}>Imię i Nazwisko:{props.username}</Typography>
             </Grid>
         </Grid>
-    )
-}
+    )}

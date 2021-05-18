@@ -1,6 +1,9 @@
 import React from "react";
 import {Box, Card, CardContent, Divider, Grid, Typography} from "@material-ui/core";
 import {UserProfile} from "./UserProfile";
+import {UserRecipe} from "./UserRecipe";
+import "./styles/UserPage"
+import useStyles from "./styles/UserPage";
 
 interface State {
     email: string
@@ -8,6 +11,8 @@ interface State {
 }
 
 export const UserPage: React.FC = props => {
+    const classes = useStyles()
+
     const [state, setState] = React.useState<State>({
         email: "admin@admin.com",
         username: "Mariusz Dymek"
@@ -15,21 +20,16 @@ export const UserPage: React.FC = props => {
     )
     return (
         <div>
-            <Grid
-                container
-                alignItems="center"
-                justify={"center"}
-                style={{minHeight: "90vh"}}
-            >
-                <Card style={{minHeight: "80vh", minWidth: "90vw"}}>
-                    <CardContent style={{padding:"5vh 5vw 0vh 3vw"}}>
+            <Grid container justify={"center"} className={classes.mainContainer}>
+                <Card className={classes.mainCard} variant={"outlined"}>
+                    <CardContent className={classes.cardContent}>
                         <Box>
                         <UserProfile email={state.email} username={state.username}/>
                         </Box>
                         <Divider />
                         <Box>
                         <Grid container>
-                        <Typography variant={"h5"}>Twoje przepisy:</Typography>
+                        <UserRecipe/>
                         </Grid>
                         </Box>
                     </CardContent>

@@ -2,10 +2,10 @@ import React, {useEffect} from "react";
 import {Box, Grid, Typography} from "@material-ui/core";
 import {CardData} from "../home/HomePage";
 import FoodCard from "../home/FoodCard";
-import axios from "axios";
-import "../home/HomePage.css"
+// import "../home/HomePage.css"
 import {EmptyFoodCard} from "./EmptyFoodCard";
 import {Pagination} from "@material-ui/lab";
+import UserRecipeService from "../../services/userRecipes"
 
 interface State {
     isLoading: boolean;
@@ -24,14 +24,13 @@ export const UserRecipe: React.FC = props => {
     })
 
 
-
     const handlePageChange = (event, value) => {
         setState({...state, pageNumber: value - 1})
     }
 
     useEffect(() => {
         const getRecipes = () => {
-            axios.get(`recipe/my/page/${state.pageNumber}`)
+            UserRecipeService.getUserRecipe(state.pageNumber)
                 .then((response) => {
                     setState({
                         isLoading: false,
