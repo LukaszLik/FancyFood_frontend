@@ -148,7 +148,7 @@ const RegisterCard = () => {
     >
       <Card style={paperStyle} variant="outlined">
         <CardContent style={{ paddingBottom: "0px" }}>
-          <Typography variant="h5">Utwórz konto</Typography>
+          <p className="register-text">Utwórz konto</p>
         </CardContent>
         <CardContent>
           <form method="POST" onSubmit={handleRegister}>

@@ -6,3 +6,13 @@
     background-size: cover;
 
 }
+
+.register-text {
+    font-family: 'Roboto Slab';
+    /*fontStyle: normal;*/
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 2px;
+    letter-spacing: 1.25px;
+    color: #002226;
+}
