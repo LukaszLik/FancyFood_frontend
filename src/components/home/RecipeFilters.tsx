@@ -31,6 +31,25 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 200,
   },
+  text: {
+    // position: 'absolute',
+    textAlign: "left",
+    width: "218px",
+    height: "20px",
+    left: "30px",
+    top: "90px",
+
+    fontFamily: "Roboto Slab",
+    // fontStyle: 'normal',
+    fontWeight: 700,
+    fontSize: "18px",
+    lineHeight: "16px",
+    /* or 89% */
+
+    letterSpacing: "1.25px",
+
+    color: "#002226",
+  },
 }));
 
 export default function RecipeFilters() {
@@ -60,7 +79,7 @@ export default function RecipeFilters() {
       >
         <Grid item>
           <div className={classes.searchElement}>
-            <h3>Szukaj przepisu</h3>
+            <p className={classes.text}>Szukaj przepisu</p>
             <TextField
               id="input-search-by-name"
               type="text"
@@ -80,7 +99,7 @@ export default function RecipeFilters() {
         </Grid>
         <Grid item>
           <div className={classes.searchElement}>
-            <h3>Filtruj po tagach</h3>
+            <p className={classes.text}>Filtruj po tagach</p>
             <TextField
               id="recipe-tag-search"
               label="Tagi"
@@ -92,7 +111,7 @@ export default function RecipeFilters() {
         </Grid>
         <Grid item>
           <div className={classes.searchElement}>
-            <h3>Sortuj po</h3>
+            <p className={classes.text}>Sortuj po</p>
             <FormControl variant="filled" className={classes.formControl}>
               <InputLabel id="demo-simple-select-label">Sortuj</InputLabel>
               <Select value={state.sort} onChange={handleChangeSelect}>

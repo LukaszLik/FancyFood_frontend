@@ -118,6 +118,7 @@ const LoginCard = () => {
     border: "#c79100 4px solid",
     paddingTop: "0.5%",
   };
+
   return (
     <Grid
       container
@@ -128,7 +129,7 @@ const LoginCard = () => {
     >
       <Card style={paperStyle} variant="outlined">
         <CardContent style={{ paddingBottom: "0px" }}>
-          <Typography variant="h5">Zaloguj się</Typography>
+          <p className="login-text">Zaloguj się</p>
         </CardContent>
         <CardContent>
           <form method="POST" onSubmit={handleLogin}>

@@ -1,0 +1,10 @@
+.dynamic-fields{
+    width: 75%;
+}
+
+.input-with-del{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 1fr 50px;
+}

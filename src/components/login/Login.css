@@ -8,13 +8,20 @@
 }
 
 .login-link {
+    font-family: 'Roboto';
     color: #26c6da;
     font-weight: 600;
     text-decoration: none;
 }
 
 .login-link-des {
-    font-weight: 700;
+    font-family: 'Roboto Slab';
+    /*fontStyle: normal;*/
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 16px;
+    letter-spacing: 0.15px;
+    color: #002226;
 }
 
 .login-link:hover {
@@ -36,4 +43,14 @@
     letter-spacing: .5px;
     text-transform: uppercase;
     color: white;
+}
+
+.login-text {
+    font-family: 'Roboto Slab';
+    /*fontStyle: normal;*/
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 2px;
+    letter-spacing: 1.25px;
+    color: #002226;
 }
