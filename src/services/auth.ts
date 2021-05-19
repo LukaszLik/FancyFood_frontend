@@ -1,18 +1,20 @@
 import axios from "axios";
 import header from "./header";
 
-const API_URL = "http://localhost:8081/api/v1/";
-
 class AuthService {
   async login(email: string, password: string) {
     return axios
-      .post(API_URL + "signin", {
+      .post("signin", {
         email,
         password,
       })
       .then((response) => {
-        if (response.headers.authorization) {
+        if (response.headers.authorization && response.headers.userinfo) {
           localStorage.setItem("user", JSON.stringify(response.headers));
+          localStorage.setItem(
+            "userInfo",
+            JSON.stringify(response.headers.userinfo)
+          );
         }
         return response.data;
       });
@@ -20,11 +22,11 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+    localStorage.removeItem("userInfo");
   }
 
   register(email: string, username: string, password: string) {
-    console.log(email, username, password);
-    return axios.post(API_URL + "registration", {
+    return axios.post("registration", {
       email,
       username,
       password,
@@ -32,7 +34,15 @@ class AuthService {
   }
 
   getUser() {
-    return JSON.parse(localStorage.getItem("user") as string);
+    return JSON.parse(localStorage.getItem("userInfo") as string);
+  }
+
+  getRecipe(id: Number) {
+    return axios.get(`recipe/${id}`);
+  }
+
+  getRecipePages(nr: number) {
+    return axios.get(`recipe/page/${nr}`);
   }
 }
 
