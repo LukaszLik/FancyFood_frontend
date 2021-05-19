@@ -20,7 +20,7 @@ export class App extends React.Component<Props, State> {
           <Route path="/" exact component={HomePage} />
           <Route path="/login" exact component={LoginPage} />
           <Route path="/signup" exact component={RegisterPage} />
-          <Route path="/addproducts" exact component={AddProducts} />
+          <Route path="/recipe/add" exact component={AddProducts} />
           <Route path="/recipe/:id" exact component={RecipePage} />
         </Switch>
       </div>

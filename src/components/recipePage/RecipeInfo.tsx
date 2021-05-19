@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Recipe.css";
 import RecipeElement from "./RecipeElement";
 import {
-  makeStyles,
+  Box,
   Card,
   CardContent,
-  Typography,
   CardMedia,
   Chip,
-  Box,
   Divider,
+  makeStyles,
+  Typography,
 } from "@material-ui/core";
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -56,10 +55,10 @@ const RecipeInfo = (props) => {
       style={{ minHeight: "90vh" }}
     >
       <Card className={classes.paperStyle} variant="outlined">
-        {
-          //TODO ADD IMAGE!
-        }
-        <CardMedia className="image" image="" />
+        <CardMedia
+          className="image"
+          image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
+        />
         <CardContent style={{ paddingBottom: "0px" }}>
           <Typography variant="h3" className="titleStyle">
             {props.data.recipeName}
@@ -67,7 +66,7 @@ const RecipeInfo = (props) => {
         </CardContent>
         <CardContent className={classes.tagsContainer}>
           {props.data.tags.map((eln, index) => {
-            return <Chip label={eln.tagName} />;
+            return <Chip key={index} label={eln.tagName} />;
           })}
         </CardContent>
 

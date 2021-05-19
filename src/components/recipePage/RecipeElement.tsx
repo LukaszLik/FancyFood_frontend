@@ -9,13 +9,21 @@ const RecipeElement = (props) => {
       {props.variant ? (
         <ul className="cont">
           {props.textTable.map((eln, index) => {
-            return <li className="listEl">{eln.data}</li>;
+            return (
+              <li key={index} className="listEl">
+                {eln.data}
+              </li>
+            );
           })}
         </ul>
       ) : (
         <ol className="cont">
           {props.textTable.map((eln, index) => {
-            return <li className="listEl">{eln.data}</li>;
+            return (
+              <li key={index} className="listEl">
+                {eln.data}
+              </li>
+            );
           })}
         </ol>
       )}
