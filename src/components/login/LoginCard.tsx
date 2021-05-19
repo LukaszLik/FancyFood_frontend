@@ -118,6 +118,7 @@ const LoginCard = () => {
     border: "#c79100 4px solid",
     paddingTop: "0.5%",
   };
+
   return (
     <Grid
       container

@@ -33,22 +33,22 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     // position: 'absolute',
-    textAlign: 'left',
-    width: '218px',
-    height: '20px',
-    left: '30px',
-    top: '90px',
+    textAlign: "left",
+    width: "218px",
+    height: "20px",
+    left: "30px",
+    top: "90px",
 
-    fontFamily: 'Roboto Slab',
-// fontStyle: 'normal',
-fontWeight: 700,
-fontSize: '18px',
-lineHeight: '16px',
-/* or 89% */
+    fontFamily: "Roboto Slab",
+    // fontStyle: 'normal',
+    fontWeight: 700,
+    fontSize: "18px",
+    lineHeight: "16px",
+    /* or 89% */
 
-letterSpacing: '1.25px',
+    letterSpacing: "1.25px",
 
-color: '#002226',
+    color: "#002226",
   },
 }));
 

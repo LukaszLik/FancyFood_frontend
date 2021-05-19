@@ -15,11 +15,10 @@ const RecipeInfo: React.FC<RecipeInfo> = (props) => {
     let id: number = Number(props.match.params.id);
     AuthService.getRecipe(id).then(
       (response) => {
-        console.log(response); // todo dla testów
         setData(response);
       },
       (error) => {
-        console.log(error); // todo zmienić na coś lepszego
+        console.log(error);
       }
     );
   };
