@@ -37,8 +37,12 @@ class AuthService {
     return JSON.parse(localStorage.getItem("userInfo") as string);
   }
 
+  getUserCredentials() {
+    return JSON.parse(localStorage.getItem("user") as string);
+  }
+
   getRecipe(id: Number) {
-    return axios.get(`recipe/${id}`);
+    return axios.get(`${id}`);
   }
 
   getRecipePages(nr: number) {
