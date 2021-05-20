@@ -13,18 +13,13 @@ interface State {
 export const UserPage: React.FC = props => {
     const classes = useStyles()
 
-    const [state, setState] = React.useState<State>({
-        email: "admin@admin.com",
-        username: "Mariusz Dymek"
-        }
-    )
     return (
         <div>
             <Grid container justify={"center"} className={classes.mainContainer}>
                 <Card className={classes.mainCard} variant={"outlined"}>
                     <CardContent className={classes.cardContent}>
                         <Box>
-                        <UserProfile email={state.email} username={state.username}/>
+                        <UserProfile />
                         </Box>
                         <Divider />
                         <Box>

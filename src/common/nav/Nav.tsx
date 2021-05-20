@@ -55,23 +55,18 @@ const Nav = () => {
           style={{ paddingRight: "25px" }}
         >
           <div style={{ paddingTop: "5px" }}>
-            {currentUser ? (
-              <Typography variant="subtitle1" className="login-data">
-                {currentUser}
-              </Typography>
-            ) : (
-              <Button
+            <Button
                 variant="outlined"
                 color="secondary"
                 component={Link}
-                to="/login"
+                to={currentUser ? "/profile" : "/login"}
                 style={{ marginRight: "20px" }}
-              >
+            >
                 <span className="btn-email-text btn-texts-login">
-                  zaloguj się
+                   {currentUser ? "twój profil" : "zaloguj się"}
                 </span>
-              </Button>
-            )}
+            </Button>
+
           </div>
           <Button
             variant="contained"
