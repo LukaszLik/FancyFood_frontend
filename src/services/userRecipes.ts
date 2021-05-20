@@ -3,7 +3,7 @@ import header from "./header";
 
 class UserRecipesService {
     async getUserRecipe(pageNumber: number) {
-        return axios.get(`recipe/my/page/${pageNumber}`, {
+        return axios.get(`recipe/user/page/${pageNumber}`, {
             headers: header(),
         })
     }

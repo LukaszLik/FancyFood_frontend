@@ -1,6 +1,7 @@
 import React from "react";
 import {Card, CardContent, IconButton} from "@material-ui/core";
 import {AddCircle} from "@material-ui/icons";
+import {Link} from "react-router-dom";
 
 export const EmptyFoodCard: React.FC = props => {
     return (
@@ -11,7 +12,11 @@ export const EmptyFoodCard: React.FC = props => {
             borderRadius: "10px",
         }} variant={"outlined"}>
             <CardContent style={{display: "flex", justifyContent: "center", alignItems: "center", height: "90%"}}>
-                <IconButton style={{color:"#26c6da"}}>
+                <IconButton
+                    style={{color:"#26c6da"}}
+                    component={Link}
+                    to={"/recipe/add"}
+                >
                     <AddCircle style={{fontSize:60}}/>
                 </IconButton>
             </CardContent>
