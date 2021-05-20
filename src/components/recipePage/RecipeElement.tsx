@@ -4,7 +4,7 @@ import "./Recipe.css";
 const RecipeElement = (props) => {
   return (
     <div className="recipeEl">
-      <h2>{props.title}</h2>
+      <h2 className="text">{props.title}</h2>
 
       {props.variant ? (
         <ul className="cont">

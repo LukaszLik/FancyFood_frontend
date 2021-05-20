@@ -66,16 +66,16 @@ const RecipeInfo = (props) => {
         </CardContent>
         <CardContent className={classes.tagsContainer}>
           {props.data.tags.map((eln, index) => {
-            return <Chip key={index} label={eln.tagName} />;
+            return <Chip className="text" key={index} label={eln.tagName} />;
           })}
         </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">
-          <h4>Dodano: {props.data.createdOn.substring(0, 10)}</h4>
+          <h4 className="text">Dodano: {props.data.createdOn.substring(0, 10)}</h4>
           <Divider orientation="vertical" flexItem />
-          <h4>Czas: {props.data.recipeBody.timeDescription} </h4>
+          <h4 className="text">Czas: {props.data.recipeBody.timeDescription} </h4>
           <Divider orientation="vertical" flexItem />
-          <h4>Autor: {props.data.creatorUsername}</h4>
+          <h4 className="text">Autor: {props.data.creatorUsername}</h4>
         </Box>
         <Divider variant="middle" />
 

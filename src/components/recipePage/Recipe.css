@@ -1,6 +1,12 @@
 .titleStyle {
     font-weight: 500;
+    font-family: "Roboto Slab" !important;
 }
+
+.text {
+    font-family: "Roboto Slab" !important;
+}
+
 .image{
     height: 35vh;
 }
@@ -14,6 +20,7 @@
 }
 
 .listEl{
+    font-family: "Roboto Slab";
     margin-bottom: 1vh;
     text-align: left;
 }
