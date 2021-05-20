@@ -71,9 +71,13 @@ const RecipeInfo = (props) => {
         </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">
-          <h4 className="text">Dodano: {props.data.createdOn.substring(0, 10)}</h4>
+          <h4 className="text">
+            Dodano: {props.data.createdOn.substring(0, 10)}
+          </h4>
           <Divider orientation="vertical" flexItem />
-          <h4 className="text">Czas: {props.data.recipeBody.timeDescription} </h4>
+          <h4 className="text">
+            Czas: {props.data.recipeBody.timeDescription}{" "}
+          </h4>
           <Divider orientation="vertical" flexItem />
           <h4 className="text">Autor: {props.data.creatorUsername}</h4>
         </Box>
