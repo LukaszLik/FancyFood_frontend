@@ -1,0 +1,27 @@
+.empty-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 0 0;
+    height: 80%;
+}
+
+.empty-main-container {
+    padding: 0 0 0 0;
+    width: 14vw;
+    height: 31vh;
+    min-width: 250px;
+    min-height: 260px;
+    border-radius: 10px;
+
+}
+
+.empty-btn {
+    padding: 0 0 0 0;
+    width: min-content;
+    height: min-content;
+}
+
+.icon {
+    font-size: 60px!important;
+}

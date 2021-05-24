@@ -5,18 +5,13 @@ import {UserRecipe} from "./UserRecipe";
 import "./styles/UserPage"
 import useStyles from "./styles/UserPage";
 
-interface State {
-    email: string
-    username: string
-}
-
 export const UserPage: React.FC = props => {
     const classes = useStyles()
 
     return (
         <div>
-            <Grid container justify={"center"} className={classes.mainContainer}>
-                <Card className={classes.mainCard} variant={"outlined"}>
+            <Grid container justify="center" className={classes.mainContainer}>
+                <Card className={classes.mainCard} variant="outlined">
                     <CardContent className={classes.cardContent}>
                         <Box>
                         <UserProfile />

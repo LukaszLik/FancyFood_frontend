@@ -43,16 +43,16 @@ export const UserRecipe: React.FC = props => {
     }, [state.pageNumber])
 
     return (
-        <Grid container direction={"column"} alignItems={"flex-start"} className={"main_container"}>
-            <Typography variant={"h5"} className="typography"> Twoje przepisy </Typography>
-            <Box className={"card_container"}>
+        <Grid container direction="column" alignItems="flex-start" className={"main_container"}>
+            <Typography variant="h5" className="typography"> Twoje przepisy </Typography>
+            <Box className="card_container">
                 <EmptyFoodCard/>
                 {state.recipes.map((recipe, index) => {
                     return <FoodCard key={index + state.pageNumber} {...recipe} />
                 })}
             </Box>
-            <Box className={"pagin"}>
-            <Pagination count={state.pages} onChange={handlePageChange}/>
+            <Box className="pagin">
+            <Pagination count={state.pages} onChange={handlePageChange} color="secondary"/>
             </Box>
         </Grid>
     )

@@ -2,22 +2,19 @@ import React from "react";
 import {Card, CardContent, IconButton} from "@material-ui/core";
 import {AddCircle} from "@material-ui/icons";
 import {Link} from "react-router-dom";
+import "./styles/EmptyFoodCart.css";
 
 export const EmptyFoodCard: React.FC = props => {
     return (
-        <Card style={{
-            width: "14vw", height: "31vh", minWidth: "250px",
-            minHeight: "260px",
-            // border: "4px solid #c79100",
-            borderRadius: "10px",
-        }} variant={"outlined"}>
-            <CardContent style={{display: "flex", justifyContent: "center", alignItems: "center", height: "90%"}}>
+        <Card className="empty-main-container" variant="outlined">
+            <CardContent className="empty-card-container">
                 <IconButton
-                    style={{color:"#26c6da"}}
+                    className="empty-btn"
                     component={Link}
-                    to={"/recipe/add"}
+                    to="/recipe/add"
+                    color="secondary"
                 >
-                    <AddCircle style={{fontSize:60}}/>
+                    <AddCircle className="icon"/>
                 </IconButton>
             </CardContent>
         </Card>
