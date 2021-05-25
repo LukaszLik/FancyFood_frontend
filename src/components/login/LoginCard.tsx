@@ -193,7 +193,7 @@ const LoginCard = () => {
               </FormControl>
               <Box style={{ minHeight: "4vh" }} margin="normal">
                 {values.message && (
-                  <div className="form-group">{values.message}</div>
+                  <div className="wrong-input">{values.message}</div>
                 )}
               </Box>
               <Button
