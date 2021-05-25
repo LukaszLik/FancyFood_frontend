@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 200,
   },
   text: {
-    // position: 'absolute',
     textAlign: "left",
     width: "218px",
     height: "20px",
@@ -40,19 +39,17 @@ const useStyles = makeStyles((theme) => ({
     top: "90px",
 
     fontFamily: "Roboto Slab",
-    // fontStyle: 'normal',
     fontWeight: 700,
     fontSize: "18px",
     lineHeight: "16px",
     /* or 89% */
 
     letterSpacing: "1.25px",
-
     color: "#002226",
   },
 }));
 
-export default function RecipeFilters() {
+export default function RecipeFilters( {handler} ) {
   const classes = useStyles();
   const [state, setState] = React.useState<State>({
     search: "",
@@ -64,6 +61,10 @@ export default function RecipeFilters() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState({ ...state, [prop]: event.target.value });
+    console.log(state.search);
+    // searchString = event.target.value;
+    // console.log("sercz string: " + searchString);
+    handler(event.target.value);
   };
 
   const handleChangeSelect = (event) => {

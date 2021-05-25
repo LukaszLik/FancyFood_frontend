@@ -10,6 +10,14 @@ interface State {
   recipes: CardData[];
   pageNumber: number;
   pages;
+  isSearching: boolean,
+  searchedString: string,
+}
+
+interface Search {
+  searchText: string;
+  prevSearchText: string;
+  isSearched: boolean;
 }
 
 interface Props {}
@@ -59,7 +67,16 @@ export class HomePage extends React.Component<Props, State> {
     recipes: [] as CardData[],
     pageNumber: 0,
     pages: 0,
+    isSearching: false,
+    searchedString: "",
   };
+  //
+  // searchState: Search = {
+  //   searchText: "",
+  //   prevSearchText: "a",
+  //   isSearched: false,
+  // }
+
   prevPageNumber = -1;
 
   async componentDidMount() {
@@ -80,6 +97,8 @@ export class HomePage extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
+    console.log("1");
+    // console.log("test " + this.searchState.searchText)
     if (this.state.pageNumber !== this.prevPageNumber) {
       AuthService.getRecipePages(this.state.pageNumber).then(
         (response) => {
@@ -98,10 +117,27 @@ export class HomePage extends React.Component<Props, State> {
 
       this.state.pageNumber = this.prevPageNumber;
     }
+
+    // if (this.searchState.searchText !== this.searchState.prevSearchText){
+    //   console.log("REEE KURWA ZMIENIŁO SIE " + this.searchState.searchText);
+    //
+    //   this.searchState.prevSearchText = this.searchState.searchText;
+    // }
   }
+
+  searchBarUpdate(str) {
+    // this.searchState.prevSearchText = this.searchState.searchText;
+    // this.searchState.searchText = str;
+    // this.searchState.isSearched = true;
+    // this.setState((state) => { return {searchedString: str}});
+    this.setState({...this.state, searchedString: str} )
+    console.log("strona glowna " + str)
+  }
+
 
   render() {
     const recipes: CardData[] = [];
+    // let searchState = this.searchState;
 
     if (this.state.isLoading) {
       return (
@@ -117,7 +153,7 @@ export class HomePage extends React.Component<Props, State> {
 
     return (
       <div className="home">
-        <RecipeFilters />
+        <RecipeFilters handler={this.searchBarUpdate} />
         <div className="card-area">
           <div className="card-container">
             {recipes.map((recipe) => {
