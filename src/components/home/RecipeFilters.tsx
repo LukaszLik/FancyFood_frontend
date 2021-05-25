@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeFilters( {handler} ) {
+export default function RecipeFilters({ handler }) {
   const classes = useStyles();
   const [state, setState] = React.useState<State>({
     search: "",

@@ -10,14 +10,9 @@ interface State {
   recipes: CardData[];
   pageNumber: number;
   pages;
-  isSearching: boolean,
-  searchedString: string,
-}
-
-interface Search {
-  searchText: string;
-  prevSearchText: string;
-  isSearched: boolean;
+  isSearching: boolean;
+  searchedString: string;
+  prevSearchedString: string;
 }
 
 interface Props {}
@@ -69,13 +64,8 @@ export class HomePage extends React.Component<Props, State> {
     pages: 0,
     isSearching: false,
     searchedString: "",
+    prevSearchedString: "",
   };
-  //
-  // searchState: Search = {
-  //   searchText: "",
-  //   prevSearchText: "a",
-  //   isSearched: false,
-  // }
 
   prevPageNumber = -1;
 
@@ -97,47 +87,69 @@ export class HomePage extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
-    console.log("1");
-    // console.log("test " + this.searchState.searchText)
-    if (this.state.pageNumber !== this.prevPageNumber) {
-      AuthService.getRecipePages(this.state.pageNumber).then(
-        (response) => {
-          this.setState((state) => {
-            return {
-              isLoading: false,
-              recipes: response.data.content,
-              pages: response.data.totalPages,
-            };
-          });
-        },
-        (error) => {
-          console.log(error);
+    if (!this.state.isSearching) {
+      if (this.state.pageNumber !== this.prevPageNumber) {
+        AuthService.getRecipePages(this.state.pageNumber).then(
+          (response) => {
+            this.setState((state) => {
+              return {
+                isLoading: false,
+                recipes: response.data.content,
+                pages: response.data.totalPages,
+              };
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
+        this.prevPageNumber = this.state.pageNumber;
+      }
+    } else {
+      if (
+        this.state.searchedString !== this.state.prevSearchedString ||
+        this.state.pageNumber !== this.prevPageNumber
+      ) {
+        AuthService.getRecipePageCombo(
+          this.state.pageNumber,
+          this.state.searchedString,
+          false,
+          ""
+        ).then(
+          (response) => {
+            this.setState((state) => {
+              return {
+                isLoading: false,
+                recipes: response.data.content,
+                pages: response.data.totalPages,
+              };
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
+        this.prevPageNumber = this.state.pageNumber;
+        this.setState({
+          ...this.state,
+          prevSearchedString: this.state.searchedString,
+        });
+
+        if (this.state.searchedString === "") {
+          this.setState({ ...this.state, isSearching: false });
         }
-      );
-
-      this.state.pageNumber = this.prevPageNumber;
+      }
     }
-
-    // if (this.searchState.searchText !== this.searchState.prevSearchText){
-    //   console.log("REEE KURWA ZMIENIŁO SIE " + this.searchState.searchText);
-    //
-    //   this.searchState.prevSearchText = this.searchState.searchText;
-    // }
   }
 
-  searchBarUpdate(str) {
-    // this.searchState.prevSearchText = this.searchState.searchText;
-    // this.searchState.searchText = str;
-    // this.searchState.isSearched = true;
-    // this.setState((state) => { return {searchedString: str}});
-    this.setState({...this.state, searchedString: str} )
-    console.log("strona glowna " + str)
-  }
-
+  searchBarUpdate = (str) => {
+    this.setState({ ...this.state, searchedString: str, isSearching: true });
+  };
 
   render() {
     const recipes: CardData[] = [];
-    // let searchState = this.searchState;
 
     if (this.state.isLoading) {
       return (
