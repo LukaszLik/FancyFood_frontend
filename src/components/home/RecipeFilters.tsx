@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeFilters({ handler }) {
+export default function RecipeFilters({ searchHandler, sortHandler }) {
   const classes = useStyles();
   const [state, setState] = React.useState<State>({
     search: "",
@@ -57,18 +57,19 @@ export default function RecipeFilters({ handler }) {
     sort: "",
   });
 
+  const ref = React.createRef();
+
   const handleChange = (prop: keyof State) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState({ ...state, [prop]: event.target.value });
-    console.log(state.search);
-    // searchString = event.target.value;
-    // console.log("sercz string: " + searchString);
-    handler(event.target.value);
+    searchHandler(event.target.value);
   };
 
   const handleChangeSelect = (event) => {
     setState({ ...state, sort: event.target.value });
+    console.log("magia: " + event.target.value);
+    sortHandler(event.target.value);
   };
 
   return (
@@ -117,10 +118,13 @@ export default function RecipeFilters({ handler }) {
             <FormControl variant="filled" className={classes.formControl}>
               <InputLabel id="demo-simple-select-label">Sortuj</InputLabel>
               <Select value={state.sort} onChange={handleChangeSelect}>
-                <MenuItem value={""} />
-                <MenuItem value={"Popularność"}>Popularność</MenuItem>
-                <MenuItem value={"Ocena"}>Ocena</MenuItem>
-                <MenuItem value={"Alfabetycznie"}>Alfabetycznie</MenuItem>
+                <MenuItem style={{ height: "35px" }} value={""} />
+                <MenuItem style={{ height: "35px" }} value={"Ocena"}>
+                  Ocena
+                </MenuItem>
+                <MenuItem style={{ height: "35px" }} value={"Alfabetycznie"}>
+                  Alfabetycznie
+                </MenuItem>
               </Select>
             </FormControl>
           </div>

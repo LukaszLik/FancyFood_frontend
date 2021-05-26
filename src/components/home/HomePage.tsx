@@ -13,6 +13,8 @@ interface State {
   isSearching: boolean;
   searchedString: string;
   prevSearchedString: string;
+  sortBy: string;
+  prevSortBy: string;
 }
 
 interface Props {}
@@ -65,6 +67,8 @@ export class HomePage extends React.Component<Props, State> {
     isSearching: false,
     searchedString: "",
     prevSearchedString: "",
+    sortBy: "",
+    prevSortBy: "",
   };
 
   prevPageNumber = -1;
@@ -109,13 +113,14 @@ export class HomePage extends React.Component<Props, State> {
     } else {
       if (
         this.state.searchedString !== this.state.prevSearchedString ||
-        this.state.pageNumber !== this.prevPageNumber
+        this.state.pageNumber !== this.prevPageNumber ||
+        this.state.sortBy !== this.state.prevSortBy
       ) {
         AuthService.getRecipePageCombo(
           this.state.pageNumber,
           this.state.searchedString,
           false,
-          ""
+          this.state.sortBy
         ).then(
           (response) => {
             this.setState((state) => {
@@ -135,9 +140,10 @@ export class HomePage extends React.Component<Props, State> {
         this.setState({
           ...this.state,
           prevSearchedString: this.state.searchedString,
+          prevSortBy: this.state.sortBy,
         });
 
-        if (this.state.searchedString === "") {
+        if (this.state.searchedString === "" && this.state.sortBy === "") {
           this.setState({ ...this.state, isSearching: false });
         }
       }
@@ -146,6 +152,18 @@ export class HomePage extends React.Component<Props, State> {
 
   searchBarUpdate = (str) => {
     this.setState({ ...this.state, searchedString: str, isSearching: true });
+  };
+
+  sortBarUpdate = (str) => {
+    const alpha = "name";
+    const mark = "mark";
+    if (str === "Alfabetycznie") {
+      this.setState({ ...this.state, sortBy: alpha, isSearching: true });
+    } else if (str === "Ocena") {
+      this.setState({ ...this.state, sortBy: mark, isSearching: true });
+    } else {
+      this.setState({ ...this.state, sortBy: "", isSearching: true });
+    }
   };
 
   render() {
@@ -165,7 +183,10 @@ export class HomePage extends React.Component<Props, State> {
 
     return (
       <div className="home">
-        <RecipeFilters handler={this.searchBarUpdate} />
+        <RecipeFilters
+          searchHandler={this.searchBarUpdate}
+          sortHandler={this.sortBarUpdate}
+        />
         <div className="card-area">
           <div className="card-container">
             {recipes.map((recipe) => {

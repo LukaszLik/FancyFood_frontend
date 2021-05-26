@@ -55,7 +55,7 @@ class AuthService {
     fieldFilter: string
   ) {
     return axios.get(
-      `recipe/page/combo/${pageNumber}?containing=${containing}`
+      `recipe/page/${pageNumber}?containing=${containing}&descending=${descending}&fieldFilter=${fieldFilter}`
     );
   }
 }
