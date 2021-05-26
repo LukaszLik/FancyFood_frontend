@@ -39,13 +39,11 @@ export default function RecipeReviewCard(props) {
 
   const maxChips = 3;
   return (
-    <Card
-      className={classes.root}
-      onClick={() => recipePageHandler(props.recipeId)}
-    >
+    <Card className={classes.root}>
       <CardMedia
         className={classes.media}
         image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
+        onClick={() => recipePageHandler(props.recipeId)}
       />
 
       <span className={classes.chipRow}>

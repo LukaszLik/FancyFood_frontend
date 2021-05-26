@@ -91,62 +91,37 @@ export class HomePage extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
-    if (!this.state.isSearching) {
-      if (this.state.pageNumber !== this.prevPageNumber) {
-        AuthService.getRecipePages(this.state.pageNumber).then(
-          (response) => {
-            this.setState((state) => {
-              return {
-                isLoading: false,
-                recipes: response.data.content,
-                pages: response.data.totalPages,
-              };
-            });
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
-        this.prevPageNumber = this.state.pageNumber;
-      }
-    } else {
-      if (
-        this.state.searchedString !== this.state.prevSearchedString ||
-        this.state.pageNumber !== this.prevPageNumber ||
-        this.state.sortBy !== this.state.prevSortBy
-      ) {
-        AuthService.getRecipePageCombo(
-          this.state.pageNumber,
-          this.state.searchedString,
-          false,
-          this.state.sortBy
-        ).then(
-          (response) => {
-            this.setState((state) => {
-              return {
-                isLoading: false,
-                recipes: response.data.content,
-                pages: response.data.totalPages,
-              };
-            });
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
-        this.prevPageNumber = this.state.pageNumber;
-        this.setState({
-          ...this.state,
-          prevSearchedString: this.state.searchedString,
-          prevSortBy: this.state.sortBy,
-        });
-
-        if (this.state.searchedString === "" && this.state.sortBy === "") {
-          this.setState({ ...this.state, isSearching: false });
+    if (
+      this.state.searchedString !== this.state.prevSearchedString ||
+      this.state.pageNumber !== this.prevPageNumber ||
+      this.state.sortBy !== this.state.prevSortBy
+    ) {
+      AuthService.getRecipePageCombo(
+        this.state.pageNumber,
+        this.state.searchedString,
+        false,
+        this.state.sortBy
+      ).then(
+        (response) => {
+          this.setState((state) => {
+            return {
+              isLoading: false,
+              recipes: response.data.content,
+              pages: response.data.totalPages,
+            };
+          });
+        },
+        (error) => {
+          console.log(error);
         }
-      }
+      );
+
+      this.prevPageNumber = this.state.pageNumber;
+      this.setState({
+        ...this.state,
+        prevSearchedString: this.state.searchedString,
+        prevSortBy: this.state.sortBy,
+      });
     }
   }
 
