@@ -10,7 +10,16 @@ import {
   Divider,
   makeStyles,
   Typography,
+  withStyles,
 } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
+import UserRecipeService from "../../services/userRecipes";
+
+const StyledRating = withStyles({
+  iconFilled: {
+    color: "#002226",
+  },
+})(Rating);
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -22,24 +31,35 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "5vh",
     margin: "5vh 0vh 5vh 0vh",
   },
-  tagsContainer: {
+  tagsAndRatingContainer: {
     display: "flex",
     marginLeft: "6vw",
     marginRight: "6vw",
     flexWrap: "wrap",
+    justifyContent: "space-between",
     "& > *": {
       margin: theme.spacing(1),
     },
   },
+  tagsContainer: {
+    display: "flex",
+  },
 }));
 
 function getPortionString(portionCount) {
-  if (portionCount == 1) {
+  if (portionCount === 1) {
     return "porcję";
   } else if (portionCount > 1 && portionCount < 5) {
     return "porcje";
   } else {
     return "porcji";
+  }
+}
+
+function ratingsHandler(recipeId, e) {
+  const mark = e.target.value;
+  if (mark) {
+    UserRecipeService.rateRecipe(recipeId, mark);
   }
 }
 
@@ -64,10 +84,20 @@ const RecipeInfo = (props) => {
             {props.data.recipeName}
           </Typography>
         </CardContent>
-        <CardContent className={classes.tagsContainer}>
-          {props.data.tags.map((eln, index) => {
-            return <Chip className="text" key={index} label={eln.tagName} />;
-          })}
+        <CardContent className={classes.tagsAndRatingContainer}>
+          <div className={classes.tagsContainer}>
+            {props.data.tags.map((eln, index) => {
+              return (
+                <Chip
+                  className="text"
+                  key={index}
+                  label={eln.tagName}
+                  style={{ marginRight: "10px" }}
+                />
+              );
+            })}
+          </div>
+          <StyledRating name="half-rating" defaultValue={2.5} precision={0.5} onClick={(e) => ratingsHandler(props.data.recipeId, e)}/>
         </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">

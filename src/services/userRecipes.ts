@@ -7,6 +7,16 @@ class UserRecipesService {
       headers: header(),
     });
   }
+
+  async rateRecipe(recipeId: number, mark: number) {
+    return axios.post(
+      `${recipeId}/mark`,
+        mark,
+      {
+        headers: header()      
+      }
+    );
+  }
 }
 
 export default new UserRecipesService();

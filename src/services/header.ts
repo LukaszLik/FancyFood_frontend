@@ -4,8 +4,11 @@ export default function header() {
   if (user && user.authorization) {
     return {
       Authorization: user.authorization,
+      'Content-Type': 'application/json'
     };
   } else {
-    return {};
+    return {
+      'Content-Type': 'application/json'
+    };
   }
 }
