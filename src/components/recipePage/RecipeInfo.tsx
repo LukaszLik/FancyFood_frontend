@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import UserRecipeService from "../../services/userRecipes";
+import AuthService from "../../services/auth";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -97,7 +98,13 @@ const RecipeInfo = (props) => {
               );
             })}
           </div>
-          <StyledRating name="half-rating" defaultValue={2.5} precision={0.5} onClick={(e) => ratingsHandler(props.data.recipeId, e)}/>
+          {
+            AuthService.getUser() !== null
+            ?  
+            <StyledRating name="half-rating" defaultValue={props.data.marks.average} precision={0.5} onClick={(e) => ratingsHandler(props.data.recipeId, e)}/> 
+            : 
+            <StyledRating name="read-only" precision={0.5} value={props.data.marks.average} readOnly />
+          }
         </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">

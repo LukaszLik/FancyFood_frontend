@@ -9,13 +9,9 @@ class UserRecipesService {
   }
 
   async rateRecipe(recipeId: number, mark: number) {
-    return axios.post(
-      `${recipeId}/mark`,
-        mark,
-      {
-        headers: header()      
-      }
-    );
+    return axios.post(`${recipeId}/mark`, mark, {
+      headers: header(),
+    });
   }
 }
 

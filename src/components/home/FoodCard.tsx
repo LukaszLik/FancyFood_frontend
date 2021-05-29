@@ -22,8 +22,6 @@ const StyledRating = withStyles({
 })(Rating);
 
 export default function RecipeReviewCard(props) {
-
-  console.log(props);
   const history = useHistory();
   const classes = styles();
   const [state, setState] = React.useState<State>({
