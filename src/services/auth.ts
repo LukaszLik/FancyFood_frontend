@@ -1,5 +1,4 @@
 import axios from "axios";
-import header from "./header";
 
 class AuthService {
   async login(email: string, password: string) {
@@ -47,6 +46,17 @@ class AuthService {
 
   getRecipePages(nr: number) {
     return axios.get(`recipe/page/${nr}`);
+  }
+
+  getPage(
+    pageNumber: number,
+    containing: string,
+    descending: boolean,
+    fieldFilter: string
+  ) {
+    return axios.get(
+      `recipe/page/${pageNumber}?containing=${containing}&descending=${descending}&fieldFilter=${fieldFilter}`
+    );
   }
 }
 
