@@ -10,6 +10,10 @@ interface State {
   recipes: CardData[];
   pageNumber: number;
   pages;
+  searchedString: string;
+  prevSearchedString: string;
+  sortBy: string;
+  prevSortBy: string;
 }
 
 interface Props {}
@@ -59,7 +63,12 @@ export class HomePage extends React.Component<Props, State> {
     recipes: [] as CardData[],
     pageNumber: 0,
     pages: 0,
+    searchedString: "",
+    prevSearchedString: "",
+    sortBy: "",
+    prevSortBy: "",
   };
+
   prevPageNumber = -1;
 
   async componentDidMount() {
@@ -80,8 +89,17 @@ export class HomePage extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
-    if (this.state.pageNumber !== this.prevPageNumber) {
-      AuthService.getRecipePages(this.state.pageNumber).then(
+    if (
+      this.state.searchedString !== this.state.prevSearchedString ||
+      this.state.pageNumber !== this.prevPageNumber ||
+      this.state.sortBy !== this.state.prevSortBy
+    ) {
+      AuthService.getPage(
+        this.state.pageNumber,
+        this.state.searchedString,
+        false,
+        this.state.sortBy
+      ).then(
         (response) => {
           this.setState((state) => {
             return {
@@ -96,9 +114,30 @@ export class HomePage extends React.Component<Props, State> {
         }
       );
 
-      this.state.pageNumber = this.prevPageNumber;
+      this.prevPageNumber = this.state.pageNumber;
+      this.setState({
+        ...this.state,
+        prevSearchedString: this.state.searchedString,
+        prevSortBy: this.state.sortBy,
+      });
     }
   }
+
+  searchBarUpdate = (str) => {
+    this.setState({ ...this.state, searchedString: str });
+  };
+
+  sortBarUpdate = (str) => {
+    const alpha = "name";
+    const mark = "mark";
+    if (str === "Alfabetycznie") {
+      this.setState({ ...this.state, sortBy: alpha });
+    } else if (str === "Ocena") {
+      this.setState({ ...this.state, sortBy: mark });
+    } else {
+      this.setState({ ...this.state, sortBy: "" });
+    }
+  };
 
   render() {
     const recipes: CardData[] = [];
@@ -117,7 +156,10 @@ export class HomePage extends React.Component<Props, State> {
 
     return (
       <div className="home">
-        <RecipeFilters />
+        <RecipeFilters
+          searchHandler={this.searchBarUpdate}
+          sortHandler={this.sortBarUpdate}
+        />
         <div className="card-area">
           <div className="card-container">
             {recipes.map((recipe) => {

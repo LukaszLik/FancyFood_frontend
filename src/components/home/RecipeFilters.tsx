@@ -32,27 +32,21 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 200,
   },
   text: {
-    // position: 'absolute',
     textAlign: "left",
     width: "218px",
     height: "20px",
     left: "30px",
     top: "90px",
-
     fontFamily: "Roboto Slab",
-    // fontStyle: 'normal',
     fontWeight: 700,
     fontSize: "18px",
     lineHeight: "16px",
-    /* or 89% */
-
     letterSpacing: "1.25px",
-
     color: "#002226",
   },
 }));
 
-export default function RecipeFilters() {
+export default function RecipeFilters({ searchHandler, sortHandler }) {
   const classes = useStyles();
   const [state, setState] = React.useState<State>({
     search: "",
@@ -60,14 +54,18 @@ export default function RecipeFilters() {
     sort: "",
   });
 
+  const ref = React.createRef();
+
   const handleChange = (prop: keyof State) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState({ ...state, [prop]: event.target.value });
+    searchHandler(event.target.value);
   };
 
   const handleChangeSelect = (event) => {
     setState({ ...state, sort: event.target.value });
+    sortHandler(event.target.value);
   };
 
   return (
@@ -116,10 +114,13 @@ export default function RecipeFilters() {
             <FormControl variant="filled" className={classes.formControl}>
               <InputLabel id="demo-simple-select-label">Sortuj</InputLabel>
               <Select value={state.sort} onChange={handleChangeSelect}>
-                <MenuItem value={""} />
-                <MenuItem value={"Popularność"}>Popularność</MenuItem>
-                <MenuItem value={"Ocena"}>Ocena</MenuItem>
-                <MenuItem value={"Alfabetycznie"}>Alfabetycznie</MenuItem>
+                <MenuItem style={{ height: "35px" }} value={""} />
+                <MenuItem style={{ height: "35px" }} value={"Ocena"}>
+                  Ocena
+                </MenuItem>
+                <MenuItem style={{ height: "35px" }} value={"Alfabetycznie"}>
+                  Alfabetycznie
+                </MenuItem>
               </Select>
             </FormControl>
           </div>

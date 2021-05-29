@@ -1,7 +1,7 @@
 import React from "react";
 import FancyFoodLogo from "../../images/FancyFoodLogo.png";
 import "./Nav.css";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import AuthService from "../../services/auth";
 
@@ -56,17 +56,16 @@ const Nav = () => {
         >
           <div style={{ paddingTop: "5px" }}>
             <Button
-                variant="outlined"
-                color="secondary"
-                component={Link}
-                to={currentUser ? "/profile" : "/login"}
-                style={{ marginRight: "20px" }}
+              variant="outlined"
+              color="secondary"
+              component={Link}
+              to={currentUser ? "/profile" : "/login"}
+              style={{ marginRight: "20px" }}
             >
-                <span className="btn-email-text btn-texts-login">
-                   {currentUser ? "twój profil" : "zaloguj się"}
-                </span>
+              <span className="btn-email-text btn-texts-login">
+                {currentUser ? "twój profil" : "zaloguj się"}
+              </span>
             </Button>
-
           </div>
           <Button
             variant="contained"
