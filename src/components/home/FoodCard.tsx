@@ -37,12 +37,16 @@ export default function RecipeReviewCard(props) {
     history.push(`/recipe/${id}`);
   };
 
+  const getImage = (id: number) => {
+    return `recipe/photo/${id}`;
+  };
+
   const maxChips = 3;
   return (
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
-        image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
+        image={getImage(props.recipeId)}
         onClick={() => recipePageHandler(props.recipeId)}
       />
 

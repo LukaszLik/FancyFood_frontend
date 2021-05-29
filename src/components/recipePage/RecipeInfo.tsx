@@ -15,10 +15,9 @@ import {
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
     minHeight: "70vh",
-    width: "66vw",
+    width: "55vw",
     outlineColor: "blue",
     border: "#c79100 4px solid",
-    paddingTop: "0.5%",
     paddingBottom: "5vh",
     margin: "5vh 0vh 5vh 0vh",
   },
@@ -45,6 +44,11 @@ function getPortionString(portionCount) {
 
 const RecipeInfo = (props) => {
   const classes = useStyles();
+
+  const getImage = (id: number) => {
+    return `photo/${id}`;
+  };
+
   return (
     <Box
       display="flex"
@@ -55,10 +59,7 @@ const RecipeInfo = (props) => {
       style={{ minHeight: "90vh" }}
     >
       <Card className={classes.paperStyle} variant="outlined">
-        <CardMedia
-          className="image"
-          image="https://www.jadlonomia.com/wp-content/uploads/2016/05/IMG_1090-copy-600x900.jpg"
-        />
+        <CardMedia className="image" image={getImage(props.data.recipeId)} />
         <CardContent style={{ paddingBottom: "0px" }}>
           <Typography variant="h3" className="titleStyle">
             {props.data.recipeName}
