@@ -37,13 +37,10 @@ const useStyles = makeStyles((theme) => ({
     height: "20px",
     left: "30px",
     top: "90px",
-
     fontFamily: "Roboto Slab",
     fontWeight: 700,
     fontSize: "18px",
     lineHeight: "16px",
-    /* or 89% */
-
     letterSpacing: "1.25px",
     color: "#002226",
   },
@@ -68,7 +65,6 @@ export default function RecipeFilters({ searchHandler, sortHandler }) {
 
   const handleChangeSelect = (event) => {
     setState({ ...state, sort: event.target.value });
-    console.log("magia: " + event.target.value);
     sortHandler(event.target.value);
   };
 

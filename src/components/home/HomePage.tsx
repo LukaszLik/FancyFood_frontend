@@ -10,7 +10,6 @@ interface State {
   recipes: CardData[];
   pageNumber: number;
   pages;
-  isSearching: boolean;
   searchedString: string;
   prevSearchedString: string;
   sortBy: string;
@@ -64,7 +63,6 @@ export class HomePage extends React.Component<Props, State> {
     recipes: [] as CardData[],
     pageNumber: 0,
     pages: 0,
-    isSearching: false,
     searchedString: "",
     prevSearchedString: "",
     sortBy: "",
@@ -96,7 +94,7 @@ export class HomePage extends React.Component<Props, State> {
       this.state.pageNumber !== this.prevPageNumber ||
       this.state.sortBy !== this.state.prevSortBy
     ) {
-      AuthService.getRecipePageCombo(
+      AuthService.getPage(
         this.state.pageNumber,
         this.state.searchedString,
         false,
@@ -126,18 +124,18 @@ export class HomePage extends React.Component<Props, State> {
   }
 
   searchBarUpdate = (str) => {
-    this.setState({ ...this.state, searchedString: str, isSearching: true });
+    this.setState({ ...this.state, searchedString: str });
   };
 
   sortBarUpdate = (str) => {
     const alpha = "name";
     const mark = "mark";
     if (str === "Alfabetycznie") {
-      this.setState({ ...this.state, sortBy: alpha, isSearching: true });
+      this.setState({ ...this.state, sortBy: alpha });
     } else if (str === "Ocena") {
-      this.setState({ ...this.state, sortBy: mark, isSearching: true });
+      this.setState({ ...this.state, sortBy: mark });
     } else {
-      this.setState({ ...this.state, sortBy: "", isSearching: true });
+      this.setState({ ...this.state, sortBy: "" });
     }
   };
 

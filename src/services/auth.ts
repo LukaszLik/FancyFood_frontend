@@ -48,7 +48,7 @@ class AuthService {
     return axios.get(`recipe/page/${nr}`);
   }
 
-  getRecipePageCombo(
+  getPage(
     pageNumber: number,
     containing: string,
     descending: boolean,
