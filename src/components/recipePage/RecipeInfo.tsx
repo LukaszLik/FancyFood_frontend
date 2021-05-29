@@ -11,6 +11,8 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -29,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
     },
+  },
+  largeIcon: {
+    width: 45,
+    height: 45,
   },
 }));
 
@@ -49,6 +55,18 @@ const RecipeInfo = (props) => {
     return `photo/${id}`;
   };
 
+  const downloadRandomImage = (id: number) => {
+    axios({
+      url: `http://localhost:8081/export/${id}`,
+      method: "GET",
+      responseType: "blob",
+    }).then((response) => {
+      const file = new Blob([response.data], { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
+    });
+  };
+
   return (
     <Box
       display="flex"
@@ -65,11 +83,20 @@ const RecipeInfo = (props) => {
             {props.data.recipeName}
           </Typography>
         </CardContent>
-        <CardContent className={classes.tagsContainer}>
-          {props.data.tags.map((eln, index) => {
-            return <Chip className="text" key={index} label={eln.tagName} />;
-          })}
-        </CardContent>
+
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <CardContent className={classes.tagsContainer}>
+            {props.data.tags.map((eln, index) => {
+              return <Chip className="text" key={index} label={eln.tagName} />;
+            })}
+          </CardContent>
+          <span style={{ marginRight: "6vw" }}>
+            <PictureAsPdfIcon
+              className={classes.largeIcon}
+              onClick={() => downloadRandomImage(props.data.recipeId)}
+            />
+          </span>
+        </Box>
 
         <Box display="flex" justifyContent="space-evenly">
           <h4 className="text">
