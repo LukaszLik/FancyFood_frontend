@@ -38,22 +38,22 @@ const RegisterCard = () => {
 
   const [errors, setErrors] = React.useState<any>();
 
-  const handleChange = (prop: keyof State) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setValues({ ...values, [prop]: event.target.value });
+  const handleChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
 
-    if (prop === "username") {
-      validateUsername(event.target.value);
-    } else if (prop === "email") {
-      validateEmail(event.target.value);
-    } else if (prop === "password") {
-      validatePassword(event.target.value);
-    }
-  };
+      if (prop === "username") {
+        validateUsername(event.target.value);
+      } else if (prop === "email") {
+        validateEmail(event.target.value);
+      } else if (prop === "password") {
+        validatePassword(event.target.value);
+      }
+    };
 
   const validateEmail = (value: any) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     setErrors({ ...errors, email: "" });
     if (value.length === 0) {
       setErrors({ ...errors, email: "Email jest wymagany." });

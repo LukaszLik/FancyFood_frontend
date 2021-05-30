@@ -29,6 +29,31 @@ class ConnectionService {
         return response.data;
       });
   }
+
+  updateRecipe(dataToSave: any) {
+    return axios
+      .post(
+        API_URL + `recipe/update/${dataToSave.recipeId}`,
+        {
+          recipeName: dataToSave.recipeName,
+          createdOn: new Date(),
+          creatorUsername: auth.getUserCredentials()["username"],
+          creatorEmail: auth.getUserCredentials()["userinfo"],
+          tags: dataToSave.tags,
+          servingQuantity: dataToSave.servingQuantity,
+          timeDescription: dataToSave.timeDescription,
+          steps: dataToSave.steps,
+          ingredients: dataToSave.ingredients,
+        },
+        {
+          headers: header(),
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        return response.data;
+      });
+  }
 }
 
 export default new ConnectionService();

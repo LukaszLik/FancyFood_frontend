@@ -8,6 +8,7 @@ import { HomePage } from "./components/home/HomePage";
 import AddProducts from "./components/addproducts/AddProducts";
 import RecipePage from "./components/recipePage/RecipePage";
 import { UserPage } from "./components/user/UserPage";
+import EditRecipePage from "./components/editrecipe/EditRecipePage";
 
 interface State {}
 interface Props {}
@@ -24,6 +25,7 @@ export class App extends React.Component<Props, State> {
           <Route path="/recipe/add" exact component={AddProducts} />
           <Route path="/recipe/:id" exact component={RecipePage} />
           <Route path="/profile" exact component={UserPage} />
+          <Route path="/editrecipe/:id" exact component={EditRecipePage} />
         </Switch>
       </div>
     );

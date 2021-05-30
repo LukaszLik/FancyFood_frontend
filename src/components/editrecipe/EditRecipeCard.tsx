@@ -1,40 +1,87 @@
-import React, { useState } from "react";
-import InputList from "./../../common/litInputs/InputList";
 import {
-  withStyles,
-  Theme,
+  Box,
   Button,
   Card,
   CardContent,
-  Grid,
-  TextField,
-  Typography,
-  FormControl,
-  Select,
-  MenuItem,
   Chip,
-  InputLabel,
+  FormControl,
   Input,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+  TextField,
+  Theme,
+  Typography,
+  withStyles,
 } from "@material-ui/core";
-import "./AddProduct.css";
+import React, { useState } from "react";
+import "./EditRecipe.css";
+import Tags from "../../common/Tags";
 import { grey } from "@material-ui/core/colors";
+import InputList from "../../common/litInputs/InputList";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
-import Tags from "../../common/Tags";
 
-const AddProducts = (props) => {
-  const [ingredients, setIngredients] = useState([
-    { data: "", orderNumber: 0 },
-  ]);
-  const [steps, setSteps] = useState([{ data: "", orderNumber: 0 }]);
-  const [tags, setTags] = useState<string[]>([]);
-  const [values, setValues] = useState({
-    title: "",
-    quantity: 0,
-    time: "",
-    image: null,
+interface RecipeData {
+  recipeId: number;
+  recipeName: string;
+  servingQuantity: number;
+  timeDescription: string;
+  image: any;
+}
+
+const useStyles = makeStyles((theme) => ({
+  paperStyle: {
+    minHeight: "70vh",
+    width: "55vw",
+    outlineColor: "blue",
+    border: "#c79100 4px solid",
+    paddingBottom: "5vh",
+    margin: "5vh 0vh 5vh 0vh",
+  },
+}));
+
+const EditRecipeCard = (props) => {
+  const getImage = (id: number) => {
+    return `http://localhost:3000/recipe/photo/${id}`;
+  };
+  const classes = useStyles();
+  const [values, setValues] = useState<RecipeData>({
+    recipeId: props.data.recipeId,
+    recipeName: props.data.recipeName,
+    servingQuantity: props.data.recipeBody.servingQuantity,
+    timeDescription: props.data.recipeBody.timeDescription,
+    image: getImage(props.data.recipeId),
   });
+  const [tags, setTags] = useState(props.data.tags.map((el) => el.tagName));
+  const [ingredients, setIngredients] = useState(
+    props.data.recipeBody.ingredients
+  );
+  const [steps, setSteps] = useState(props.data.recipeBody.steps);
 
+  const tagsArray = Object.values(Tags);
+
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: 48 * 4.5 + 8,
+        width: 250,
+      },
+    },
+  };
+
+  const UploadCustomButton = withStyles((theme: Theme) => ({
+    root: {
+      fontWeight: 500,
+      color: grey[50],
+      backgroundColor: grey[500],
+      "&:hover": {
+        backgroundColor: grey[800],
+      },
+    },
+  }))(Button);
+  //Handlery
   const handleChange =
     (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
@@ -44,6 +91,20 @@ const AddProducts = (props) => {
     setTags(event.target.value as string[]);
   };
 
+  const hiddenFileInput = React.useRef(null);
+
+  const handleClick = (event) => {
+    // @ts-ignore
+    hiddenFileInput.current.click();
+  };
+  const handleImage =
+    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      // @ts-ignore
+        setValues({
+        ...values,
+        [prop]: URL.createObjectURL(event.target.files[0]),
+      });
+    };
   const handleInputChange = (e, index, componentList, componentEl) => {
     const { name, value } = e.target;
     const list = [...componentEl];
@@ -57,24 +118,24 @@ const AddProducts = (props) => {
     componentList(list);
   };
 
-  const handleAdd = (index, componentList, componentEl) => {
+  const handleAdd = (index, componentList, componentEl, data = "") => {
     componentList([...componentEl, { data: "", orderNumber: index + 1 }]);
   };
-
-  const createHandler = (e) => {
+  const updateHandler = (e) => {
     e.preventDefault();
     const data = {
-      recipeName: values.title,
+      recipeId: values.recipeId,
+      recipeName: values.recipeName,
       tags: tags,
-      servingQuantity: values.quantity,
-      timeDescription: values.time,
+      servingQuantity: values.servingQuantity,
+      timeDescription: values.timeDescription,
       steps: steps,
       ingredients: ingredients,
     };
 
-    ConnectionService.saveRecipe(data).then(
+    ConnectionService.updateRecipe(data).then(
       () => {
-        window.location.reload();
+        window.location.href = `/recipe/${values.recipeId}`;
       },
       (error) => {
         console.log(error);
@@ -82,67 +143,23 @@ const AddProducts = (props) => {
     );
   };
 
-  const hiddenFileInput = React.useRef(null);
-
-  const handleClick = (event) => {
-    // @ts-ignore
-    hiddenFileInput.current.click();
-  };
-
-  const paperStyle = {
-    minHeight: "70vh",
-    width: "50vw",
-    outlineColor: "blue",
-    border: "#c79100 4px solid",
-    paddingTop: "0.5%",
-    margin: "5vh 0vh 5vh 0vh",
-  };
-
-  const UploadCustomButton = withStyles((theme: Theme) => ({
-    root: {
-      fontWeight: 500,
-      color: grey[50],
-      backgroundColor: grey[500],
-      "&:hover": {
-        backgroundColor: grey[800],
-      },
-    },
-  }))(Button);
-
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: 48 * 4.5 + 8,
-        width: 250,
-      },
-    },
-  };
-
-  const handleImage =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      // @ts-ignore
-      setValues({ ...values, [prop]: event.target.files[0] });
-    };
-
-  const tagsArray = Object.values(Tags);
-
   return (
-    <Grid
-      container
+    <Box
+      display="flex"
+      alignSelf="center"
       alignItems="center"
-      direction="column"
-      justify="center"
+      flexDirection="column"
+      justifyContent="center"
       style={{ minHeight: "90vh" }}
     >
-      <Card style={paperStyle} variant="outlined">
-        <form method="POST" onSubmit={createHandler}>
+      <Card className={classes.paperStyle} variant="outlined">
+        <form method="POST" onSubmit={updateHandler}>
           <CardContent>
             <CardContent style={{ paddingBottom: "0px" }}>
               <Typography className="titleStyle" variant="h5">
-                Dodaj przepis
+                Edytuj przepis
               </Typography>
             </CardContent>
-
             <TextField
               className="single-input"
               type="text"
@@ -151,8 +168,8 @@ const AddProducts = (props) => {
               margin="normal"
               variant="filled"
               name="title"
-              onChange={handleChange("title")}
-              value={values.title}
+              onChange={handleChange("recipeName")}
+              value={values.recipeName}
               required
             />
 
@@ -195,8 +212,8 @@ const AddProducts = (props) => {
                 margin="normal"
                 variant="filled"
                 name="quantity"
-                onChange={handleChange("quantity")}
-                value={values.quantity}
+                onChange={handleChange("servingQuantity")}
+                value={values.servingQuantity}
                 required
               />
 
@@ -207,30 +224,26 @@ const AddProducts = (props) => {
                 margin="normal"
                 variant="filled"
                 name="time"
-                onChange={handleChange("time")}
-                value={values.time}
+                onChange={handleChange("timeDescription")}
+                value={values.timeDescription}
                 required
               />
             </div>
-
             <input
               type="file"
               accept="image/*"
               ref={hiddenFileInput}
               onChange={handleImage("image")}
               style={{ display: "none" }}
-              required
             />
 
             <UploadCustomButton variant="contained" onClick={handleClick}>
               Wybierz Zdjęcie
             </UploadCustomButton>
-            {values.image ? (
-              // @ts-ignore
-              <p>{values.image.name}</p>
-            ) : (
-              <br />
-            )}
+
+            <CardContent>
+              <img src={values.image} alt="image" />
+            </CardContent>
           </CardContent>
           <CardContent>
             <div className={"div-margin"}>
@@ -279,8 +292,8 @@ const AddProducts = (props) => {
           </CardContent>
         </form>
       </Card>
-    </Grid>
+    </Box>
   );
 };
 
-export default AddProducts;
+export default EditRecipeCard;
