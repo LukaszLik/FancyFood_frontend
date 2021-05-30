@@ -99,9 +99,9 @@ const EditRecipeCard = (props) => {
   };
   const handleImage =
     (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      // @ts-ignore
-        setValues({
-        ...values,
+
+      setValues({
+        ...values,// @ts-ignore
         [prop]: URL.createObjectURL(event.target.files[0]),
       });
     };
