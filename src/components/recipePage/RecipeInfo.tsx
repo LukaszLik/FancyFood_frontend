@@ -10,9 +10,21 @@ import {
   Divider,
   makeStyles,
   Typography,
+  withStyles,
 } from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
+import UserRecipeService from "../../services/userRecipes";
+import AuthService from "../../services/auth";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import axios from "axios";
+import EditIcon from "@material-ui/icons/Edit";
+import { useHistory } from "react-router-dom";
+
+const StyledRating = withStyles({
+  iconFilled: {
+    color: "#002226",
+  },
+})(Rating);
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -23,23 +35,27 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "5vh",
     margin: "5vh 0vh 5vh 0vh",
   },
-  tagsContainer: {
+  tagsAndRatingContainer: {
     display: "flex",
     marginLeft: "6vw",
     marginRight: "6vw",
     flexWrap: "wrap",
+    justifyContent: "space-between",
     "& > *": {
       margin: theme.spacing(1),
     },
   },
+  tagsContainer: {
+    display: "flex",
+  },
   largeIcon: {
-    width: 45,
-    height: 45,
+    width: 40,
+    height: 40,
   },
 }));
 
 function getPortionString(portionCount) {
-  if (portionCount == 1) {
+  if (portionCount === 1) {
     return "porcję";
   } else if (portionCount > 1 && portionCount < 5) {
     return "porcje";
@@ -48,14 +64,22 @@ function getPortionString(portionCount) {
   }
 }
 
+function ratingsHandler(recipeId, e) {
+  const mark = e.target.value;
+  if (mark) {
+    UserRecipeService.rateRecipe(recipeId, mark);
+  }
+}
+
 const RecipeInfo = (props) => {
+  const history = useHistory();
   const classes = useStyles();
 
   const getImage = (id: number) => {
     return `photo/${id}`;
   };
 
-  const downloadRandomImage = (id: number) => {
+  const downloadPdfHandle = (id: number) => {
     axios({
       url: `http://localhost:8081/export/${id}`,
       method: "GET",
@@ -65,6 +89,10 @@ const RecipeInfo = (props) => {
       const fileURL = URL.createObjectURL(file);
       window.open(fileURL);
     });
+  };
+
+  const editRecipeHandle = (id: number) => {
+    history.push(`../updateRecipe/${id}`);
   };
 
   return (
@@ -83,20 +111,46 @@ const RecipeInfo = (props) => {
             {props.data.recipeName}
           </Typography>
         </CardContent>
-
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <CardContent className={classes.tagsContainer}>
+        <CardContent className={classes.tagsAndRatingContainer}>
+          <div className={classes.tagsContainer}>
             {props.data.tags.map((eln, index) => {
-              return <Chip className="text" key={index} label={eln.tagName} />;
+              return (
+                <Chip
+                  className="text"
+                  key={index}
+                  label={eln.tagName}
+                  style={{ marginRight: "10px" }}
+                />
+              );
             })}
-          </CardContent>
-          <span style={{ marginRight: "6vw" }}>
+          </div>
+          {AuthService.getUser() !== null ? (
+            <StyledRating
+              name="half-rating"
+              defaultValue={props.data.marks.average}
+              precision={0.5}
+              onClick={(e) => ratingsHandler(props.data.recipeId, e)}
+            />
+          ) : (
+            <StyledRating
+              name="read-only"
+              precision={0.5}
+              value={props.data.marks.average}
+              readOnly
+            />
+          )}
+
+          <span>
             <PictureAsPdfIcon
               className={classes.largeIcon}
-              onClick={() => downloadRandomImage(props.data.recipeId)}
+              onClick={() => downloadPdfHandle(props.data.recipeId)}
+            />
+            <EditIcon
+              className={classes.largeIcon}
+              onClick={() => editRecipeHandle(props.data.recipeId)}
             />
           </span>
-        </Box>
+        </CardContent>
 
         <Box display="flex" justifyContent="space-evenly">
           <h4 className="text">

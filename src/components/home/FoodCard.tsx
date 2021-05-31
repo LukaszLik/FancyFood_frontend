@@ -1,13 +1,10 @@
 import React from "react";
-import { Card, Chip, CardMedia } from "@material-ui/core";
+import { Card, Chip, CardMedia, withStyles, Box } from "@material-ui/core";
 import {
   Favorite as FavoriteIcon,
   FavoriteBorder as FavoriteBorderIcon,
-  StarBorderSharp as StarBorderSharpIcon,
-  StarSharp as StarSharpIcon,
-  StarHalfSharp as StarHalfSharpIcon,
 } from "@material-ui/icons";
-
+import Rating from "@material-ui/lab/Rating";
 import { CardData } from "./HomePage";
 import { styles } from "./FoodCardStyles";
 import "./HomePage.css";
@@ -17,6 +14,12 @@ interface State {
   addedToFavourites: boolean;
   recipe: CardData;
 }
+
+const StyledRating = withStyles({
+  iconFilled: {
+    color: "#002226",
+  },
+})(Rating);
 
 export default function RecipeReviewCard(props) {
   const history = useHistory();
@@ -80,12 +83,17 @@ export default function RecipeReviewCard(props) {
         </span>
 
         <span className={classes.stars} id="stars">
-          <StarSharpIcon />
-          <StarHalfSharpIcon />
-          <StarBorderSharpIcon />
-          <StarBorderSharpIcon />
-          <StarBorderSharpIcon />
-          <p className={classes.reviewNumberText}>{props.recipeId}</p>
+          <Box component="fieldset" mb={3} borderColor="transparent">
+            <StyledRating
+              name="read-only"
+              precision={0.5}
+              value={props.marks.average}
+              readOnly
+            />{" "}
+          </Box>
+          <p className={classes.reviewNumberText}>
+            {props.marks.numberOfmarks}
+          </p>
         </span>
       </span>
 
