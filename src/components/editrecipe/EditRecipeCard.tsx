@@ -44,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
 
 const EditRecipeCard = (props) => {
   const classes = useStyles();
+
+  const getImage = (id: number) => {
+    return `http://localhost:3000/recipe/photo/${id}`;
+  };
+
   const [values, setValues] = useState<RecipeData>({
     recipeId: props.data.recipeId,
     recipeName: props.data.recipeName,
@@ -66,10 +71,6 @@ const EditRecipeCard = (props) => {
   };
 
   const tagsArray = Object.values(Tags);
-
-  const getImage = (id: number) => {
-    return `http://localhost:3000/recipe/photo/${id}`;
-  };
 
   const UploadCustomButton = withStyles((theme: Theme) => ({
     root: {
