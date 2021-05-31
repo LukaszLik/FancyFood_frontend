@@ -84,9 +84,16 @@ export default function RecipeReviewCard(props) {
 
         <span className={classes.stars} id="stars">
           <Box component="fieldset" mb={3} borderColor="transparent">
-            <StyledRating name="read-only" precision={0.5} value={props.marks.average} readOnly />{" "}
+            <StyledRating
+              name="read-only"
+              precision={0.5}
+              value={props.marks.average}
+              readOnly
+            />{" "}
           </Box>
-          <p className={classes.reviewNumberText}>{props.marks.numberOfmarks}</p>
+          <p className={classes.reviewNumberText}>
+            {props.marks.numberOfmarks}
+          </p>
         </span>
       </span>
 

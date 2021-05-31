@@ -15,14 +15,16 @@ import {
 import Rating from "@material-ui/lab/Rating";
 import UserRecipeService from "../../services/userRecipes";
 import AuthService from "../../services/auth";
+import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
+import axios from "axios";
+import EditIcon from "@material-ui/icons/Edit";
+import { useHistory } from "react-router-dom";
 
 const StyledRating = withStyles({
   iconFilled: {
     color: "#002226",
   },
 })(Rating);
-import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paperStyle: {
@@ -47,8 +49,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   largeIcon: {
-    width: 45,
-    height: 45,
+    width: 40,
+    height: 40,
   },
 }));
 
@@ -70,13 +72,14 @@ function ratingsHandler(recipeId, e) {
 }
 
 const RecipeInfo = (props) => {
+  const history = useHistory();
   const classes = useStyles();
 
   const getImage = (id: number) => {
     return `photo/${id}`;
   };
 
-  const downloadRandomImage = (id: number) => {
+  const downloadPdfHandle = (id: number) => {
     axios({
       url: `http://localhost:8081/export/${id}`,
       method: "GET",
@@ -86,6 +89,10 @@ const RecipeInfo = (props) => {
       const fileURL = URL.createObjectURL(file);
       window.open(fileURL);
     });
+  };
+
+  const editRecipeHandle = (id: number) => {
+    history.push(`../updateRecipe/${id}`);
   };
 
   return (
@@ -117,27 +124,33 @@ const RecipeInfo = (props) => {
               );
             })}
           </div>
-          {
-            AuthService.getUser() !== null
-            ?
-            <StyledRating name="half-rating" defaultValue={props.data.marks.average} precision={0.5} onClick={(e) => ratingsHandler(props.data.recipeId, e)}/>
-            :
-            <StyledRating name="read-only" precision={0.5} value={props.data.marks.average} readOnly />
-          }
+          {AuthService.getUser() !== null ? (
+            <StyledRating
+              name="half-rating"
+              defaultValue={props.data.marks.average}
+              precision={0.5}
+              onClick={(e) => ratingsHandler(props.data.recipeId, e)}
+            />
+          ) : (
+            <StyledRating
+              name="read-only"
+              precision={0.5}
+              value={props.data.marks.average}
+              readOnly
+            />
+          )}
+
+          <span>
+            <PictureAsPdfIcon
+              className={classes.largeIcon}
+              onClick={() => downloadPdfHandle(props.data.recipeId)}
+            />
+            <EditIcon
+              className={classes.largeIcon}
+              onClick={() => editRecipeHandle(props.data.recipeId)}
+            />
+          </span>
         </CardContent>
-        {/*<Box display="flex" justifyContent="space-between" alignItems="center">*/}
-        {/*  <CardContent className={classes.tagsContainer}>*/}
-        {/*    {props.data.tags.map((eln, index) => {*/}
-        {/*      return <Chip className="text" key={index} label={eln.tagName} />;*/}
-        {/*    })}*/}
-        {/*  </CardContent>*/}
-        {/*  <span style={{ marginRight: "6vw" }}>*/}
-        {/*    <PictureAsPdfIcon*/}
-        {/*        className={classes.largeIcon}*/}
-        {/*        onClick={() => downloadRandomImage(props.data.recipeId)}*/}
-        {/*    />*/}
-        {/*  </span>*/}
-        {/*</Box>*/}
 
         <Box display="flex" justifyContent="space-evenly">
           <h4 className="text">

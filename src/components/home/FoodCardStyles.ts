@@ -10,7 +10,7 @@ export const styles = makeStyles((theme: Theme) =>
       minHeight: "260px",
       border: "4px solid #c79100",
       borderRadius: "10px",
-      cursor: "pointer"
+      cursor: "pointer",
     },
     media: {
       position: "relative",
