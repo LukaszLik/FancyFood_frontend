@@ -22,6 +22,7 @@ import { grey } from "@material-ui/core/colors";
 import InputList from "../../common/litInputs/InputList";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
+import axios from "axios";
 
 interface RecipeData {
   recipeId: number;
@@ -29,6 +30,7 @@ interface RecipeData {
   servingQuantity: number;
   timeDescription: string;
   image: any;
+  imageUpdate: any;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -45,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
 const EditRecipeCard = (props) => {
   const classes = useStyles();
 
-  const getImage = (id: number) => {
-    return `http://localhost:3000/recipe/photo/${id}`;
+  const getImageUrl = (id: number) => {
+    return `../recipe/photo/${id}`;
   };
 
   const [values, setValues] = useState<RecipeData>({
@@ -54,7 +56,8 @@ const EditRecipeCard = (props) => {
     recipeName: props.data.recipeName,
     servingQuantity: props.data.recipeBody.servingQuantity,
     timeDescription: props.data.recipeBody.timeDescription,
-    image: getImage(props.data.recipeId),
+    image: getImageUrl(props.data.recipeId),
+    imageUpdate: null,
   });
   const [tags, setTags] = useState(props.data.tags.map((el) => el.tagName));
   const [ingredients, setIngredients] = useState(
@@ -104,7 +107,8 @@ const EditRecipeCard = (props) => {
   ) => {
     setValues({
       ...values, // @ts-ignore
-      [prop]: URL.createObjectURL(event.target.files[0]),
+      [prop]: URL.createObjectURL(event.target.files[0]), // @ts-ignore
+      ["imageUpdate"]: event.target.files[0],
     });
   };
 
@@ -135,6 +139,7 @@ const EditRecipeCard = (props) => {
       timeDescription: values.timeDescription,
       steps: steps,
       ingredients: ingredients,
+      image: values.imageUpdate ? values.imageUpdate : "-1",
     };
 
     ConnectionService.updateRecipe(data).then(

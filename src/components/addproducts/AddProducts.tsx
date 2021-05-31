@@ -71,11 +71,12 @@ const AddProducts = (props) => {
       timeDescription: values.time,
       steps: steps,
       ingredients: ingredients,
+      image: values.image,
     };
 
     ConnectionService.saveRecipe(data).then(
-      () => {
-        window.location.reload();
+      (response) => {
+        window.location.href = `/recipe/${response}`;
       },
       (error) => {
         console.log(error);

@@ -145,10 +145,15 @@ const RecipeInfo = (props) => {
               className={classes.largeIcon}
               onClick={() => downloadPdfHandle(props.data.recipeId)}
             />
-            <EditIcon
-              className={classes.largeIcon}
-              onClick={() => editRecipeHandle(props.data.recipeId)}
-            />
+
+            {props.data.creatorUsername === AuthService.getUser() ? (
+              <EditIcon
+                className={classes.largeIcon}
+                onClick={() => editRecipeHandle(props.data.recipeId)}
+              />
+            ) : (
+              <p />
+            )}
           </span>
         </CardContent>
 
