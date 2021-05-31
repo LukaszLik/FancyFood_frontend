@@ -92,7 +92,7 @@ const RecipeInfo = (props) => {
   };
 
   const editRecipeHandle = (id: number) => {
-    history.push(`../updateRecipe/${id}`);
+    history.push(`../editrecipe/${id}`);
   };
 
   return (

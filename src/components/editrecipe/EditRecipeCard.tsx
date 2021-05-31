@@ -43,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EditRecipeCard = (props) => {
-  const getImage = (id: number) => {
-    return `http://localhost:3000/recipe/photo/${id}`;
-  };
   const classes = useStyles();
   const [values, setValues] = useState<RecipeData>({
     recipeId: props.data.recipeId,
@@ -59,9 +56,6 @@ const EditRecipeCard = (props) => {
     props.data.recipeBody.ingredients
   );
   const [steps, setSteps] = useState(props.data.recipeBody.steps);
-
-  const tagsArray = Object.values(Tags);
-
   const MenuProps = {
     PaperProps: {
       style: {
@@ -69,6 +63,12 @@ const EditRecipeCard = (props) => {
         width: 250,
       },
     },
+  };
+
+  const tagsArray = Object.values(Tags);
+
+  const getImage = (id: number) => {
+    return `http://localhost:3000/recipe/photo/${id}`;
   };
 
   const UploadCustomButton = withStyles((theme: Theme) => ({
@@ -81,11 +81,12 @@ const EditRecipeCard = (props) => {
       },
     },
   }))(Button);
-  //Handlery
-  const handleChange =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+
+  const handleChange = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleTags = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTags(event.target.value as string[]);
@@ -97,14 +98,15 @@ const EditRecipeCard = (props) => {
     // @ts-ignore
     hiddenFileInput.current.click();
   };
-  const handleImage =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImage = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({
+      ...values, // @ts-ignore
+      [prop]: URL.createObjectURL(event.target.files[0]),
+    });
+  };
 
-      setValues({
-        ...values,// @ts-ignore
-        [prop]: URL.createObjectURL(event.target.files[0]),
-      });
-    };
   const handleInputChange = (e, index, componentList, componentEl) => {
     const { name, value } = e.target;
     const list = [...componentEl];
@@ -121,6 +123,7 @@ const EditRecipeCard = (props) => {
   const handleAdd = (index, componentList, componentEl, data = "") => {
     componentList([...componentEl, { data: "", orderNumber: index + 1 }]);
   };
+
   const updateHandler = (e) => {
     e.preventDefault();
     const data = {
@@ -287,7 +290,7 @@ const EditRecipeCard = (props) => {
               color="secondary"
               size="large"
             >
-              <span className="addRecBtn">Dodaj przepis</span>
+              <span className="addRecBtn">Edytuj przepis</span>
             </Button>
           </CardContent>
         </form>
