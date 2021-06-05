@@ -9,6 +9,8 @@ import { CardData } from "./HomePage";
 import { styles } from "./FoodCardStyles";
 import "./HomePage.css";
 import { useHistory } from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
+import { Typography } from "@material-ui/core";
 
 interface State {
   addedToFavourites: boolean;
@@ -20,6 +22,15 @@ const StyledRating = withStyles({
     color: "#002226",
   },
 })(Rating);
+
+// const HtmlTooltip = withStyles((theme) => ({
+//   tooltip: {
+//     backgroundColor: '#fff',
+//     color: 'rgba(0, 0, 0, 1)',
+//     border: "2px solid #c79100",
+//     borderRadius: "5px",
+//   }
+// }))(Tooltip);
 
 export default function RecipeReviewCard(props) {
   const history = useHistory();
@@ -65,7 +76,24 @@ export default function RecipeReviewCard(props) {
 
       <span className={classes.titleFavSpan} id="text-likes-favourites">
         <span className={classes.titleFav}>
-          <div className="titleText">{props.recipeName}</div>
+          {/*<HtmlTooltip title={*/}
+          {/*  <React.Fragment>*/}
+          {/*    <Typography color="inherit">{props.recipeName}</Typography>*/}
+          {/*  </React.Fragment>*/}
+          {/*}>*/}
+          {/*  <div className="titleText">{props.recipeName}</div>*/}
+          {/*</HtmlTooltip>*/}
+          <Tooltip
+            title={
+              <React.Fragment>
+                <Typography color="inherit">{props.recipeName}</Typography>
+              </React.Fragment>
+            }
+            placement="bottom"
+            arrow
+          >
+            <div className="titleText">{props.recipeName}</div>
+          </Tooltip>
           <span className={classes.buttonDiv}>
             <button
               type="button"

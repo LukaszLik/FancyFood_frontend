@@ -1,8 +1,10 @@
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { Route, RouteComponentProps } from "react-router-dom";
 import AuthService from "../../services/auth";
 import { useEffect, useState } from "react";
 import EditRecipeCard from "./EditRecipeCard";
+import { UserPage } from "../user/UserPage";
+import Unauthorized from "../../common/errorPages/Unauthorized";
 
 interface RouteParams {
   id: string;
