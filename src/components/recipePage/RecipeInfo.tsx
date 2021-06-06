@@ -19,6 +19,8 @@ import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import axios from "axios";
 import EditIcon from "@material-ui/icons/Edit";
 import { useHistory } from "react-router-dom";
+import {AddComment} from "../comments/AddComent";
+import {CommentSection} from "../comments/CommentSection";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -184,6 +186,8 @@ const RecipeInfo = (props) => {
           textTable={props.data.recipeBody.steps}
           variant={false}
         />
+        <Divider variant="middle"/>
+        <CommentSection/>
       </Card>
     </Box>
   );
