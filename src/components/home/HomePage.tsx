@@ -38,6 +38,7 @@ export class CardData {
   creatorId: number;
   createdOn: string;
   creatorUsername: string;
+  favorite: boolean;
   tags: Tag[];
 
   constructor(
@@ -46,6 +47,7 @@ export class CardData {
     creatorId = 1,
     createdOn = Date(),
     creatorUsername = "test",
+    favorite = false,
     tags = [new Tag(0, "test")]
   ) {
     this.recipeId = recipeId;
@@ -53,6 +55,7 @@ export class CardData {
     this.creatorId = creatorId;
     this.createdOn = createdOn;
     this.creatorUsername = creatorUsername;
+    this.favorite = favorite;
     this.tags = tags;
   }
 }
@@ -72,7 +75,7 @@ export class HomePage extends React.Component<Props, State> {
   prevPageNumber = -1;
 
   async componentDidMount() {
-    AuthService.getRecipePages(this.state.pageNumber).then(
+    AuthService.getPage(this.state.pageNumber, "", false, "").then(
       (response) => {
         this.setState((state) => {
           return {
@@ -101,6 +104,7 @@ export class HomePage extends React.Component<Props, State> {
         this.state.sortBy
       ).then(
         (response) => {
+          console.log(response);
           this.setState((state) => {
             return {
               isLoading: false,
