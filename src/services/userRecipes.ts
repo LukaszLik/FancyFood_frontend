@@ -3,13 +3,13 @@ import header from "./header";
 
 class UserRecipesService {
   async getUserRecipe(pageNumber: number) {
-    return axios.get(`recipe/user/page/${pageNumber}`, {
+    return axios.get(`/recipe/user/page/${pageNumber}`, {
       headers: header(),
     });
   }
 
   async rateRecipe(recipeId: number, mark: number) {
-    return axios.post(`${recipeId}/mark`, mark, {
+    return axios.post(`/recipe/${recipeId}/mark`, mark, {
       headers: header(),
     });
   }
