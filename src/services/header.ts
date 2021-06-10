@@ -5,7 +5,7 @@ export default function header() {
     return {
       Authorization: user.authorization,
       "Content-Type": "application/json",
-      "content-type": "multipart/form-data",
+      // "content-type": "multipart/form-data",
     };
   } else {
     return {

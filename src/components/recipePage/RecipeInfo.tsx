@@ -186,7 +186,7 @@ const RecipeInfo = (props) => {
           variant={false}
         />
         <Divider variant="middle"/>
-        <CommentSection comments={props.data.recipeBody.comments}/>
+        <CommentSection comments={props.data.recipeBody.comments} recipeId={props.data.recipeId}/>
       </Card>
     </Box>
   );

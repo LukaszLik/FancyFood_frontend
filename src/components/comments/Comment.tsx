@@ -13,7 +13,7 @@ export const Comment: React.FC<Props> = props => {
             <CardContent>
                 <span style={{display: "flex", justifyContent:"space-between"}}>
                     <Typography>{props.creatorUsername}</Typography>
-                    <Typography>{props.createdOn}</Typography>
+                    <Typography>{props.createdOn.substring(0,10)}</Typography>
                 </span>
 
                 <Typography variant="subtitle2" style={{textAlign: "left"}}>
