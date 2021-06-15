@@ -1,5 +1,6 @@
 import React from "react";
 import {Card, CardContent, CardHeader, Typography} from "@material-ui/core";
+import "./Comments.css"
 
 interface Props {
     content: string,
@@ -10,13 +11,13 @@ interface Props {
 export const Comment: React.FC<Props> = props => {
     return (
         <Card variant="outlined">
-            <CardContent>
-                <span style={{display: "flex", justifyContent:"space-between"}}>
-                    <Typography>{props.creatorUsername}</Typography>
-                    <Typography>{props.createdOn.substring(0,10)}</Typography>
+            <CardContent style={{}}>
+                <span className="comment-container-head">
+                    <Typography variant="h5" className="typography typography-h5" style={{ color:"#0095A8", fontSize:18}}>{props.creatorUsername}</Typography>
+                    <Typography variant="h5" className="typography typography-h5" style={{ color:"#747474", fontSize:14}}>{props.createdOn.substring(0,10)}</Typography>
                 </span>
 
-                <Typography variant="subtitle2" style={{textAlign: "left"}}>
+                <Typography variant="body1" className="typography" style={{textAlign: "justify", fontWeight:400, fontSize:14}}>
                     {props.content}
                 </Typography>
             </CardContent>

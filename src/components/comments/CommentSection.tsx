@@ -1,13 +1,13 @@
 import React from "react";
-import {Box, Divider} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import {AddComment} from "./AddComent";
 import {Comments} from "./Comments";
+import  "./Comments.css"
 
 export const CommentSection = props => {
     return (
-        <Box style={{padding: "0vh 1vw 0vh 1vw", marginTop: "2vh", display: "flex", flexDirection: "column", gap:"30px"}}>
+        <Box className={"comment-section-container"}>
             <AddComment recipeId={props.recipeId}/>
-            <Divider variant="middle"/>
             <Comments comments={props.comments}/>
         </Box>
     )
