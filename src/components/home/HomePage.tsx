@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FoodCard from "./FoodCard";
 import RecipeFilters from "./RecipeFilters";
 import "./HomePage.css";
@@ -38,6 +38,7 @@ export class CardData {
   creatorId: number;
   createdOn: string;
   creatorUsername: string;
+  favorite: boolean;
   tags: Tag[];
 
   constructor(
@@ -46,6 +47,7 @@ export class CardData {
     creatorId = 1,
     createdOn = Date(),
     creatorUsername = "test",
+    favorite = false,
     tags = [new Tag(0, "test")]
   ) {
     this.recipeId = recipeId;
@@ -53,12 +55,13 @@ export class CardData {
     this.creatorId = creatorId;
     this.createdOn = createdOn;
     this.creatorUsername = creatorUsername;
+    this.favorite = favorite;
     this.tags = tags;
   }
 }
 
-export class HomePage extends React.Component<Props, State> {
-  state: State = {
+export default function HomePage() {
+  const [state, setState] = React.useState({
     isLoading: true,
     recipes: [] as CardData[],
     pageNumber: 0,
@@ -67,117 +70,97 @@ export class HomePage extends React.Component<Props, State> {
     prevSearchedString: "",
     sortBy: "",
     prevSortBy: "",
-  };
+  });
 
-  prevPageNumber = -1;
+  let prevPageNumber = -1;
 
-  async componentDidMount() {
-    AuthService.getRecipePages(this.state.pageNumber).then(
-      (response) => {
-        this.setState((state) => {
-          return {
-            isLoading: false,
-            recipes: response.data.content,
-            pages: response.data.totalPages,
-          };
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  componentDidUpdate() {
-    if (
-      this.state.searchedString !== this.state.prevSearchedString ||
-      this.state.pageNumber !== this.prevPageNumber ||
-      this.state.sortBy !== this.state.prevSortBy
-    ) {
-      AuthService.getPage(
-        this.state.pageNumber,
-        this.state.searchedString,
-        false,
-        this.state.sortBy
-      ).then(
-        (response) => {
-          this.setState((state) => {
-            return {
+  useEffect(() => {
+    const getPages = () => {
+      if (
+        state.searchedString !== state.prevSearchedString ||
+        state.pageNumber !== prevPageNumber ||
+        state.sortBy !== state.prevSortBy
+      ) {
+        AuthService.getPage(
+          state.pageNumber,
+          state.searchedString,
+          false,
+          state.sortBy
+        ).then(
+          (response) => {
+            setState({
+              ...state,
               isLoading: false,
               recipes: response.data.content,
               pages: response.data.totalPages,
-            };
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
 
-      this.prevPageNumber = this.state.pageNumber;
-      this.setState({
-        ...this.state,
-        prevSearchedString: this.state.searchedString,
-        prevSortBy: this.state.sortBy,
-      });
-    }
-  }
+        prevPageNumber = state.pageNumber;
+        setState({
+          ...state,
+          prevSearchedString: state.searchedString,
+          prevSortBy: state.sortBy,
+        });
+      }
+    };
 
-  searchBarUpdate = (str) => {
-    this.setState({ ...this.state, searchedString: str });
+    getPages();
+  }, [state.pageNumber, state.searchedString, state.sortBy]);
+
+  const searchBarUpdate = (str) => {
+    setState({ ...state, searchedString: str });
   };
 
-  sortBarUpdate = (str) => {
+  const sortBarUpdate = (str) => {
     const alpha = "name";
     const mark = "mark";
     if (str === "Alfabetycznie") {
-      this.setState({ ...this.state, sortBy: alpha });
+      setState({ ...state, sortBy: alpha });
     } else if (str === "Ocena") {
-      this.setState({ ...this.state, sortBy: mark });
+      setState({ ...state, sortBy: mark });
     } else {
-      this.setState({ ...this.state, sortBy: "" });
+      setState({ ...state, sortBy: "" });
     }
   };
 
-  render() {
-    const recipes: CardData[] = [];
+  const recipes: CardData[] = [];
 
-    if (this.state.isLoading) {
-      return (
-        <div>
-          <p>Ładowanie strony, proszę czekać</p>
-        </div>
-      );
-    }
+  for (let recipe of state.recipes) {
+    recipes.push(recipe);
+  }
 
-    for (let recipe of this.state.recipes) {
-      recipes.push(recipe);
-    }
-
-    return (
-      <div className="home">
-        <RecipeFilters
-          searchHandler={this.searchBarUpdate}
-          sortHandler={this.sortBarUpdate}
-        />
-        <div className="card-area">
-          <div className="card-container">
-            {recipes.map((recipe) => {
-              return <FoodCard key={recipe.recipeId} {...recipe} />;
-            })}
-          </div>
-        </div>
-        <div className="footer">
-          <Pagination
-            count={this.state.pages}
-            color="secondary"
-            className="pagination"
-            onChange={(event, page) => {
-              this.setState({ pageNumber: page - 1 });
-            }}
-          />
+  return state.isLoading ? (
+    <div>
+      <p>Ładowanie strony, proszę czekać</p>
+    </div>
+  ) : (
+    <div className="home">
+      <RecipeFilters
+        searchHandler={searchBarUpdate}
+        sortHandler={sortBarUpdate}
+      />
+      <div className="card-area">
+        <div className="card-container">
+          {recipes.map((recipe) => {
+            return <FoodCard key={recipe.recipeId} {...recipe} />;
+          })}
         </div>
       </div>
-    );
-  }
+      <div className="footer">
+        <Pagination
+          count={state.pages}
+          color="secondary"
+          className="pagination"
+          onChange={(event, page) => {
+            setState({ ...state, pageNumber: page - 1 });
+          }}
+        />
+      </div>
+    </div>
+  );
 }

@@ -42,7 +42,7 @@ export default function RecipeReviewCard(props) {
 
   const handleFavourites = () => {
     setState({
-      addedToFavourites: !state.addedToFavourites,
+      addedToFavourites: props.favorite,
       recipe: new CardData(),
     });
   };
