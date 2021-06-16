@@ -6,7 +6,7 @@ import  "./Comments.css"
 
 export const CommentSection = props => {
     return (
-        <Box className={"comment-section-container"}>
+        <Box className="comment-section-container">
             <AddComment recipeId={props.recipeId}/>
             <Comments comments={props.comments}/>
         </Box>

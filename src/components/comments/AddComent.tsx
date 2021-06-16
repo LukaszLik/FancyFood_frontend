@@ -21,7 +21,7 @@ export const AddComment = props => {
 
     return (
         <>
-            <form method="POST" onSubmit={handleAddComment}>
+            <form onSubmit={handleAddComment}>
                 <TextField multiline fullWidth variant="filled" label="Komentarz" placeholder="Wpisz swój komentarz..."
                            value={content} onChange={handleChange}/>
                 <Button type="submit" variant="contained" size="large" color="secondary" className="add-comment-button">
