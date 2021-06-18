@@ -62,69 +62,63 @@ export class CardData {
 
 export default function HomePage() {
   const [state, setState] = React.useState({
-    isLoading: true,
     recipes: [] as CardData[],
+  });
+
+  const [filters, setFilters] = React.useState({
+    searchedString: "",
+    sortBy: "",
+  });
+
+  const [page, setPage] = React.useState({
     pageNumber: 0,
     pages: 0,
-    searchedString: "",
-    prevSearchedString: "",
-    sortBy: "",
-    prevSortBy: "",
-  });
+  })
+
+  const [loading, setLoading] = React.useState(true);
+
 
   let prevPageNumber = -1;
 
   useEffect(() => {
+
     const getPages = () => {
-      if (
-        state.searchedString !== state.prevSearchedString ||
-        state.pageNumber !== prevPageNumber ||
-        state.sortBy !== state.prevSortBy
-      ) {
         AuthService.getPage(
-          state.pageNumber,
-          state.searchedString,
+          page.pageNumber,
+          filters.searchedString,
           false,
-          state.sortBy
+          filters.sortBy
         ).then(
           (response) => {
             setState({
               ...state,
-              isLoading: false,
               recipes: response.data.content,
-              pages: response.data.totalPages,
             });
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
 
-        prevPageNumber = state.pageNumber;
-        setState({
-          ...state,
-          prevSearchedString: state.searchedString,
-          prevSortBy: state.sortBy,
-        });
-      }
+            setPage({...page, pages: response.data.totalPages});
+
+            setLoading(false);
+          },
+        );
     };
 
     getPages();
-  }, [state.pageNumber, state.searchedString, state.sortBy]);
+
+  }, [page.pageNumber, filters.searchedString, filters.sortBy]);
 
   const searchBarUpdate = (str) => {
-    setState({ ...state, searchedString: str });
+    setFilters({ ...filters, searchedString: str });
   };
 
   const sortBarUpdate = (str) => {
     const alpha = "name";
     const mark = "mark";
     if (str === "Alfabetycznie") {
-      setState({ ...state, sortBy: alpha });
+      setFilters({ ...filters, sortBy: alpha });
     } else if (str === "Ocena") {
-      setState({ ...state, sortBy: mark });
+      setFilters({ ...filters, sortBy: mark });
     } else {
-      setState({ ...state, sortBy: "" });
+      setFilters({ ...filters, sortBy: "" });
     }
   };
 
@@ -134,7 +128,7 @@ export default function HomePage() {
     recipes.push(recipe);
   }
 
-  return state.isLoading ? (
+  return loading ? (
     <div>
       <p>Ładowanie strony, proszę czekać</p>
     </div>
@@ -153,11 +147,11 @@ export default function HomePage() {
       </div>
       <div className="footer">
         <Pagination
-          count={state.pages}
+          count={page.pages}
           color="secondary"
           className="pagination"
-          onChange={(event, page) => {
-            setState({ ...state, pageNumber: page - 1 });
+          onChange={(event, pageNr) => {
+            setPage({...page, pageNumber: pageNr - 1 });
           }}
         />
       </div>
