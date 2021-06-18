@@ -23,15 +23,6 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-// const HtmlTooltip = withStyles((theme) => ({
-//   tooltip: {
-//     backgroundColor: '#fff',
-//     color: 'rgba(0, 0, 0, 1)',
-//     border: "2px solid #c79100",
-//     borderRadius: "5px",
-//   }
-// }))(Tooltip);
-
 export default function RecipeReviewCard(props) {
   const history = useHistory();
   const classes = styles();
@@ -76,13 +67,6 @@ export default function RecipeReviewCard(props) {
 
       <span className={classes.titleFavSpan} id="text-likes-favourites">
         <span className={classes.titleFav}>
-          {/*<HtmlTooltip title={*/}
-          {/*  <React.Fragment>*/}
-          {/*    <Typography color="inherit">{props.recipeName}</Typography>*/}
-          {/*  </React.Fragment>*/}
-          {/*}>*/}
-          {/*  <div className="titleText">{props.recipeName}</div>*/}
-          {/*</HtmlTooltip>*/}
           <Tooltip
             title={
               <React.Fragment>

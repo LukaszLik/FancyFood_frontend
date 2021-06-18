@@ -61,7 +61,6 @@ export default function RecipeFilters({ searchHandler, sortHandler }) {
   ) => {
     searchHandler(event.target.value);
     setState({ ...state, [prop]: event.target.value });
-
   };
 
   const handleChangeSelect = (event) => {

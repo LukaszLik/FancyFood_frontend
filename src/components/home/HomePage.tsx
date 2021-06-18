@@ -73,37 +73,32 @@ export default function HomePage() {
   const [page, setPage] = React.useState({
     pageNumber: 0,
     pages: 0,
-  })
+  });
 
   const [loading, setLoading] = React.useState(true);
-
 
   let prevPageNumber = -1;
 
   useEffect(() => {
-
     const getPages = () => {
-        AuthService.getPage(
-          page.pageNumber,
-          filters.searchedString,
-          false,
-          filters.sortBy
-        ).then(
-          (response) => {
-            setState({
-              ...state,
-              recipes: response.data.content,
-            });
+      AuthService.getPage(
+        page.pageNumber,
+        filters.searchedString,
+        false,
+        filters.sortBy
+      ).then((response) => {
+        setState({
+          ...state,
+          recipes: response.data.content,
+        });
 
-            setPage({...page, pages: response.data.totalPages});
+        setPage({ ...page, pages: response.data.totalPages });
 
-            setLoading(false);
-          },
-        );
+        setLoading(false);
+      });
     };
 
     getPages();
-
   }, [page.pageNumber, filters.searchedString, filters.sortBy]);
 
   const searchBarUpdate = (str) => {
@@ -151,7 +146,7 @@ export default function HomePage() {
           color="secondary"
           className="pagination"
           onChange={(event, pageNr) => {
-            setPage({...page, pageNumber: pageNr - 1 });
+            setPage({ ...page, pageNumber: pageNr - 1 });
           }}
         />
       </div>
