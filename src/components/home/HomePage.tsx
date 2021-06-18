@@ -5,19 +5,6 @@ import "./HomePage.css";
 import Pagination from "@material-ui/lab/Pagination";
 import AuthService from "../../services/auth";
 
-interface State {
-  isLoading: boolean;
-  recipes: CardData[];
-  pageNumber: number;
-  pages;
-  searchedString: string;
-  prevSearchedString: string;
-  sortBy: string;
-  prevSortBy: string;
-}
-
-interface Props {}
-
 export class Tag {
   id: number;
   tagName: string;
@@ -76,8 +63,6 @@ export default function HomePage() {
   });
 
   const [loading, setLoading] = React.useState(true);
-
-  let prevPageNumber = -1;
 
   useEffect(() => {
     const getPages = () => {
