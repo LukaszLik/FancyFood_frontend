@@ -4,7 +4,7 @@ import Nav from "./common/nav/Nav";
 import { LoginPage } from "./components/login/LoginPage";
 import { Route, Switch } from "react-router-dom";
 import { RegisterPage } from "./components/register/RegisterPage";
-import { HomePage } from "./components/home/HomePage";
+import HomePage from "./components/home/HomePage";
 import AddProducts from "./components/addproducts/AddProducts";
 import RecipePage from "./components/recipePage/RecipePage";
 import { UserPage } from "./components/user/UserPage";
