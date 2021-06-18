@@ -112,7 +112,7 @@ export default function HomePage() {
 
   const sortBarUpdate = (str) => {
     const alpha = "name";
-    const mark = "mark";
+    const mark = "marks";
     if (str === "Alfabetycznie") {
       setFilters({ ...filters, sortBy: alpha });
     } else if (str === "Ocena") {
