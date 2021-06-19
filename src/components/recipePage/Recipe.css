@@ -28,3 +28,10 @@
 .recipeEl{
     margin-bottom: 3vh;
 }
+
+
+.favoriteButton {
+     background: Transparent;
+    outline: none;
+    border: none;
+}

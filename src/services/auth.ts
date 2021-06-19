@@ -60,9 +60,10 @@ class AuthService {
     fieldFilter: string
   ) {
     return axios.get(
-      `recipe/page/${pageNumber}?containing=${containing}&descending=${descending}&fieldFilter=${fieldFilter}`, {
-        headers: header()
-        }
+      `recipe/page/${pageNumber}?containing=${containing}&descending=${descending}&fieldFilter=${fieldFilter}`,
+      {
+        headers: header(),
+      }
     );
   }
 }

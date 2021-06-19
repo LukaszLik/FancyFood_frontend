@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Recipe.css";
 import RecipeElement from "./RecipeElement";
 import {
@@ -18,7 +18,13 @@ import AuthService from "../../services/auth";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import axios from "axios";
 import EditIcon from "@material-ui/icons/Edit";
+import {
+  Favorite as FavoriteIcon,
+  FavoriteBorder as FavoriteBorderIcon,
+} from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
+import { CardData } from "../home/HomePage";
+import UserRecipesService from "../../services/userRecipes";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -54,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   largeIcon: {
     width: 40,
     height: 40,
+    marginRight: "5%",
   },
 }));
 
@@ -78,8 +85,24 @@ const RecipeInfo = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
+  const [favoriteStare, setFavoriteStare] = useState({
+    addedToFavorites: props.data.favorite,
+  });
+
   const getImage = (id: number) => {
     return `photo/${id}`;
+  };
+
+  const handleFavourites = () => {
+    setFavoriteStare({
+      addedToFavorites: !favoriteStare.addedToFavorites,
+    });
+
+    if (favoriteStare.addedToFavorites) {
+      UserRecipesService.removeFavorite(props.data.recipeId);
+    } else {
+      UserRecipesService.addFavorite(props.data.recipeId);
+    }
   };
 
   const downloadPdfHandle = (id: number) => {
@@ -127,6 +150,7 @@ const RecipeInfo = (props) => {
               );
             })}
           </div>
+
           {AuthService.getUser() !== null ? (
             <StyledRating
               name="half-rating"
@@ -144,6 +168,21 @@ const RecipeInfo = (props) => {
           )}
 
           <span>
+            {AuthService.getUser() ? (
+              <button
+                type="button"
+                className={"favoriteButton"}
+                onClick={handleFavourites}
+                aria-label="add to favorites"
+              >
+                {favoriteStare.addedToFavorites ? (
+                  <FavoriteIcon className={classes.largeIcon} />
+                ) : (
+                  <FavoriteBorderIcon className={classes.largeIcon} />
+                )}
+              </button>
+            ) : null}
+
             <PictureAsPdfIcon
               className={classes.largeIcon}
               onClick={() => downloadPdfHandle(props.data.recipeId)}
@@ -154,9 +193,7 @@ const RecipeInfo = (props) => {
                 className={classes.largeIcon}
                 onClick={() => editRecipeHandle(props.data.recipeId)}
               />
-            ) : (
-              <p />
-            )}
+            ) : null}
           </span>
         </CardContent>
 

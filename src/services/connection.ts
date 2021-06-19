@@ -56,7 +56,7 @@ class ConnectionService {
 
     return axios
       .post(API_URL + `recipe/update/${dataToSave.recipeId}`, formData, {
-    headers: {...header(), "Content-Type": "multipart/form-data"},
+        headers: { ...header(), "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
         return response.data;
