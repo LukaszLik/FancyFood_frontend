@@ -55,12 +55,15 @@ export default function HomePage() {
   const [filters, setFilters] = React.useState({
     searchedString: "",
     sortBy: "",
+    onlyFavorites: false,
   });
 
   const [page, setPage] = React.useState({
     pageNumber: 0,
     pages: 0,
   });
+
+  const [favorites, setFavorites] = React.useState(false);
 
   const [loading, setLoading] = React.useState(true);
 
@@ -70,7 +73,8 @@ export default function HomePage() {
         page.pageNumber,
         filters.searchedString,
         false,
-        filters.sortBy
+        filters.sortBy,
+        favorites
       ).then((response) => {
         setState({
           ...state,
@@ -84,7 +88,7 @@ export default function HomePage() {
     };
 
     getPages();
-  }, [page.pageNumber, filters.searchedString, filters.sortBy]);
+  }, [page.pageNumber, filters.searchedString, filters.sortBy, favorites]);
 
   const searchBarUpdate = (str) => {
     setFilters({ ...filters, searchedString: str });
@@ -102,6 +106,11 @@ export default function HomePage() {
     }
   };
 
+  const favoritesUpdate = (str) => {
+    console.log(str);
+    setFavorites(str);
+  };
+
   const recipes: CardData[] = [];
 
   for (let recipe of state.recipes) {
@@ -117,6 +126,7 @@ export default function HomePage() {
       <RecipeFilters
         searchHandler={searchBarUpdate}
         sortHandler={sortBarUpdate}
+        favoritesHandler={favoritesUpdate}
       />
       <div className="card-area">
         <div className="card-container">

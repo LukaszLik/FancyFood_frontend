@@ -8,6 +8,8 @@ import {
   MenuItem,
   Select,
   InputAdornment,
+  Checkbox,
+  FormControlLabel,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -15,6 +17,7 @@ interface State {
   search: string;
   tags: string;
   sort: string;
+  onlyFavorites: boolean;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,14 +47,26 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "1.25px",
     color: "#002226",
   },
+  checkbox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    marginTop: "50px",
+  },
 }));
 
-export default function RecipeFilters({ searchHandler, sortHandler }) {
+export default function RecipeFilters({
+  searchHandler,
+  sortHandler,
+  favoritesHandler,
+}) {
   const classes = useStyles();
   const [state, setState] = React.useState<State>({
     search: "",
     tags: "",
     sort: "",
+    onlyFavorites: false,
   });
 
   const ref = React.createRef();
@@ -66,6 +81,11 @@ export default function RecipeFilters({ searchHandler, sortHandler }) {
   const handleChangeSelect = (event) => {
     sortHandler(event.target.value);
     setState({ ...state, sort: event.target.value });
+  };
+
+  const handleChangeBox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    favoritesHandler(event.target.checked);
+    setState({ ...state, onlyFavorites: event.target.checked });
   };
 
   return (
@@ -97,16 +117,28 @@ export default function RecipeFilters({ searchHandler, sortHandler }) {
           </div>
         </Grid>
         <Grid item>
-          <div className={classes.searchElement}>
-            <p className={classes.text}>Filtruj po tagach</p>
-            <TextField
-              id="recipe-tag-search"
-              label="Tagi"
-              variant="filled"
-              value={state.tags}
-              onChange={handleChange("tags")}
+          <div className={classes.checkbox}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={state.onlyFavorites}
+                  onChange={handleChangeBox}
+                  name="checkedA"
+                />
+              }
+              label="pokaż tylko ulubione"
             />
           </div>
+          {/*<div className={classes.searchElement}>*/}
+          {/*  <p className={classes.text}>Filtruj po tagach</p>*/}
+          {/*  <TextField*/}
+          {/*    id="recipe-tag-search"*/}
+          {/*    label="Tagi"*/}
+          {/*    variant="filled"*/}
+          {/*    value={state.tags}*/}
+          {/*    onChange={handleChange("tags")}*/}
+          {/*  />*/}
+          {/*</div>*/}
         </Grid>
         <Grid item>
           <div className={classes.searchElement}>
