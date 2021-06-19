@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Typography } from "@material-ui/core";
 import UserRecipesService from "../../services/userRecipes";
+import AuthService from "../../services/auth"
 
 interface State {
   addedToFavourites: boolean;
@@ -24,15 +25,6 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-// const HtmlTooltip = withStyles((theme) => ({
-//   tooltip: {
-//     backgroundColor: '#fff',
-//     color: 'rgba(0, 0, 0, 1)',
-//     border: "2px solid #c79100",
-//     borderRadius: "5px",
-//   }
-// }))(Tooltip);
-
 export default function RecipeReviewCard(props) {
   const history = useHistory();
   const classes = styles();
@@ -42,16 +34,23 @@ export default function RecipeReviewCard(props) {
   });
 
   const handleFavourites = () => {
-    setState({
-      addedToFavourites: !state.addedToFavourites,
-      recipe: new CardData(),
-    });
 
-    if (state.addedToFavourites) {
-      UserRecipesService.removeFavorite(props.recipeId);
-    } else {
-    UserRecipesService.addFavorite(props.recipeId);
+    if(AuthService.getUser()){
+      setState({
+        addedToFavourites: !state.addedToFavourites,
+        recipe: new CardData(),
+      });
+
+      if (state.addedToFavourites) {
+        UserRecipesService.removeFavorite(props.recipeId);
+      } else {
+        UserRecipesService.addFavorite(props.recipeId);
+      }
+    }else{
+      window.location.replace("/login")
     }
+
+
   };
 
   const recipePageHandler = (id: Number) => {
@@ -83,13 +82,6 @@ export default function RecipeReviewCard(props) {
 
       <span className={classes.titleFavSpan} id="text-likes-favourites">
         <span className={classes.titleFav}>
-          {/*<HtmlTooltip title={*/}
-          {/*  <React.Fragment>*/}
-          {/*    <Typography color="inherit">{props.recipeName}</Typography>*/}
-          {/*  </React.Fragment>*/}
-          {/*}>*/}
-          {/*  <div className="titleText">{props.recipeName}</div>*/}
-          {/*</HtmlTooltip>*/}
           <Tooltip
             title={
               <React.Fragment>
