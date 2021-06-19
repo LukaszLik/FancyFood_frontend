@@ -36,17 +36,20 @@ const useStyles = makeStyles((theme) => ({
     margin: "5vh 0vh 5vh 0vh",
   },
   tagsAndRatingContainer: {
-    display: "flex",
-    marginLeft: "6vw",
-    marginRight: "6vw",
+    display: "grid",
+    marginLeft: "4%",
+    gap: "1%",
+    gridTemplateColumns: "36% 30% 24%",
+    marginRight: "4%",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "center",
     "& > *": {
       margin: theme.spacing(1),
     },
   },
   tagsContainer: {
     display: "flex",
+    flexWrap: "wrap",
   },
   largeIcon: {
     width: 40,
@@ -119,7 +122,7 @@ const RecipeInfo = (props) => {
                   className="text"
                   key={index}
                   label={eln.tagName}
-                  style={{ marginRight: "10px" }}
+                  style={{ margin: "0px 5px 2px 0" }}
                 />
               );
             })}
