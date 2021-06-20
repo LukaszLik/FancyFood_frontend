@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Recipe.css";
 import RecipeElement from "./RecipeElement";
 import {
@@ -20,6 +20,11 @@ import axios from "axios";
 import EditIcon from "@material-ui/icons/Edit";
 import { useHistory } from "react-router-dom";
 import { CommentSection } from "../comments/CommentSection";
+import UserRecipesService from "../../services/userRecipes";
+import {
+  Favorite as FavoriteIcon,
+  FavoriteBorder as FavoriteBorderIcon,
+} from "@material-ui/icons";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -37,21 +42,25 @@ const useStyles = makeStyles((theme) => ({
     margin: "5vh 0vh 5vh 0vh",
   },
   tagsAndRatingContainer: {
-    display: "flex",
-    marginLeft: "6vw",
-    marginRight: "6vw",
+    display: "grid",
+    marginLeft: "4%",
+    gap: "1%",
+    gridTemplateColumns: "36% 30% 24%",
+    marginRight: "4%",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "center",
     "& > *": {
       margin: theme.spacing(1),
     },
   },
   tagsContainer: {
     display: "flex",
+    flexWrap: "wrap",
   },
   largeIcon: {
     width: 40,
     height: 40,
+    marginRight: "5%",
   },
 }));
 
@@ -76,8 +85,24 @@ const RecipeInfo = (props) => {
   const history = useHistory();
   const classes = useStyles();
 
+  const [favoriteStare, setFavoriteStare] = useState({
+    addedToFavorites: props.data.favorite,
+  });
+
   const getImage = (id: number) => {
     return `photo/${id}`;
+  };
+
+  const handleFavourites = () => {
+    setFavoriteStare({
+      addedToFavorites: !favoriteStare.addedToFavorites,
+    });
+
+    if (favoriteStare.addedToFavorites) {
+      UserRecipesService.removeFavorite(props.data.recipeId);
+    } else {
+      UserRecipesService.addFavorite(props.data.recipeId);
+    }
   };
 
   const downloadPdfHandle = (id: number) => {
@@ -120,11 +145,12 @@ const RecipeInfo = (props) => {
                   className="text"
                   key={index}
                   label={eln.tagName}
-                  style={{ marginRight: "10px" }}
+                  style={{ margin: "0px 5px 2px 0" }}
                 />
               );
             })}
           </div>
+
           {AuthService.getUser() !== null ? (
             <StyledRating
               name="half-rating"
@@ -142,6 +168,21 @@ const RecipeInfo = (props) => {
           )}
 
           <span>
+            {AuthService.getUser() ? (
+              <button
+                type="button"
+                className={"favoriteButton"}
+                onClick={handleFavourites}
+                aria-label="add to favorites"
+              >
+                {favoriteStare.addedToFavorites ? (
+                  <FavoriteIcon className={classes.largeIcon} />
+                ) : (
+                  <FavoriteBorderIcon className={classes.largeIcon} />
+                )}
+              </button>
+            ) : null}
+
             <PictureAsPdfIcon
               className={classes.largeIcon}
               onClick={() => downloadPdfHandle(props.data.recipeId)}
@@ -152,9 +193,7 @@ const RecipeInfo = (props) => {
                 className={classes.largeIcon}
                 onClick={() => editRecipeHandle(props.data.recipeId)}
               />
-            ) : (
-              <p />
-            )}
+            ) : null}
           </span>
         </CardContent>
 

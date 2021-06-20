@@ -86,7 +86,7 @@ const RegisterCard = () => {
       setErrors({
         ...errors,
         password:
-          "Hasło powinnno zawierać przynajmniej 8 znaków, 1 dużą, 1 małą literę i 1 cyfrę.",
+          "Hasło powinnno zawierać przynajmniej 8 znaków, 1 dużą, 1 małą literę, 1 cyfrę i 1 znak specjalny.",
       });
     }
   };
