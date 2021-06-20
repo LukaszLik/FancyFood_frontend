@@ -42,7 +42,7 @@ class AuthService {
   }
 
   getRecipe(id: Number) {
-    return axios.get(`${id}`);
+    return axios.get(`${id}`, { headers: header() });
   }
 
   getRecipeToEdit(id: Number) {
