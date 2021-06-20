@@ -59,7 +59,7 @@ const Nav = () => {
             color="secondary"
             component={Link}
             to={currentUser ? "/profile" : "/login"}
-            style={{ marginRight: "20px", paddingTop: "5px" }}
+            style={{ marginRight: "20px", paddingTop: "5px 16px 6px" }}
           >
             <span className="btn-email-text btn-texts-login">
               {currentUser ? "twój profil" : "zaloguj się"}
