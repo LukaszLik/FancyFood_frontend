@@ -56,6 +56,7 @@ export default function HomePage() {
     searchedString: "",
     sortBy: "",
     onlyFavorites: false,
+    descending: false,
   });
 
   const [page, setPage] = React.useState({
@@ -74,6 +75,7 @@ export default function HomePage() {
         filters.searchedString,
         false,
         filters.sortBy,
+          filters.descending,
         favorites
       ).then((response) => {
         setState({
@@ -88,7 +90,7 @@ export default function HomePage() {
     };
 
     getPages();
-  }, [page.pageNumber, filters.searchedString, filters.sortBy, favorites]);
+  }, [page.pageNumber, filters.searchedString, filters.sortBy, filters.descending, favorites]);
 
   const searchBarUpdate = (str) => {
     setFilters({ ...filters, searchedString: str });
@@ -97,11 +99,18 @@ export default function HomePage() {
   const sortBarUpdate = (str) => {
     const alpha = "name";
     const mark = "marks";
-    if (str === "Alfabetycznie") {
-      setFilters({ ...filters, sortBy: alpha });
-    } else if (str === "Ocena") {
-      setFilters({ ...filters, sortBy: mark });
-    } else {
+    if (str === "Alfabetycznie rosnąco") {
+      setFilters({ ...filters, sortBy: alpha, descending: false });
+    }
+    else if (str ==="Alfabetycznie malejąco"){
+      setFilters({ ...filters, sortBy: alpha, descending: true });
+    }
+    else if (str === "Ocena rosnąco") {
+      setFilters({ ...filters, sortBy: mark, descending: false});
+    }else if(str === "Ocena malejąco"){
+      setFilters({ ...filters, sortBy: mark, descending: true});
+    }
+    else {
       setFilters({ ...filters, sortBy: "" });
     }
   };
