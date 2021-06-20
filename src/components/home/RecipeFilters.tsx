@@ -71,12 +71,11 @@ export default function RecipeFilters({
 
   const ref = React.createRef();
 
-  const handleChange = (prop: keyof State) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    searchHandler(event.target.value);
-    setState({ ...state, [prop]: event.target.value });
-  };
+  const handleChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      searchHandler(event.target.value);
+      setState({ ...state, [prop]: event.target.value });
+    };
 
   const handleChangeSelect = (event) => {
     sortHandler(event.target.value);
@@ -120,8 +119,12 @@ export default function RecipeFilters({
           <div className={classes.searchElement}>
             <p className={classes.text}>Sortuj po</p>
             <FormControl variant="filled" className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Sortuj</InputLabel>
-              <Select value={state.sort} onChange={handleChangeSelect}>
+              <InputLabel>Sortuj</InputLabel>
+              <Select
+                value={state.sort}
+                style={{ minWidth: "254px" }}
+                onChange={handleChangeSelect}
+              >
                 <MenuItem style={{ height: "35px" }} value="" />
                 <MenuItem style={{ height: "35px" }} value="Ocena rosnąco">
                   Ocena rosnąco

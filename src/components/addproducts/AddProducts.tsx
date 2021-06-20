@@ -35,11 +35,10 @@ const AddProducts = (props) => {
     image: null,
   });
 
-  const handleChange = (prop) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  const handleChange =
+    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
   const handleTags = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTags(event.target.value as string[]);
@@ -120,12 +119,11 @@ const AddProducts = (props) => {
     },
   };
 
-  const handleImage = (prop) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    // @ts-ignore
-    setValues({ ...values, [prop]: event.target.files[0] });
-  };
+  const handleImage =
+    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      // @ts-ignore
+      setValues({ ...values, [prop]: event.target.files[0] });
+    };
 
   const tagsArray = Object.values(Tags);
 
