@@ -73,9 +73,8 @@ export default function HomePage() {
       AuthService.getPage(
         page.pageNumber,
         filters.searchedString,
-        false,
+        filters.descending,
         filters.sortBy,
-          filters.descending,
         favorites
       ).then((response) => {
         setState({
@@ -90,7 +89,13 @@ export default function HomePage() {
     };
 
     getPages();
-  }, [page.pageNumber, filters.searchedString, filters.sortBy, filters.descending, favorites]);
+  }, [
+    page.pageNumber,
+    filters.searchedString,
+    filters.sortBy,
+    filters.descending,
+    favorites,
+  ]);
 
   const searchBarUpdate = (str) => {
     setFilters({ ...filters, searchedString: str });
@@ -101,16 +106,13 @@ export default function HomePage() {
     const mark = "marks";
     if (str === "Alfabetycznie rosnąco") {
       setFilters({ ...filters, sortBy: alpha, descending: false });
-    }
-    else if (str ==="Alfabetycznie malejąco"){
+    } else if (str === "Alfabetycznie malejąco") {
       setFilters({ ...filters, sortBy: alpha, descending: true });
-    }
-    else if (str === "Ocena rosnąco") {
-      setFilters({ ...filters, sortBy: mark, descending: false});
-    }else if(str === "Ocena malejąco"){
-      setFilters({ ...filters, sortBy: mark, descending: true});
-    }
-    else {
+    } else if (str === "Ocena rosnąco") {
+      setFilters({ ...filters, sortBy: mark, descending: false });
+    } else if (str === "Ocena malejąco") {
+      setFilters({ ...filters, sortBy: mark, descending: true });
+    } else {
       setFilters({ ...filters, sortBy: "" });
     }
   };

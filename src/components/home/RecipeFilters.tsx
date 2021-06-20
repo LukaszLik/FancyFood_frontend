@@ -13,6 +13,7 @@ import {
   Switch,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import AuthService from "../../services/auth";
 
 interface State {
   search: string;
@@ -128,10 +129,16 @@ export default function RecipeFilters({
                 <MenuItem style={{ height: "35px" }} value="Ocena malejąco">
                   Ocena malejąco
                 </MenuItem>
-                <MenuItem style={{ height: "35px" }} value="Alfabetycznie rosnąco">
+                <MenuItem
+                  style={{ height: "35px" }}
+                  value="Alfabetycznie rosnąco"
+                >
                   Alfabetycznie rosnąco
                 </MenuItem>
-                <MenuItem style={{ height: "35px" }} value="Alfabetycznie malejąco">
+                <MenuItem
+                  style={{ height: "35px" }}
+                  value="Alfabetycznie malejąco"
+                >
                   Alfabetycznie malejąco
                 </MenuItem>
               </Select>
@@ -145,6 +152,7 @@ export default function RecipeFilters({
                 <Switch
                   checked={state.onlyFavorites}
                   onChange={handleChangeBox}
+                  disabled={AuthService.getUser() ? false : true}
                 />
               }
               label="ULUBIONE"

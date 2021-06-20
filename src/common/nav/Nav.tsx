@@ -54,25 +54,24 @@ const Nav = () => {
           xs={4}
           style={{ paddingRight: "25px" }}
         >
-          <div style={{ paddingTop: "5px" }}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              component={Link}
-              to={currentUser ? "/profile" : "/login"}
-              style={{ marginRight: "20px" }}
-            >
-              <span className="btn-email-text btn-texts-login">
-                {currentUser ? "twój profil" : "zaloguj się"}
-              </span>
-            </Button>
-          </div>
+          <Button
+            variant="outlined"
+            color="secondary"
+            component={Link}
+            to={currentUser ? "/profile" : "/login"}
+            style={{ marginRight: "20px", paddingTop: "5px" }}
+          >
+            <span className="btn-email-text btn-texts-login">
+              {currentUser ? "twój profil" : "zaloguj się"}
+            </span>
+          </Button>
           <Button
             variant="contained"
             color="secondary"
             component={Link}
             to={currentUser ? "/" : "/signup"}
             onClick={logOutHandle}
+            style={{ paddingTop: "5px" }}
           >
             <span className="btn-signup-text btn-texts-login">
               {currentUser ? "wyloguj się" : "zarejestruj się"}
