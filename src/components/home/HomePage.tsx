@@ -55,6 +55,7 @@ export default function HomePage() {
   const [filters, setFilters] = React.useState({
     searchedString: "",
     sortBy: "",
+    onlyFavorites: false,
     descending: false,
   });
 
@@ -62,6 +63,8 @@ export default function HomePage() {
     pageNumber: 0,
     pages: 0,
   });
+
+  const [favorites, setFavorites] = React.useState(false);
 
   const [loading, setLoading] = React.useState(true);
 
@@ -71,7 +74,8 @@ export default function HomePage() {
         page.pageNumber,
         filters.searchedString,
         filters.descending,
-        filters.sortBy
+        filters.sortBy,
+        favorites
       ).then((response) => {
         setState({
           ...state,
@@ -85,7 +89,13 @@ export default function HomePage() {
     };
 
     getPages();
-  }, [page.pageNumber, filters.searchedString, filters.sortBy, filters.descending]);
+  }, [
+    page.pageNumber,
+    filters.searchedString,
+    filters.sortBy,
+    filters.descending,
+    favorites,
+  ]);
 
   const searchBarUpdate = (str) => {
     setFilters({ ...filters, searchedString: str });
@@ -96,18 +106,19 @@ export default function HomePage() {
     const mark = "marks";
     if (str === "Alfabetycznie rosnąco") {
       setFilters({ ...filters, sortBy: alpha, descending: false });
-    }
-    else if (str ==="Alfabetycznie malejąco"){
+    } else if (str === "Alfabetycznie malejąco") {
       setFilters({ ...filters, sortBy: alpha, descending: true });
-    }
-    else if (str === "Ocena rosnąco") {
-      setFilters({ ...filters, sortBy: mark, descending: false});
-    }else if(str === "Ocena malejąco"){
-      setFilters({ ...filters, sortBy: mark, descending: true});
-    }
-    else {
+    } else if (str === "Ocena rosnąco") {
+      setFilters({ ...filters, sortBy: mark, descending: false });
+    } else if (str === "Ocena malejąco") {
+      setFilters({ ...filters, sortBy: mark, descending: true });
+    } else {
       setFilters({ ...filters, sortBy: "" });
     }
+  };
+
+  const favoritesUpdate = (str) => {
+    setFavorites(str);
   };
 
   const recipes: CardData[] = [];
@@ -125,6 +136,7 @@ export default function HomePage() {
       <RecipeFilters
         searchHandler={searchBarUpdate}
         sortHandler={sortBarUpdate}
+        favoritesHandler={favoritesUpdate}
       />
       <div className="card-area">
         <div className="card-container">
