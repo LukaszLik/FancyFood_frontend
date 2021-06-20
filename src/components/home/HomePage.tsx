@@ -107,7 +107,6 @@ export default function HomePage() {
   };
 
   const favoritesUpdate = (str) => {
-    console.log(str);
     setFavorites(str);
   };
 

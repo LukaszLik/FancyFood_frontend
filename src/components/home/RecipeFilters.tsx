@@ -10,12 +10,12 @@ import {
   InputAdornment,
   Checkbox,
   FormControlLabel,
+  Switch,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 interface State {
   search: string;
-  tags: string;
   sort: string;
   onlyFavorites: boolean;
 }
@@ -64,7 +64,6 @@ export default function RecipeFilters({
   const classes = useStyles();
   const [state, setState] = React.useState<State>({
     search: "",
-    tags: "",
     sort: "",
     onlyFavorites: false,
   });
@@ -117,30 +116,6 @@ export default function RecipeFilters({
           </div>
         </Grid>
         <Grid item>
-          <div className={classes.checkbox}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={state.onlyFavorites}
-                  onChange={handleChangeBox}
-                  name="checkedA"
-                />
-              }
-              label="pokaż tylko ulubione"
-            />
-          </div>
-          {/*<div className={classes.searchElement}>*/}
-          {/*  <p className={classes.text}>Filtruj po tagach</p>*/}
-          {/*  <TextField*/}
-          {/*    id="recipe-tag-search"*/}
-          {/*    label="Tagi"*/}
-          {/*    variant="filled"*/}
-          {/*    value={state.tags}*/}
-          {/*    onChange={handleChange("tags")}*/}
-          {/*  />*/}
-          {/*</div>*/}
-        </Grid>
-        <Grid item>
           <div className={classes.searchElement}>
             <p className={classes.text}>Sortuj po</p>
             <FormControl variant="filled" className={classes.formControl}>
@@ -155,6 +130,19 @@ export default function RecipeFilters({
                 </MenuItem>
               </Select>
             </FormControl>
+          </div>
+        </Grid>
+        <Grid item>
+          <div className={classes.checkbox}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={state.onlyFavorites}
+                  onChange={handleChangeBox}
+                />
+              }
+              label="ULUBIONE"
+            />
           </div>
         </Grid>
       </Grid>

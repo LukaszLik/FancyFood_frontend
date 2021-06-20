@@ -13,7 +13,6 @@ export const AddComment = (props) => {
 
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(content);
     CommentService.addComment(content, props.recipeId).then(() => {
       window.location.reload();
     });

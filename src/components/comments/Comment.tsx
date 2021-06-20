@@ -11,7 +11,7 @@ interface Props {
 export const Comment: React.FC<Props> = (props) => {
   return (
     <Card variant="outlined">
-      <CardContent style={{}}>
+      <CardContent>
         <span className="comment-container-head">
           <Typography
             variant="h5"
