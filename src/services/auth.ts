@@ -57,13 +57,12 @@ class AuthService {
     pageNumber: number,
     containing: string,
     descending: boolean,
-    fieldFilter: string
+    fieldFilter: string,
+    favoritesFilter: boolean
   ) {
     return axios.get(
-      `recipe/page/${pageNumber}?containing=${containing}&descending=${descending}&fieldFilter=${fieldFilter}`,
-      {
-        headers: header(),
-      }
+      `recipe/page/${pageNumber}?containing=${containing}&descending=${descending}&fieldFilter=${fieldFilter}&favorites=${favoritesFilter}`,
+      { headers: header() }
     );
   }
 }

@@ -18,13 +18,13 @@ import AuthService from "../../services/auth";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import axios from "axios";
 import EditIcon from "@material-ui/icons/Edit";
+import { useHistory } from "react-router-dom";
+import { CommentSection } from "../comments/CommentSection";
+import UserRecipesService from "../../services/userRecipes";
 import {
   Favorite as FavoriteIcon,
   FavoriteBorder as FavoriteBorderIcon,
 } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
-import { CardData } from "../home/HomePage";
-import UserRecipesService from "../../services/userRecipes";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -223,6 +223,11 @@ const RecipeInfo = (props) => {
           title={"Przygotowanie"}
           textTable={props.data.recipeBody.steps}
           variant={false}
+        />
+        <Divider variant="middle" />
+        <CommentSection
+          comments={props.data.recipeBody.comments}
+          recipeId={props.data.recipeId}
         />
       </Card>
     </Box>

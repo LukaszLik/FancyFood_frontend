@@ -8,13 +8,17 @@ import {
   MenuItem,
   Select,
   InputAdornment,
+  Checkbox,
+  FormControlLabel,
+  Switch,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import AuthService from "../../services/auth";
 
 interface State {
   search: string;
-  tags: string;
   sort: string;
+  onlyFavorites: boolean;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,27 +48,44 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "1.25px",
     color: "#002226",
   },
+  checkbox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    marginTop: "50px",
+  },
 }));
 
-export default function RecipeFilters({ searchHandler, sortHandler }) {
+export default function RecipeFilters({
+  searchHandler,
+  sortHandler,
+  favoritesHandler,
+}) {
   const classes = useStyles();
   const [state, setState] = React.useState<State>({
     search: "",
-    tags: "",
     sort: "",
+    onlyFavorites: false,
   });
 
   const ref = React.createRef();
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setState({ ...state, [prop]: event.target.value });
-      searchHandler(event.target.value);
-    };
+  const handleChange = (prop: keyof State) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    searchHandler(event.target.value);
+    setState({ ...state, [prop]: event.target.value });
+  };
 
   const handleChangeSelect = (event) => {
-    setState({ ...state, sort: event.target.value });
     sortHandler(event.target.value);
+    setState({ ...state, sort: event.target.value });
+  };
+
+  const handleChangeBox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    favoritesHandler(event.target.checked);
+    setState({ ...state, onlyFavorites: event.target.checked });
   };
 
   return (
@@ -97,31 +118,45 @@ export default function RecipeFilters({ searchHandler, sortHandler }) {
         </Grid>
         <Grid item>
           <div className={classes.searchElement}>
-            <p className={classes.text}>Filtruj po tagach</p>
-            <TextField
-              id="recipe-tag-search"
-              label="Tagi"
-              variant="filled"
-              value={state.tags}
-              onChange={handleChange("tags")}
-            />
-          </div>
-        </Grid>
-        <Grid item>
-          <div className={classes.searchElement}>
             <p className={classes.text}>Sortuj po</p>
             <FormControl variant="filled" className={classes.formControl}>
               <InputLabel id="demo-simple-select-label">Sortuj</InputLabel>
               <Select value={state.sort} onChange={handleChangeSelect}>
-                <MenuItem style={{ height: "35px" }} value={""} />
-                <MenuItem style={{ height: "35px" }} value={"Ocena"}>
-                  Ocena
+                <MenuItem style={{ height: "35px" }} value="" />
+                <MenuItem style={{ height: "35px" }} value="Ocena rosnąco">
+                  Ocena rosnąco
                 </MenuItem>
-                <MenuItem style={{ height: "35px" }} value={"Alfabetycznie"}>
-                  Alfabetycznie
+                <MenuItem style={{ height: "35px" }} value="Ocena malejąco">
+                  Ocena malejąco
+                </MenuItem>
+                <MenuItem
+                  style={{ height: "35px" }}
+                  value="Alfabetycznie rosnąco"
+                >
+                  Alfabetycznie rosnąco
+                </MenuItem>
+                <MenuItem
+                  style={{ height: "35px" }}
+                  value="Alfabetycznie malejąco"
+                >
+                  Alfabetycznie malejąco
                 </MenuItem>
               </Select>
             </FormControl>
+          </div>
+        </Grid>
+        <Grid item>
+          <div className={classes.checkbox}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={state.onlyFavorites}
+                  onChange={handleChangeBox}
+                  disabled={AuthService.getUser() ? false : true}
+                />
+              }
+              label="ULUBIONE"
+            />
           </div>
         </Grid>
       </Grid>

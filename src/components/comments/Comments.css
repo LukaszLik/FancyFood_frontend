@@ -1,0 +1,30 @@
+.typography {
+    font-family: "Roboto Slab", serif !important;
+}
+
+.typography-h5 {
+    font-weight: 500 !important;
+}
+
+
+.comment-section-container {
+    display: flex;
+    padding: 0 1vw 0 1vw;
+    margin-top: 2vh;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.comment-container-head{
+    display: flex;
+    justify-content:space-between;
+}
+
+.add-comment-button{
+    margin-top: 10px;
+}
+
+.add-comment-button-content{
+    color: white;
+    text-transform: uppercase;
+}

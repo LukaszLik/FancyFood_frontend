@@ -1,22 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FoodCard from "./FoodCard";
 import RecipeFilters from "./RecipeFilters";
 import "./HomePage.css";
 import Pagination from "@material-ui/lab/Pagination";
 import AuthService from "../../services/auth";
-
-interface State {
-  isLoading: boolean;
-  recipes: CardData[];
-  pageNumber: number;
-  pages;
-  searchedString: string;
-  prevSearchedString: string;
-  sortBy: string;
-  prevSortBy: string;
-}
-
-interface Props {}
 
 export class Tag {
   id: number;
@@ -60,128 +47,114 @@ export class CardData {
   }
 }
 
-export class HomePage extends React.Component<Props, State> {
-  state: State = {
-    isLoading: true,
+export default function HomePage() {
+  const [state, setState] = React.useState({
     recipes: [] as CardData[],
+  });
+
+  const [filters, setFilters] = React.useState({
+    searchedString: "",
+    sortBy: "",
+    onlyFavorites: false,
+    descending: false,
+  });
+
+  const [page, setPage] = React.useState({
     pageNumber: 0,
     pages: 0,
-    searchedString: "",
-    prevSearchedString: "",
-    sortBy: "",
-    prevSortBy: "",
-  };
+  });
 
-  prevPageNumber = -1;
+  const [favorites, setFavorites] = React.useState(false);
 
-  async componentDidMount() {
-    AuthService.getPage(this.state.pageNumber, "", false, "").then(
-      (response) => {
-        this.setState((state) => {
-          return {
-            isLoading: false,
-            recipes: response.data.content,
-            pages: response.data.totalPages,
-          };
-        });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+  const [loading, setLoading] = React.useState(true);
 
-  componentDidUpdate() {
-    if (
-      this.state.searchedString !== this.state.prevSearchedString ||
-      this.state.pageNumber !== this.prevPageNumber ||
-      this.state.sortBy !== this.state.prevSortBy
-    ) {
+  useEffect(() => {
+    const getPages = () => {
       AuthService.getPage(
-        this.state.pageNumber,
-        this.state.searchedString,
-        false,
-        this.state.sortBy
-      ).then(
-        (response) => {
-          console.log(response);
-          this.setState((state) => {
-            return {
-              isLoading: false,
-              recipes: response.data.content,
-              pages: response.data.totalPages,
-            };
-          });
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        page.pageNumber,
+        filters.searchedString,
+        filters.descending,
+        filters.sortBy,
+        favorites
+      ).then((response) => {
+        setState({
+          ...state,
+          recipes: response.data.content,
+        });
 
-      this.prevPageNumber = this.state.pageNumber;
-      this.setState({
-        ...this.state,
-        prevSearchedString: this.state.searchedString,
-        prevSortBy: this.state.sortBy,
+        setPage({ ...page, pages: response.data.totalPages });
+
+        setLoading(false);
       });
+    };
+
+    getPages();
+  }, [
+    page.pageNumber,
+    filters.searchedString,
+    filters.sortBy,
+    filters.descending,
+    favorites,
+  ]);
+
+  const searchBarUpdate = (str) => {
+    setFilters({ ...filters, searchedString: str });
+  };
+
+  const sortBarUpdate = (str) => {
+    const alpha = "name";
+    const mark = "marks";
+    if (str === "Alfabetycznie rosnąco") {
+      setFilters({ ...filters, sortBy: alpha, descending: false });
+    } else if (str === "Alfabetycznie malejąco") {
+      setFilters({ ...filters, sortBy: alpha, descending: true });
+    } else if (str === "Ocena rosnąco") {
+      setFilters({ ...filters, sortBy: mark, descending: false });
+    } else if (str === "Ocena malejąco") {
+      setFilters({ ...filters, sortBy: mark, descending: true });
+    } else {
+      setFilters({ ...filters, sortBy: "" });
     }
+  };
+
+  const favoritesUpdate = (str) => {
+    setFavorites(str);
+  };
+
+  const recipes: CardData[] = [];
+
+  for (let recipe of state.recipes) {
+    recipes.push(recipe);
   }
 
-  searchBarUpdate = (str) => {
-    this.setState({ ...this.state, searchedString: str });
-  };
-
-  sortBarUpdate = (str) => {
-    const alpha = "name";
-    const mark = "mark";
-    if (str === "Alfabetycznie") {
-      this.setState({ ...this.state, sortBy: alpha });
-    } else if (str === "Ocena") {
-      this.setState({ ...this.state, sortBy: mark });
-    } else {
-      this.setState({ ...this.state, sortBy: "" });
-    }
-  };
-
-  render() {
-    const recipes: CardData[] = [];
-
-    if (this.state.isLoading) {
-      return (
-        <div>
-          <p>Ładowanie strony, proszę czekać</p>
-        </div>
-      );
-    }
-
-    for (let recipe of this.state.recipes) {
-      recipes.push(recipe);
-    }
-
-    return (
-      <div className="home">
-        <RecipeFilters
-          searchHandler={this.searchBarUpdate}
-          sortHandler={this.sortBarUpdate}
-        />
-        <div className="card-area">
-          <div className="card-container">
-            {recipes.map((recipe) => {
-              return <FoodCard key={recipe.recipeId} {...recipe} />;
-            })}
-          </div>
-        </div>
-        <div className="footer">
-          <Pagination
-            count={this.state.pages}
-            color="secondary"
-            className="pagination"
-            onChange={(event, page) => {
-              this.setState({ pageNumber: page - 1 });
-            }}
-          />
+  return loading ? (
+    <div>
+      <p>Ładowanie strony, proszę czekać</p>
+    </div>
+  ) : (
+    <div className="home">
+      <RecipeFilters
+        searchHandler={searchBarUpdate}
+        sortHandler={sortBarUpdate}
+        favoritesHandler={favoritesUpdate}
+      />
+      <div className="card-area">
+        <div className="card-container">
+          {recipes.map((recipe) => {
+            return <FoodCard key={recipe.recipeId} {...recipe} />;
+          })}
         </div>
       </div>
-    );
-  }
+      <div className="footer">
+        <Pagination
+          count={page.pages}
+          color="secondary"
+          className="pagination"
+          onChange={(event, pageNr) => {
+            setPage({ ...page, pageNumber: pageNr - 1 });
+          }}
+        />
+      </div>
+    </div>
+  );
 }
