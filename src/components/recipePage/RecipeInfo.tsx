@@ -14,13 +14,13 @@ import {
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating";
 import UserRecipeService from "../../services/userRecipes";
+import UserRecipesService from "../../services/userRecipes";
 import AuthService from "../../services/auth";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import axios from "axios";
 import EditIcon from "@material-ui/icons/Edit";
 import { useHistory } from "react-router-dom";
 import { CommentSection } from "../comments/CommentSection";
-import UserRecipesService from "../../services/userRecipes";
 import {
   Favorite as FavoriteIcon,
   FavoriteBorder as FavoriteBorderIcon,

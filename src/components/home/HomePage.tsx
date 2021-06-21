@@ -139,17 +139,17 @@ export default function HomePage() {
         favoritesHandler={favoritesUpdate}
       />
       <div className="card-area">
-        {recipes.length > 0 ? 
+        {recipes.length > 0 ? (
           <div className="card-container">
             {recipes.map((recipe) => {
               return <FoodCard key={recipe.recipeId} {...recipe} />;
             })}
           </div>
-         : 
+        ) : (
           <h3 className="not-found-message">
             Nie znaleziono przepisów. Spróbuj wybrać inne parametry.
           </h3>
-        }
+        )}
       </div>
       <div className="footer">
         <Pagination

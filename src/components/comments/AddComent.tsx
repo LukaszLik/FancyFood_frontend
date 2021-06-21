@@ -1,26 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, TextField } from "@material-ui/core";
-import CommentService from "../../services/comment";
 import "./Comments.css";
+import AuthService from "../../services/auth";
 
-export const AddComment = (props) => {
-  const [content, setContent] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setContent(e.target.value);
-  };
-
-  const handleAddComment = (e: React.FormEvent) => {
-    e.preventDefault();
-    CommentService.addComment(content, props.recipeId).then(() => {
-      window.location.reload();
-    });
-  };
-
+export const AddComment = ({ handleAdd, handelCh, content }) => {
   return (
     <>
-      <form onSubmit={handleAddComment}>
+      <form onSubmit={handleAdd}>
         <TextField
           multiline
           fullWidth
@@ -28,7 +14,8 @@ export const AddComment = (props) => {
           label="Komentarz"
           placeholder="Wpisz swój komentarz..."
           value={content}
-          onChange={handleChange}
+          onChange={handelCh}
+          disabled={AuthService.getUser() ? false : true}
         />
         <Button
           type="submit"
@@ -36,6 +23,8 @@ export const AddComment = (props) => {
           size="large"
           color="secondary"
           className="add-comment-button"
+          style={{ marginTop: "13px" }}
+          disabled={AuthService.getUser() ? false : true}
         >
           <span className="add-comment-button-content">skomentuj</span>
         </Button>

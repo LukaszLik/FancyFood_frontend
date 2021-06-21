@@ -122,7 +122,9 @@ export default function RecipeFilters({
             <FormControl variant="filled" className={classes.formControl}>
               <InputLabel id="demo-simple-select-label">Domyślnie</InputLabel>
               <Select value={state.sort} onChange={handleChangeSelect}>
-                <MenuItem style={{ height: "35px" }} value="Domyślnie" >Domyślnie</MenuItem>
+                <MenuItem style={{ height: "35px" }} value="Domyślnie">
+                  Domyślnie
+                </MenuItem>
                 <MenuItem style={{ height: "35px" }} value="Ocena rosnąco">
                   Ocena rosnąco
                 </MenuItem>

@@ -222,7 +222,6 @@ const AddProducts = (props) => {
               ref={hiddenFileInput}
               onChange={handleImage("image")}
               style={{ display: "none" }}
-              required
             />
 
             <UploadCustomButton variant="contained" onClick={handleClick}>

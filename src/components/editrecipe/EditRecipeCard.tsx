@@ -22,7 +22,6 @@ import { grey } from "@material-ui/core/colors";
 import InputList from "../../common/litInputs/InputList";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
-import axios from "axios";
 
 interface RecipeData {
   recipeId: number;
@@ -251,7 +250,11 @@ const EditRecipeCard = (props) => {
             </UploadCustomButton>
 
             <CardContent>
-              <img src={values.image} alt="image" />
+              <img
+                style={{ maxWidth: "50vw", maxHeight: "40vw" }}
+                src={values.image}
+                alt="image"
+              />
             </CardContent>
           </CardContent>
           <CardContent>

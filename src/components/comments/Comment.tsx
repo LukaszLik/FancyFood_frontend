@@ -32,7 +32,12 @@ export const Comment: React.FC<Props> = (props) => {
         <Typography
           variant="body1"
           className="typography"
-          style={{ textAlign: "justify", fontWeight: 400, fontSize: 14 }}
+          style={{
+            textAlign: "justify",
+            fontWeight: 400,
+            fontSize: 14,
+            wordWrap: "break-word",
+          }}
         >
           {props.content}
         </Typography>
