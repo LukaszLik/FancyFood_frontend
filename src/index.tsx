@@ -7,13 +7,16 @@ import { BrowserRouter } from "react-router-dom";
 import "./Colors.css";
 import { ThemeProvider } from "@material-ui/core";
 import theme from "./thems";
+import { SnackbarProvider } from "notistack";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <SnackbarProvider maxSnack={3}>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </SnackbarProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
