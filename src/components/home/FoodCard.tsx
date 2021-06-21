@@ -115,9 +115,6 @@ export default function RecipeReviewCard(props) {
               readOnly
             />{" "}
           </Box>
-          {/*<p className={classes.reviewNumberText}>*/}
-          {/*  {props.marks.numberOfmarks}*/}
-          {/*</p>*/}
         </span>
       </span>
 
