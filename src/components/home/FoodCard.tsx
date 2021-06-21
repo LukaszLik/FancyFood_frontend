@@ -111,13 +111,13 @@ export default function RecipeReviewCard(props) {
             <StyledRating
               name="read-only"
               precision={0.5}
-              value={props.marks.average}
+              value={props.marksAvg}
               readOnly
             />{" "}
           </Box>
-          <p className={classes.reviewNumberText}>
-            {props.marks.numberOfmarks}
-          </p>
+          {/*<p className={classes.reviewNumberText}>*/}
+          {/*  {props.marks.numberOfmarks}*/}
+          {/*</p>*/}
         </span>
       </span>
 

@@ -103,7 +103,7 @@ export default function HomePage() {
 
   const sortBarUpdate = (str) => {
     const alpha = "name";
-    const mark = "marks";
+    const mark = "marksAvg";
     if (str === "Alfabetycznie rosnąco") {
       setFilters({ ...filters, sortBy: alpha, descending: false });
     } else if (str === "Alfabetycznie malejąco") {
