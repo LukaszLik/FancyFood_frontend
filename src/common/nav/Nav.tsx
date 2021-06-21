@@ -23,6 +23,12 @@ const Nav = () => {
     AuthService.logout();
   };
 
+  const logoButtonOnClick = () => {
+    if (window.location.toString() === "http://localhost:3000/") {
+      window.location.reload();
+    }
+  };
+
   return (
     <nav>
       <Grid
@@ -43,6 +49,7 @@ const Nav = () => {
               className="nav-logo"
               src={FancyFoodLogo}
               alt="FancyFood logo"
+              onClick={logoButtonOnClick}
             />
           </Link>
         </Grid>
