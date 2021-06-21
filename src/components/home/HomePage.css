@@ -48,3 +48,8 @@
     margin: 1.5vh 0vw 0vh 0.6vw;
 }
 
+.not-found-message {
+    font-family: "Roboto Slab";
+    color: var(--medium_gray);
+    white-space: nowrap;
+}

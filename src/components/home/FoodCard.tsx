@@ -11,6 +11,8 @@ import "./HomePage.css";
 import { useHistory } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Typography } from "@material-ui/core";
+import UserRecipesService from "../../services/userRecipes";
+import AuthService from "../../services/auth";
 
 interface State {
   addedToFavourites: boolean;
@@ -27,15 +29,25 @@ export default function RecipeReviewCard(props) {
   const history = useHistory();
   const classes = styles();
   const [state, setState] = React.useState<State>({
-    addedToFavourites: false,
+    addedToFavourites: props.favorite,
     recipe: new CardData(),
   });
 
   const handleFavourites = () => {
-    setState({
-      addedToFavourites: props.favorite,
-      recipe: new CardData(),
-    });
+    if (AuthService.getUser()) {
+      setState({
+        addedToFavourites: !state.addedToFavourites,
+        recipe: new CardData(),
+      });
+
+      if (state.addedToFavourites) {
+        UserRecipesService.removeFavorite(props.recipeId);
+      } else {
+        UserRecipesService.addFavorite(props.recipeId);
+      }
+    } else {
+      window.location.replace("/login");
+    }
   };
 
   const recipePageHandler = (id: Number) => {
