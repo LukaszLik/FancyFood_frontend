@@ -22,6 +22,8 @@ import { grey } from "@material-ui/core/colors";
 import InputList from "../../common/litInputs/InputList";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
+import { useSnackbar } from "notistack";
+import { useHistory } from "react-router-dom";
 
 interface RecipeData {
   recipeId: number;
@@ -45,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 
 const EditRecipeCard = (props) => {
   const classes = useStyles();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const history = useHistory();
 
   const getImageUrl = (id: number) => {
     return `../recipe/photo/${id}`;
@@ -143,10 +147,11 @@ const EditRecipeCard = (props) => {
 
     ConnectionService.updateRecipe(data).then(
       () => {
-        window.location.href = `/recipe/${values.recipeId}`;
+        enqueueSnackbar("Przepis został edytowany!");
+        history.push(`/recipe/${values.recipeId}`);
       },
       (error) => {
-        console.log(error);
+        enqueueSnackbar("Edycja przepisu nie powiodła się.");
       }
     );
   };

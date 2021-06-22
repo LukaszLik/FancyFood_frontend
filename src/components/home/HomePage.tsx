@@ -99,6 +99,7 @@ export default function HomePage() {
 
   const searchBarUpdate = (str) => {
     setFilters({ ...filters, searchedString: str });
+    setPage({ ...page, pageNumber: 0 });
   };
 
   const sortBarUpdate = (str) => {
@@ -119,6 +120,7 @@ export default function HomePage() {
 
   const favoritesUpdate = (str) => {
     setFavorites(str);
+    setPage({ ...page, pageNumber: 0 });
   };
 
   const recipes: CardData[] = [];
@@ -154,6 +156,7 @@ export default function HomePage() {
       <div className="footer">
         <Pagination
           count={page.pages}
+          page={page.pageNumber + 1}
           color="secondary"
           className="pagination"
           onChange={(event, pageNr) => {

@@ -21,6 +21,8 @@ import { grey } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
 import Tags from "../../common/Tags";
+import { useSnackbar } from "notistack";
+import { useHistory } from "react-router-dom";
 
 const AddProducts = (props) => {
   const [ingredients, setIngredients] = useState([
@@ -34,6 +36,8 @@ const AddProducts = (props) => {
     time: "",
     image: null,
   });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const history = useHistory();
 
   const handleChange = (prop) => (
     event: React.ChangeEvent<HTMLInputElement>
@@ -76,10 +80,11 @@ const AddProducts = (props) => {
 
     ConnectionService.saveRecipe(data).then(
       (response) => {
-        window.location.href = `/recipe/${response}`;
+        enqueueSnackbar("Dodano przepis!");
+        history.push(`/recipe/${response}`);
       },
       (error) => {
-        console.log(error);
+        enqueueSnackbar("Dodawanie przepisu nie powiodło się.");
       }
     );
   };
