@@ -11,7 +11,11 @@ export const AddComment = ({ handleAdd, handleChange, content }) => {
           multiline
           fullWidth
           variant="filled"
-          label="Komentarz"
+          label={
+            AuthService.getUser()
+              ? "Komentarz"
+              : "Zaloguj się aby dodać komentarz"
+          }
           placeholder="Wpisz swój komentarz..."
           value={content}
           onChange={handleChange}
@@ -24,7 +28,7 @@ export const AddComment = ({ handleAdd, handleChange, content }) => {
           color="secondary"
           className="add-comment-button"
           style={{ marginTop: "13px" }}
-          disabled={AuthService.getUser() ? false : true}
+          disabled={AuthService.getUser() ? (content ? false : true) : true}
         >
           <span className="add-comment-button-content">skomentuj</span>
         </Button>

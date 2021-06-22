@@ -20,8 +20,11 @@ export const CommentSection = (props) => {
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
     CommentService.addComment(content, props.recipeId).then(() => {
+      if (content !== "") {
+        enqueueSnackbar("Dodano komentarz!");
+      } else {
+      }
       setContent("");
-      enqueueSnackbar("Dodano komentarz!");
       const readData = () => {
         AuthService.getRecipe(props.recipeId).then(
           (response) => {

@@ -1,6 +1,7 @@
 .titleStyle {
     font-weight: 500;
     font-family: "Roboto Slab" !important;
+    word-break: break-word;
 }
 
 .text {
