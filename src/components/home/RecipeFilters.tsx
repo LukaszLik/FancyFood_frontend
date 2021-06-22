@@ -71,11 +71,12 @@ export default function RecipeFilters({
 
   const ref = React.createRef();
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      searchHandler(event.target.value);
-      setState({ ...state, [prop]: event.target.value });
-    };
+  const handleChange = (prop: keyof State) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    searchHandler(event.target.value);
+    setState({ ...state, [prop]: event.target.value });
+  };
 
   const handleChangeSelect = (event) => {
     sortHandler(event.target.value);

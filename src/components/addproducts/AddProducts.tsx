@@ -21,7 +21,7 @@ import { grey } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
 import Tags from "../../common/Tags";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
 
 const AddProducts = (props) => {
@@ -39,10 +39,11 @@ const AddProducts = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory();
 
-  const handleChange =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+  const handleChange = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleTags = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTags(event.target.value as string[]);
@@ -79,11 +80,11 @@ const AddProducts = (props) => {
 
     ConnectionService.saveRecipe(data).then(
       (response) => {
-        enqueueSnackbar('Dodano przepis!');
+        enqueueSnackbar("Dodano przepis!");
         history.push(`/recipe/${response}`);
       },
       (error) => {
-        enqueueSnackbar('Dodawanie przepisu nie powiodło się.');
+        enqueueSnackbar("Dodawanie przepisu nie powiodło się.");
       }
     );
   };
@@ -124,11 +125,12 @@ const AddProducts = (props) => {
     },
   };
 
-  const handleImage =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      // @ts-ignore
-      setValues({ ...values, [prop]: event.target.files[0] });
-    };
+  const handleImage = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // @ts-ignore
+    setValues({ ...values, [prop]: event.target.files[0] });
+  };
 
   const tagsArray = Object.values(Tags);
 

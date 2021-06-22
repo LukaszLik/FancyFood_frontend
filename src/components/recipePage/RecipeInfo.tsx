@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     width: 40,
     height: 40,
     marginRight: "5%",
-    cursor: 'pointer'
+    cursor: "pointer",
   },
 }));
 
