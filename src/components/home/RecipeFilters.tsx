@@ -8,7 +8,6 @@ import {
   MenuItem,
   Select,
   InputAdornment,
-  Checkbox,
   FormControlLabel,
   Switch,
 } from "@material-ui/core";
@@ -69,8 +68,6 @@ export default function RecipeFilters({
     onlyFavorites: false,
   });
 
-  const ref = React.createRef();
-
   const handleChange = (prop: keyof State) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -120,7 +117,7 @@ export default function RecipeFilters({
           <div className={classes.searchElement}>
             <p className={classes.text}>Sortuj po</p>
             <FormControl variant="filled" className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Domyślnie</InputLabel>
+              <InputLabel>Domyślnie</InputLabel>
               <Select
                 value={state.sort}
                 style={{ minWidth: "254px" }}
