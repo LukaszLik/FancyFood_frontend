@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InputList from "./../../common/litInputs/InputList";
+import InputList from "../../common/listinputs/InputList";
 import {
   withStyles,
   Theme,

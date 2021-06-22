@@ -19,7 +19,7 @@ import React, { useState } from "react";
 import "./EditRecipe.css";
 import Tags from "../../common/Tags";
 import { grey } from "@material-ui/core/colors";
-import InputList from "../../common/litInputs/InputList";
+import InputList from "../../common/listinputs/InputList";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
 import { useSnackbar } from "notistack";

@@ -5,10 +5,12 @@ import { Comments } from "./Comments";
 import "./Comments.css";
 import AuthService from "../../services/auth";
 import CommentService from "../../services/comment";
+import { useSnackbar } from "notistack";
 
 export const CommentSection = (props) => {
   const [content, setContent] = useState("");
   const [comment, setComment] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -19,13 +21,14 @@ export const CommentSection = (props) => {
     e.preventDefault();
     CommentService.addComment(content, props.recipeId).then(() => {
       setContent("");
+      enqueueSnackbar("Dodano komentarz!");
       const readData = () => {
         AuthService.getRecipe(props.recipeId).then(
           (response) => {
             setComment(response.data.recipeBody.comments);
           },
           (error) => {
-            console.log(error);
+            enqueueSnackbar("Dodawanie komentarza się nie powiodło.");
           }
         );
       };
@@ -37,7 +40,7 @@ export const CommentSection = (props) => {
     <Box className="comment-section-container">
       <AddComment
         handleAdd={handleAddComment}
-        handelCh={handleChange}
+        handleChange={handleChange}
         content={content}
       />
       <Comments comments={comment == "" ? props.comments : comment} />

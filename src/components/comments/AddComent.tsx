@@ -3,7 +3,7 @@ import { Button, TextField } from "@material-ui/core";
 import "./Comments.css";
 import AuthService from "../../services/auth";
 
-export const AddComment = ({ handleAdd, handelCh, content }) => {
+export const AddComment = ({ handleAdd, handleChange, content }) => {
   return (
     <>
       <form onSubmit={handleAdd}>
@@ -14,7 +14,7 @@ export const AddComment = ({ handleAdd, handelCh, content }) => {
           label="Komentarz"
           placeholder="Wpisz swój komentarz..."
           value={content}
-          onChange={handelCh}
+          onChange={handleChange}
           disabled={AuthService.getUser() ? false : true}
         />
         <Button
