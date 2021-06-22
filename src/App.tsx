@@ -13,42 +13,37 @@ import NotFound from "./common/errorPages/NotFound";
 import AuthService from "./services/auth";
 import Unauthorized from "./common/errorPages/Unauthorized";
 
-interface State {}
-interface Props {}
+export const App = () => {
+  return (
+    <div className="App">
+      <Nav />
+      <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/login" exact component={LoginPage} />
+        <Route path="/signup" exact component={RegisterPage} />
+        <Route
+          path="/recipe/add"
+          exact
+          component={
+            AuthService.getUser() !== null ? AddProducts : Unauthorized
+          }
+        />
+        <Route path="/recipe/:id" exact component={RecipePage} />
+        <Route
+          path="/profile"
+          exact
+          component={AuthService.getUser() !== null ? UserPage : Unauthorized}
+        />
+        <Route
+          path="/editrecipe/:id"
+          exact
+          component={
+            AuthService.getUser() !== null ? EditRecipePage : Unauthorized
+          }
+        />
 
-export class App extends React.Component<Props, State> {
-  render() {
-    return (
-      <div className="App">
-        <Nav />
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/login" exact component={LoginPage} />
-          <Route path="/signup" exact component={RegisterPage} />
-          <Route
-            path="/recipe/add"
-            exact
-            component={
-              AuthService.getUser() !== null ? AddProducts : Unauthorized
-            }
-          />
-          <Route path="/recipe/:id" exact component={RecipePage} />
-          <Route
-            path="/profile"
-            exact
-            component={AuthService.getUser() !== null ? UserPage : Unauthorized}
-          />
-          <Route
-            path="/editrecipe/:id"
-            exact
-            component={
-              AuthService.getUser() !== null ? EditRecipePage : Unauthorized
-            }
-          />
-
-          <Route component={NotFound} />
-        </Switch>
-      </div>
-    );
-  }
-}
+        <Route component={NotFound} />
+      </Switch>
+    </div>
+  );
+};

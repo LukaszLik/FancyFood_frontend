@@ -14,7 +14,7 @@ export const Comments = (props) => {
         Komentarze ({props.comments.length})
       </Typography>
       {props.comments.map((comment, index) => {
-        return <Comment {...comment} />;
+        return <Comment {...comment} key={index} />;
       })}
     </>
   );

@@ -120,13 +120,15 @@ export default function RecipeFilters({
           <div className={classes.searchElement}>
             <p className={classes.text}>Sortuj po</p>
             <FormControl variant="filled" className={classes.formControl}>
-              <InputLabel>Sortuj</InputLabel>
+              <InputLabel id="demo-simple-select-label">Domyślnie</InputLabel>
               <Select
                 value={state.sort}
                 style={{ minWidth: "254px" }}
                 onChange={handleChangeSelect}
               >
-                <MenuItem style={{ height: "35px" }} value="" />
+                <MenuItem style={{ height: "35px" }} value="Domyślnie">
+                  Domyślnie
+                </MenuItem>
                 <MenuItem style={{ height: "35px" }} value="Ocena rosnąco">
                   Ocena rosnąco
                 </MenuItem>
