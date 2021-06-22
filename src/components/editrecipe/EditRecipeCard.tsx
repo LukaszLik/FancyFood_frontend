@@ -147,11 +147,11 @@ const EditRecipeCard = (props) => {
 
     ConnectionService.updateRecipe(data).then(
       () => {
-        enqueueSnackbar('Przepis został edytowany!');
+        enqueueSnackbar("Przepis został edytowany!");
         history.push(`/recipe/${values.recipeId}`);
       },
       (error) => {
-        enqueueSnackbar('Edycja przepisu nie powiodła się.');
+        enqueueSnackbar("Edycja przepisu nie powiodła się.");
       }
     );
   };

@@ -99,7 +99,7 @@ export default function HomePage() {
 
   const searchBarUpdate = (str) => {
     setFilters({ ...filters, searchedString: str });
-    setPage({...page, pageNumber: 0})
+    setPage({ ...page, pageNumber: 0 });
   };
 
   const sortBarUpdate = (str) => {
@@ -120,7 +120,7 @@ export default function HomePage() {
 
   const favoritesUpdate = (str) => {
     setFavorites(str);
-    setPage({...page, pageNumber: 0})
+    setPage({ ...page, pageNumber: 0 });
   };
 
   const recipes: CardData[] = [];
@@ -141,17 +141,17 @@ export default function HomePage() {
         favoritesHandler={favoritesUpdate}
       />
       <div className="card-area">
-        {recipes.length > 0 ? 
+        {recipes.length > 0 ? (
           <div className="card-container">
             {recipes.map((recipe) => {
               return <FoodCard key={recipe.recipeId} {...recipe} />;
             })}
           </div>
-         : 
+        ) : (
           <h3 className="not-found-message">
             Nie znaleziono przepisów. Spróbuj wybrać inne parametry.
           </h3>
-        }
+        )}
       </div>
       <div className="footer">
         <Pagination

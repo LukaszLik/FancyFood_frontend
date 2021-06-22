@@ -21,7 +21,7 @@ import { grey } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import ConnectionService from "../../services/connection";
 import Tags from "../../common/Tags";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 import { useHistory } from "react-router-dom";
 
 const AddProducts = (props) => {
@@ -80,11 +80,11 @@ const AddProducts = (props) => {
 
     ConnectionService.saveRecipe(data).then(
       (response) => {
-        enqueueSnackbar('Dodano przepis!');
+        enqueueSnackbar("Dodano przepis!");
         history.push(`/recipe/${response}`);
       },
       (error) => {
-        enqueueSnackbar('Dodawanie przepisu nie powiodło się.');
+        enqueueSnackbar("Dodawanie przepisu nie powiodło się.");
       }
     );
   };

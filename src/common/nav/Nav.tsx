@@ -59,7 +59,7 @@ const Nav = () => {
             color="secondary"
             component={Link}
             to={currentUser ? "/profile" : "/login"}
-            style={{ marginRight: "20px", paddingTop: "5px" }}
+            style={{ marginRight: "20px", paddingTop: "10px 16px 6px" }}
           >
             <span className="btn-email-text btn-texts-login">
               {currentUser ? "twój profil" : "zaloguj się"}
@@ -71,7 +71,7 @@ const Nav = () => {
             component={Link}
             to={currentUser ? "/" : "/signup"}
             onClick={logOutHandle}
-            style={{ paddingTop: "5px" }}
+            style={{ paddingTop: "10px" }}
           >
             <span className="btn-signup-text btn-texts-login">
               {currentUser ? "wyloguj się" : "zarejestruj się"}
