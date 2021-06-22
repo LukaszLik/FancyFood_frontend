@@ -46,6 +46,7 @@
     font-style: normal;
     font-weight: 600;
     margin: 1.5vh 0vw 0vh 0.6vw;
+    word-break: break-word;
 }
 
 .not-found-message {
