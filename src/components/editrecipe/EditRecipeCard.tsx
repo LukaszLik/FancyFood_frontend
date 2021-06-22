@@ -89,10 +89,11 @@ const EditRecipeCard = (props) => {
     },
   }))(Button);
 
-  const handleChange =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+  const handleChange = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleTags = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTags(event.target.value as string[]);
@@ -104,14 +105,15 @@ const EditRecipeCard = (props) => {
     // @ts-ignore
     hiddenFileInput.current.click();
   };
-  const handleImage =
-    (prop) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({
-        ...values, // @ts-ignore
-        [prop]: URL.createObjectURL(event.target.files[0]), // @ts-ignore
-        ["imageUpdate"]: event.target.files[0],
-      });
-    };
+  const handleImage = (prop) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValues({
+      ...values, // @ts-ignore
+      [prop]: URL.createObjectURL(event.target.files[0]), // @ts-ignore
+      ["imageUpdate"]: event.target.files[0],
+    });
+  };
 
   const handleInputChange = (e, index, componentList, componentEl) => {
     const { name, value } = e.target;
