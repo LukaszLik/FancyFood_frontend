@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InputList from "./../../common/litInputs/InputList";
+import InputList from "../../common/listinputs/InputList";
 import {
   withStyles,
   Theme,
@@ -225,7 +225,6 @@ const AddProducts = (props) => {
               ref={hiddenFileInput}
               onChange={handleImage("image")}
               style={{ display: "none" }}
-              required
             />
 
             <UploadCustomButton variant="contained" onClick={handleClick}>

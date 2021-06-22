@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RecipeInfo from "./RecipeInfo";
 import RecipePageLoading from "./RecipePageLoading";
 
 import { RouteComponentProps } from "react-router-dom";
 import AuthService from "../../services/auth";
-import { useEffect, useState } from "react";
 
 interface RouteParams {
   id: string;

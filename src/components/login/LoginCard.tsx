@@ -211,12 +211,6 @@ const LoginCard = () => {
       </Card>
       <Box>
         <p className="login-link-des">
-          Zapomniałeś hasła?{" "}
-          <Link to="#" className="login-link">
-            PRZYPOMNIJ HASLO
-          </Link>
-        </p>
-        <p className="login-link-des">
           Nie masz jeszcze konta?{" "}
           <Link to="/signup" className="login-link">
             ZAREJESTRUJ SIE
