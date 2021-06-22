@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import CommentService from "../../services/comment";
 import "./Comments.css";
+import { useSnackbar } from "notistack";
 
 export const AddComment = (props) => {
   const [content, setContent] = useState("");
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -13,9 +15,15 @@ export const AddComment = (props) => {
 
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
-    CommentService.addComment(content, props.recipeId).then(() => {
-      window.location.reload();
-    });
+    CommentService.addComment(content, props.recipeId).then(
+      () => {
+        window.location.reload();
+        enqueueSnackbar("Dodano komentarz!");
+      },
+      (error) => {
+        enqueueSnackbar("Dodawanie komentarza się nie powiodło.");
+      }
+    );
   };
 
   return (
