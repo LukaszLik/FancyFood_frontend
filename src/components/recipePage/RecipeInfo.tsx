@@ -155,7 +155,7 @@ const RecipeInfo = (props) => {
           {AuthService.getUser() !== null ? (
             <StyledRating
               name="half-rating"
-              defaultValue={props.data.marks.average}
+              defaultValue={props.data.marksAvg}
               precision={0.5}
               onClick={(e) => ratingsHandler(props.data.recipeId, e)}
             />
@@ -163,7 +163,7 @@ const RecipeInfo = (props) => {
             <StyledRating
               name="read-only"
               precision={0.5}
-              value={props.data.marks.average}
+              value={props.data.marksAvg}
               readOnly
             />
           )}
