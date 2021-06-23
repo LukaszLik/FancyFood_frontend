@@ -6,9 +6,9 @@ const Unauthorized = () => (
   <div className="error-wrapper un-error">
     <div className="error-wrapper-center">
       <span>
-        <h1>401 - Unauthorized!</h1>
+        <h1 className="error-title">Brak dostępu!</h1>
         <Link to="/" className="error-link">
-          Go Home
+          STRONA GŁÓWNA
         </Link>
       </span>
     </div>

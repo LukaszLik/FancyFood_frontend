@@ -30,7 +30,16 @@
 .error-link{
     text-decoration: none;
     color: #fff;
+    font-size: 48px;
     font-weight: 700;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+.error-title{
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+
 }
 
 .error-link:hover {

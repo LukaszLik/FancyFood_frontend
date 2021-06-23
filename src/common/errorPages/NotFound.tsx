@@ -6,9 +6,9 @@ const NotFound = () => (
   <div className="error-wrapper">
     <div className="error-wrapper-center">
       <span>
-        <h1>404 - Not Found!</h1>
+        <h1 className="error-title">Nie znaleziono strony!</h1>
         <Link to="/" className="error-link">
-          Go Home
+          STRONA GŁÓWNA
         </Link>
       </span>
     </div>
