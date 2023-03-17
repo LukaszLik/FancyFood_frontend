@@ -1,5 +1,8 @@
 # Frontend
 
+##
+Group project, my commits have been made with Fresh222 gitlab account. I focused mainly on the front page.
+
 ## How to start
 Clone repository using `git clone https://gitlab.com/placki1/frontend.git`
 Install node modules using `npm install`
